@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-27T00:13:06",
+  "lastUpdated": "2026-05-27T00:16:01",
   "currentRT": {
     "rtNumber": "v11.3.0",
     "schedule": {
@@ -7,7 +7,44 @@
       "deployStart": null,
       "deployComplete": null
     },
-    "stages": [],
+    "stages": [
+      {
+        "name": "과제 취합",
+        "date": "2026-03-24"
+      },
+      {
+        "name": "3/25 ~ 3/31",
+        "date": "2026-03-31"
+      },
+      {
+        "name": "4/1 ~ 4/2",
+        "date": "2026-04-02"
+      },
+      {
+        "name": "4/3 ~ 4/9",
+        "date": "2026-04-09"
+      },
+      {
+        "name": "4/10 ~ 4/14",
+        "date": "2026-04-14"
+      },
+      {
+        "name": "4/15 ~ 4/16",
+        "date": "2026-04-16"
+      },
+      {
+        "name": "개발 (+Sanity, Feature QA)",
+        "date": "2026-05-07"
+      },
+      {
+        "name": "QA",
+        "date": "2026-05-08"
+      },
+      {
+        "name": "심사 요청",
+        "date": "2026-05-21"
+      }
+    ],
     "tasks": [
       "지도 렌더링 성능 개선",
       "실시간 교통정보 정확도 향상",
@@ -36,18 +73,92 @@
         "deployStart": null,
         "deployComplete": null
       },
-      "stages": [],
+      "stages": [
+        {
+          "name": "과제 취합",
+          "date": "2026-05-22"
+        },
+        {
+          "name": "5/25~5/29",
+          "date": "2026-05-29"
+        },
+        {
+          "name": "6/1~6/2",
+          "date": "2026-06-02"
+        },
+        {
+          "name": "6/4~6/10",
+          "date": "2026-06-10"
+        },
+        {
+          "name": "6/11~6/15",
+          "date": "2026-06-15"
+        },
+        {
+          "name": "6/16~6/17",
+          "date": "2026-06-17"
+        },
+        {
+          "name": "개발 (+Sanity, Feature QA)",
+          "date": "2026-07-03"
+        },
+        {
+          "name": "QA",
+          "date": "2026-07-15"
+        },
+        {
+          "name": "심사 요청",
+          "date": "2026-07-16"
+        }
+      ],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2424637740"
     },
     {
       "rtNumber": "v11.6.0",
       "schedule": {
-        "reviewRequest": "2026-07-02",
+        "reviewRequest": "2026-06-18",
         "deployStart": null,
         "deployComplete": null
       },
-      "stages": [],
+      "stages": [
+        {
+          "name": "과제 취합",
+          "date": "2026-04-21"
+        },
+        {
+          "name": "4/22 ~ 4/28",
+          "date": "2026-04-28"
+        },
+        {
+          "name": "4/29 ~ 4/30",
+          "date": "2026-04-30"
+        },
+        {
+          "name": "5/6 ~ 5/12",
+          "date": "2026-05-12"
+        },
+        {
+          "name": "5/13 ~ 5/15",
+          "date": "2026-05-15"
+        },
+        {
+          "name": "5/18 ~ 5/19",
+          "date": "2026-05-19"
+        },
+        {
+          "name": "개발 (+Sanity, Feature QA)",
+          "date": "2026-06-05"
+        },
+        {
+          "name": "QA",
+          "date": "2026-06-17"
+        },
+        {
+          "name": "심사 요청",
+          "date": "2026-06-18"
+        }
+      ],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2426961937"
     },
@@ -69,7 +180,44 @@
         "deployStart": null,
         "deployComplete": null
       },
-      "stages": [],
+      "stages": [
+        {
+          "name": "과제 취합",
+          "date": "2026-03-24"
+        },
+        {
+          "name": "3/25 ~ 3/31",
+          "date": "2026-03-31"
+        },
+        {
+          "name": "4/1 ~ 4/2",
+          "date": "2026-04-02"
+        },
+        {
+          "name": "4/3 ~ 4/9",
+          "date": "2026-04-09"
+        },
+        {
+          "name": "4/10 ~ 4/14",
+          "date": "2026-04-14"
+        },
+        {
+          "name": "4/15 ~ 4/16",
+          "date": "2026-04-16"
+        },
+        {
+          "name": "개발 (+Sanity, Feature QA)",
+          "date": "2026-05-21"
+        },
+        {
+          "name": "QA",
+          "date": "2026-06-02"
+        },
+        {
+          "name": "심사 요청",
+          "date": "2026-06-04"
+        }
+      ],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2424671196"
     },
@@ -138,7 +286,7 @@
         },
         {
           "name": "QA",
-          "date": "2026-04-06"
+          "date": "2026-04-16"
         },
         {
           "name": "심사 요청",
