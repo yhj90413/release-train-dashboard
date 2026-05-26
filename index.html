@@ -303,6 +303,13 @@
     .notes-input:focus { border-color: var(--primary); background: #fff; }
     @media (max-width: 760px) { .stages-section { grid-template-columns: 1fr; } }
 
+    /* ── Future date badge ───────────────────────── */
+    .future-badge {
+      background: var(--primary-light); color: var(--primary);
+      border-radius: 4px; padding: 1px 5px; font-size: 10px; font-weight: 700;
+      vertical-align: middle; margin-left: 4px;
+    }
+
     /* ── Modal ───────────────────────────────────── */
     .overlay {
       display: none; position: fixed; inset: 0;
@@ -445,7 +452,7 @@
         <div class="panel-links" id="panelLinks"></div>
       </div>
       <div class="review-panel">
-        <div class="panel-title">심사요청 버전 현황</div>
+        <div class="panel-title">현재 버전 심사현황</div>
         <div id="reviewVersions"></div>
       </div>
     </div>
@@ -606,36 +613,10 @@
       </div>
 
       <div class="fsec">
-        <div class="fsec-title">버전 진행단계</div>
-        <div class="fgroup" style="margin-bottom:12px">
+        <div class="fsec-title">링크 설정</div>
+        <div class="fgroup">
           <label class="flabel">Jira QA 대시보드 URL</label>
           <input class="finput" id="f-qa-url" placeholder="https://tmobi.atlassian.net/...">
-        </div>
-        <div class="fg2">
-          <div class="fgroup">
-            <label class="flabel">① 과제취합 종료일</label>
-            <input class="finput" type="date" id="f-stage-0">
-          </div>
-          <div class="fgroup">
-            <label class="flabel">② 상위기획리뷰 종료일</label>
-            <input class="finput" type="date" id="f-stage-1">
-          </div>
-          <div class="fgroup">
-            <label class="flabel">③ 과제 우선순위 확정 종료일</label>
-            <input class="finput" type="date" id="f-stage-2">
-          </div>
-          <div class="fgroup">
-            <label class="flabel">④ 상세기획/개발 종료일</label>
-            <input class="finput" type="date" id="f-stage-3">
-          </div>
-          <div class="fgroup">
-            <label class="flabel">⑤ QA 종료일</label>
-            <input class="finput" type="date" id="f-stage-4">
-          </div>
-          <div class="fgroup">
-            <label class="flabel">⑥ 심사요청 예정일</label>
-            <input class="finput" type="date" id="f-stage-5">
-          </div>
         </div>
       </div>
 
@@ -759,8 +740,14 @@ function render() {
   // RT label
   document.getElementById('curLabel').textContent = manual.rtNumber || rt.rtNumber;
 
-  // Timeline
-  const dates = [rt.schedule.reviewRequest, rt.schedule.deployStart, rt.schedule.deployComplete];
+  // Timeline — manual.schedule 우선 적용 (배포시작일 등 직접 입력 반영)
+  const ms = manual.schedule || {};
+  const sched = {
+    reviewRequest:  ms.reviewRequest  || rt.schedule.reviewRequest,
+    deployStart:    ms.deployStart    || rt.schedule.deployStart,
+    deployComplete: ms.deployComplete || rt.schedule.deployComplete,
+  };
+  const dates = [sched.reviewRequest, sched.deployStart, sched.deployComplete];
   dates.forEach((d, i) => {
     document.getElementById(`ts${i}`).className = `tl-step ${stepCls(d)}`;
     document.getElementById(`td${i}`).textContent = fmtShort(d);
@@ -840,89 +827,113 @@ function renderStores() {
 }
 
 // ────────────────────────────────────────────────────────
-// RENDER: STAGE PROGRESS
+// RENDER: STAGE PROGRESS (Confluence 일정 기반 다중 버전)
 // ────────────────────────────────────────────────────────
 function renderStages() {
-  const tbody     = document.getElementById('stagesBody');
+  const tbody      = document.getElementById('stagesBody');
   const panelLinks = document.getElementById('panelLinks');
-  const today     = new Date(); today.setHours(0,0,0,0);
-  const stages    = manual.stages || [];
+  const today      = new Date(); today.setHours(0,0,0,0);
 
-  tbody.innerHTML = STAGE_NAMES.map((name, i) => {
-    const endDate = stages[i]?.endDate || '';
-    const d = toD(endDate);
-    let ddayText = '-', ddayCls = 'dp-future', rowCls = '';
-    if (d) {
-      const diff = Math.round((d - today) / 86400000);
-      if      (diff < 0)  { ddayText = `D+${Math.abs(diff)}`; ddayCls = 'dp-past';   rowCls = 'stage-past'; }
-      else if (diff === 0) { ddayText = 'D-Day';              ddayCls = 'dp-today';  rowCls = 'stage-current'; }
-      else if (diff <= 7)  { ddayText = `D-${diff}`;          ddayCls = 'dp-near';   rowCls = 'stage-current'; }
-      else                 { ddayText = `D-${diff}`;          ddayCls = 'dp-future'; }
-    }
-    return `<tr class="${rowCls}">
-      <td>${name}</td>
-      <td style="color:var(--text-muted);font-size:12px">${endDate ? fmtFull(endDate) : '-'}</td>
-      <td><span class="dday-pill ${ddayCls}">${ddayText}</span></td>
-    </tr>`;
-  }).join('');
+  // 현재 RT + 미래 히스토리 중 stages 있는 버전
+  const allVersions = [remote.currentRT, ...(remote.history || [])]
+    .filter(rt => rt?.stages?.length > 0);
 
-  const wikiUrl = remote.currentRT?.wikiUrl || '';
-  const qaUrl   = manual.qaUrl || '';
-  panelLinks.innerHTML =
-    (wikiUrl ? `<a href="${wikiUrl}" target="_blank" class="panel-link-btn">📄 과제리스트</a>`
-              : `<span class="panel-link-btn disabled">📄 과제리스트</span>`) +
-    (qaUrl   ? `<a href="${qaUrl}"   target="_blank" class="panel-link-btn">🔗 QA 대시보드</a>`
-              : `<span class="panel-link-btn disabled">🔗 QA 대시보드</span>`);
-}
-
-// ────────────────────────────────────────────────────────
-// RENDER: REVIEW VERSIONS
-// ────────────────────────────────────────────────────────
-function renderReviewVersions() {
-  const container = document.getElementById('reviewVersions');
-  const today = new Date(); today.setHours(0,0,0,0);
-
-  const candidates = [remote.currentRT, ...(remote.history || [])].filter(rt => {
-    if (!rt?.schedule?.reviewRequest) return false;
-    const rd = toD(rt.schedule.reviewRequest);
-    if (!rd || rd > today) return false;
-    const cd = toD(rt.schedule.deployComplete);
-    if (cd && Math.round((today - cd) / 86400000) > 30) return false;
-    return true;
-  });
-
-  if (!candidates.length) {
-    container.innerHTML = '<div style="color:var(--text-muted);font-size:13px;padding:8px 0">심사 진행 중인 버전이 없습니다</div>';
+  if (!allVersions.length) {
+    tbody.innerHTML = `<tr><td colspan="4" style="color:var(--text-muted);padding:12px 6px;font-size:13px">
+      진행단계 정보가 없습니다 (데이터 업데이트 후 자동 반영)</td></tr>`;
+    panelLinks.innerHTML = '';
     return;
   }
 
-  container.innerHTML = candidates.map(rt => {
-    const s = rt.schedule;
-    let label, cls;
-    if (s.deployComplete)   { label = '배포완료'; cls = 'sb-deploy_complete'; }
-    else if (s.deployStart) { label = '배포중';   cls = 'sb-deploying'; }
-    else                    { label = '심사중';   cls = 'sb-review_requested'; }
+  tbody.innerHTML = allVersions.map(rt => {
+    const stages = rt.stages;
+    // 현재 단계: 오늘 기준 아직 안 지난 첫 번째 단계
+    const currentIdx = stages.findIndex(s => {
+      const d = toD(s.date); return d && d >= today;
+    });
 
-    // 현재 RT이면 스토어별 상태 표시
-    let storePills = '';
-    if (rt === remote.currentRT && manual.stores) {
-      storePills = `<div class="rv-stores">${STORES.map(sc => {
-        const st = STATUS[manual.stores[sc.key]?.status] || STATUS.review_requested;
-        return `<span class="rv-store-pill">${sc.icon} ${sc.name}
-          <span class="status-badge ${st.cls}" style="font-size:10px;padding:1px 5px">${st.label}</span>
-        </span>`;
-      }).join('')}</div>`;
-    }
+    const stageRows = stages.map((s, idx) => {
+      const d = toD(s.date);
+      let ddayText = '', ddayCls = '', rowCls = '';
+      if (d) {
+        const diff = Math.round((d - today) / 86400000);
+        if      (diff < 0)   { ddayText = `D+${Math.abs(diff)}`; ddayCls = 'dp-past'; rowCls = 'stage-past'; }
+        else if (diff === 0)  { ddayText = 'D-Day';              ddayCls = 'dp-today'; rowCls = 'stage-current'; }
+        else if (diff <= 7)   { ddayText = `D-${diff}`;          ddayCls = 'dp-near';  rowCls = 'stage-current'; }
+        else                  { ddayText = `D-${diff}`;          ddayCls = 'dp-future'; }
+      }
+      const isCurrent = idx === currentIdx;
+      return `<tr class="${rowCls}">
+        <td style="padding-left:12px;font-size:12px${isCurrent ? ';font-weight:700;color:var(--primary)' : ''}">
+          ${isCurrent ? '◉ ' : (idx < (currentIdx === -1 ? stages.length : currentIdx) ? '✓ ' : '○ ')}${s.name}
+        </td>
+        <td style="font-size:11px;color:var(--text-muted)">${s.date ? fmtFull(s.date) : ''}</td>
+        <td>${ddayText ? `<span class="dday-pill ${ddayCls}">${ddayText}</span>` : ''}</td>
+        <td></td>
+      </tr>`;
+    }).join('');
 
-    return `<div class="rv-item">
-      <div class="rv-top">
-        <span class="rv-ver-label">${rt.rtNumber}</span>
-        <span class="status-badge ${cls}">${label}</span>
-        <span class="rv-date">심사요청 ${fmtFull(s.reviewRequest)}</span>
+    const vWikiUrl = isActiveWiki(rt) ? rt.wikiUrl : '';
+    const wikiBtn  = vWikiUrl
+      ? `<a href="${vWikiUrl}" target="_blank" class="panel-link-btn" style="font-size:11px;padding:3px 8px">📄 위키</a>`
+      : '';
+
+    return `<tr style="background:var(--primary-light)">
+        <td colspan="3" style="padding:6px 8px;font-weight:700;font-size:13px;color:var(--primary)">${rt.rtNumber}</td>
+        <td style="padding:4px 8px">${wikiBtn}</td>
+      </tr>
+      ${stageRows}`;
+  }).join('');
+
+  // 현재 RT 링크 버튼 (하단)
+  const qaUrl = manual.qaUrl || '';
+  panelLinks.innerHTML =
+    (qaUrl ? `<a href="${qaUrl}" target="_blank" class="panel-link-btn">🔗 QA 대시보드</a>`
+           : `<span class="panel-link-btn disabled">🔗 QA 대시보드</span>`);
+}
+
+// ────────────────────────────────────────────────────────
+// RENDER: CURRENT RT REVIEW STATUS
+// ────────────────────────────────────────────────────────
+function renderReviewVersions() {
+  const container = document.getElementById('reviewVersions');
+  const rt  = remote.currentRT;
+  const ms  = manual.schedule || {};
+  const s   = {
+    reviewRequest:  ms.reviewRequest  || rt.schedule.reviewRequest,
+    deployStart:    ms.deployStart    || rt.schedule.deployStart,
+    deployComplete: ms.deployComplete || rt.schedule.deployComplete,
+  };
+
+  let overallLabel, overallCls;
+  if (s.deployComplete)   { overallLabel = '배포완료'; overallCls = 'sb-deploy_complete'; }
+  else if (s.deployStart) { overallLabel = '배포중';   overallCls = 'sb-deploying'; }
+  else if (s.reviewRequest) { overallLabel = '심사중'; overallCls = 'sb-review_requested'; }
+  else                    { overallLabel = '준비중';   overallCls = 'sb-review_requested'; }
+
+  // 스토어별 상태
+  const storePills = STORES.map(sc => {
+    const store = manual.stores?.[sc.key] || {};
+    const st    = STATUS[store.status] || STATUS.review_requested;
+    const ver   = store.ver ? `<span style="color:var(--text-muted);font-size:10px;margin-left:4px">${store.ver}</span>` : '';
+    return `<div class="rv-item" style="padding:6px 0">
+      <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+        <span style="font-size:14px">${sc.icon}</span>
+        <span style="font-size:12px;font-weight:600;flex:1">${sc.name}</span>
+        <span class="status-badge ${st.cls}">${st.label}</span>
+        ${ver}
       </div>
-      ${storePills}
     </div>`;
   }).join('');
+
+  container.innerHTML = `
+    <div class="rv-top" style="margin-bottom:10px">
+      <span class="rv-ver-label">${manual.rtNumber || rt.rtNumber}</span>
+      <span class="status-badge ${overallCls}">${overallLabel}</span>
+    </div>
+    ${s.reviewRequest ? `<div style="font-size:12px;color:var(--text-muted);margin-bottom:10px">심사요청 ${fmtFull(s.reviewRequest)}</div>` : ''}
+    ${storePills}
+  `;
 }
 
 // ────────────────────────────────────────────────────────
@@ -940,9 +951,8 @@ function renderHistory() {
   remote.history.forEach((rt, i) => {
     const eid = `exp${i}`;
 
-    // 과제 0건이면 위키 링크 비활성화
-    const hasWiki = rt.wikiUrl && rt.tasks.length > 0;
-    const wikiLink = hasWiki
+    // 전용 위키 페이지이거나 티켓 링크가 있는 이력 페이지면 활성
+    const wikiLink = isActiveWiki(rt)
       ? `<a href="${rt.wikiUrl}" target="_blank" class="wiki-btn">📄 위키</a>`
       : `<span class="wiki-btn wiki-btn-disabled">📄 위키</span>`;
 
@@ -953,9 +963,9 @@ function renderHistory() {
     tr.className = 'data-row';
     tr.innerHTML = `
       <td><span class="rt-pill">${rt.rtNumber}</span></td>
-      <td class="dt">${fmtFull(rt.schedule.reviewRequest)}</td>
-      <td class="dt">${fmtFull(rt.schedule.deployStart)}</td>
-      <td class="dt">${fmtFull(rt.schedule.deployComplete)}</td>
+      <td class="dt">${fmtWithFuture(rt.schedule.reviewRequest)}</td>
+      <td class="dt">${fmtWithFuture(rt.schedule.deployStart)}</td>
+      <td class="dt">${fmtWithFuture(rt.schedule.deployComplete)}</td>
       <td><button class="toggle-btn" onclick="toggleExp('${eid}',this)">과제 ${rt.tasks.length}건 보기 ▾</button></td>
       <td>${wikiLink}</td>
       <td><input type="text" class="notes-input" value="${note}" placeholder="메모"
@@ -984,6 +994,27 @@ function toggleExp(id, btn) {
     : btn.textContent.replace('닫기 ▴', '보기 ▾');
 }
 
+// 위키 버튼 활성화 여부: 전용 위키 페이지가 있는 경우만
+// 이력 페이지(2701918389)만 링크이고 티켓도 없으면 비활성
+const HISTORY_PAGE_WIKI = 'https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389';
+function isActiveWiki(rt) {
+  if (!rt.wikiUrl) return false;
+  if (rt.wikiUrl === HISTORY_PAGE_WIKI) {
+    // 이력 페이지인 경우: 티켓 링크가 있으면 활성, 없으면 비활성
+    const hasTicket = (rt.tasks || []).some(t => typeof t === 'object' && t.ticketUrl);
+    return hasTicket;
+  }
+  return true; // 전용 페이지면 항상 활성
+}
+
+// 날짜 포맷 + 미래이면 예정 배지 추가
+function fmtWithFuture(s) {
+  const d = toD(s); if (!d) return '-';
+  const today = new Date(); today.setHours(0,0,0,0);
+  const str = fmtFull(s);
+  return d > today ? `${str}<span class="future-badge">예정</span>` : str;
+}
+
 // 비고 저장
 function saveNote(rtNumber, value) {
   if (!manual.notes) manual.notes = {};
@@ -1003,9 +1034,11 @@ function openModal() {
   const rt = remote.currentRT;
 
   document.getElementById('f-rt').value = manual.rtNumber || rt.rtNumber || '';
-  document.getElementById('f-d0').value = rt.schedule.reviewRequest || '';
-  document.getElementById('f-d1').value = rt.schedule.deployStart   || '';
-  document.getElementById('f-d2').value = rt.schedule.deployComplete || '';
+  // manual.schedule가 있으면 우선 표시
+  const ms = manual.schedule || {};
+  document.getElementById('f-d0').value = ms.reviewRequest  || rt.schedule.reviewRequest  || '';
+  document.getElementById('f-d1').value = ms.deployStart    || rt.schedule.deployStart    || '';
+  document.getElementById('f-d2').value = ms.deployComplete || rt.schedule.deployComplete || '';
 
   STORES.forEach(sc => {
     const m = manual.stores?.[sc.key] || {};
@@ -1019,10 +1052,6 @@ function openModal() {
   document.getElementById('f-tasks').value =
     tasks.map(t => (typeof t === 'string') ? t : t.name).join('\n');
 
-  // 진행단계 날짜
-  STAGE_NAMES.forEach((_, i) => {
-    document.getElementById(`f-stage-${i}`).value = manual.stages?.[i]?.endDate || '';
-  });
   document.getElementById('f-qa-url').value = manual.qaUrl || '';
 
   document.getElementById('overlay').classList.add('open');
@@ -1048,14 +1077,16 @@ function saveRT() {
     };
   });
 
+  // 배포 일정 저장 (타임라인 반영)
+  manual.schedule = {
+    reviewRequest:  document.getElementById('f-d0').value || null,
+    deployStart:    document.getElementById('f-d1').value || null,
+    deployComplete: document.getElementById('f-d2').value || null,
+  };
+
   const raw = document.getElementById('f-tasks').value;
   manual.tasks = raw.split('\n').map(t => t.trim()).filter(Boolean);
 
-  // 진행단계 저장
-  manual.stages = STAGE_NAMES.map((name, i) => ({
-    name,
-    endDate: document.getElementById(`f-stage-${i}`).value
-  }));
   manual.qaUrl = document.getElementById('f-qa-url').value.trim();
 
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(manual)); } catch(_) {}

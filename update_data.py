@@ -65,11 +65,32 @@ def load_config() -> dict:
 
 # ── 날짜 파싱 ──────────────────────────────────────────────────────────────────
 def parse_date(text: str, year: int) -> str | None:
+    """텍스트에서 첫 번째 날짜 추출"""
     m = re.search(r"(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})", text)
     if m:
         return f"{m.group(1)}-{m.group(2).zfill(2)}-{m.group(3).zfill(2)}"
-    m = re.search(r"[~\s]?(\d{1,2})/(\d{1,2})(?:[^/\d]|$)", text)
+    m = re.search(r"(\d{1,2})/(\d{1,2})(?:[^/\d]|$)", text)
     if m:
+        mo, d = int(m.group(1)), int(m.group(2))
+        if 1 <= mo <= 12 and 1 <= d <= 31:
+            return f"{year}-{str(mo).zfill(2)}-{str(d).zfill(2)}"
+    m = re.search(r"(\d{1,2})월\s*(\d{1,2})일", text)
+    if m:
+        return f"{year}-{m.group(1).zfill(2)}-{m.group(2).zfill(2)}"
+    return None
+
+
+def parse_date_end(text: str, year: int) -> str | None:
+    """날짜 범위에서 마지막 날짜 추출 — 단계 종료일 기준 (예: '3/25 ~ 3/31' → 3/31)"""
+    # yyyy-MM-dd / yyyy.MM.dd
+    matches = list(re.finditer(r"(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})", text))
+    if matches:
+        m = matches[-1]
+        return f"{m.group(1)}-{m.group(2).zfill(2)}-{m.group(3).zfill(2)}"
+    # M/D 형식 (마지막 날짜)
+    matches = list(re.finditer(r"(\d{1,2})/(\d{1,2})(?:[^/\d]|$)", text))
+    if matches:
+        m = matches[-1]
         mo, d = int(m.group(1)), int(m.group(2))
         if 1 <= mo <= 12 and 1 <= d <= 31:
             return f"{year}-{str(mo).zfill(2)}-{str(d).zfill(2)}"
@@ -165,6 +186,7 @@ def get_rt_pages_by_year(cfg: dict, year: int) -> list[dict]:
 
         html     = p.get("body", {}).get("storage", {}).get("value", "")
         schedule = {"reviewRequest": None, "deployStart": None, "deployComplete": None}
+        stages   = []   # 전체 진행단계 리스트 [{name, date}]
         tasks    = []
 
         if HAS_BS4 and html:
@@ -174,21 +196,41 @@ def get_rt_pages_by_year(cfg: dict, year: int) -> list[dict]:
                 headers = [c.get_text(strip=True) for c in (rows[0].find_all(["th","td"]) if rows else [])]
 
                 # ── 일정 표 ──────────────────────────────────────────────────
-                if len(headers) >= 2 and "분류" in headers[0] and "일정" in headers[1]:
+                # 형식 A: [분류, 일정]       — 2컬럼
+                # 형식 B: [분류, 내용, 일정] — 3컬럼 (단계명은 '내용' 컬럼)
+                is_sched_A = len(headers) >= 2 and "분류" in headers[0] and "일정" in headers[1]
+                is_sched_B = (len(headers) >= 3 and "분류" in headers[0]
+                              and any("내용" in h for h in headers)
+                              and any("일정" in h for h in headers))
+                if is_sched_A or is_sched_B:
+                    name_idx = next((i for i, h in enumerate(headers) if "내용" in h), 0)
+                    date_idx = next((i for i, h in enumerate(headers) if "일정" in h), 1)
+                    max_cells = len(headers)
                     for row in rows[1:]:
                         cells = row.find_all(["th","td"])
                         if len(cells) < 2:
                             continue
-                        label = cells[0].get_text(strip=True)
-                        d     = parse_date(cells[1].get_text(strip=True), year)
-                        if not d:
+                        # rowspan 병합으로 셀 수가 줄어든 경우 인덱스를 왼쪽으로 shift
+                        shift = max_cells - len(cells)
+                        a_name = max(0, name_idx - shift)
+                        a_date = max(0, date_idx - shift)
+                        label     = cells[a_name].get_text(strip=True) if a_name < len(cells) else ''
+                        date_text = cells[a_date].get_text(strip=True) if a_date < len(cells) else cells[-1].get_text(strip=True)
+
+                        # 핵심 일정은 첫 번째 날짜, 단계 종료일은 마지막 날짜
+                        d_start = parse_date(date_text, year)
+                        d_end   = parse_date_end(date_text, year)
+                        if not d_start:
                             continue
                         if re.search(r"심사\s*요청", label):
-                            schedule["reviewRequest"] = d
+                            schedule["reviewRequest"] = d_start
                         elif re.search(r"배포\s*시작|출시|릴리즈", label):
-                            schedule["deployStart"] = d
+                            schedule["deployStart"] = d_start
                         elif re.search(r"배포\s*완료", label):
-                            schedule["deployComplete"] = d
+                            schedule["deployComplete"] = d_start
+                        # ★ 전체 단계 저장 — 종료일 기준
+                        if label and (d_end or d_start):
+                            stages.append({"name": label, "date": d_end or d_start})
 
                 # ── 과제 표 (최종과제 = '확정' 상태) ──────────────────────
                 elif any(k in " ".join(headers) for k in ["상세 내용", "Product"]):
@@ -223,6 +265,7 @@ def get_rt_pages_by_year(cfg: dict, year: int) -> list[dict]:
         result.append({
             "version":  version,
             "schedule": schedule,
+            "stages":   stages,
             "tasks":    tasks,
             "wikiUrl":  wiki_url(p["id"]),
             "pageId":   p["id"],
@@ -386,6 +429,7 @@ def build_rt_list(rt_pages: list, history_page: list, slack_schedules: dict) -> 
         rt_map[ver] = {
             "rtNumber": f"v{ver}",
             "schedule": p["schedule"].copy(),
+            "stages":   p.get("stages", []),
             "tasks":    p["tasks"],
             "wikiUrl":  p["wikiUrl"],
         }
@@ -404,6 +448,7 @@ def build_rt_list(rt_pages: list, history_page: list, slack_schedules: dict) -> 
             rt_map[ver] = {
                 "rtNumber": f"v{ver}",
                 "schedule": p["schedule"].copy(),
+                "stages":   [],          # 이력 페이지에는 단계 정보 없음
                 "tasks":    p["tasks"],
                 "wikiUrl":  p["wikiUrl"],
             }
@@ -414,6 +459,7 @@ def build_rt_list(rt_pages: list, history_page: list, slack_schedules: dict) -> 
             rt_map[ver] = {
                 "rtNumber": f"v{ver}",
                 "schedule": {"reviewRequest": None, "deployStart": None, "deployComplete": None},
+                "stages":   [],
                 "tasks":    [],
                 "wikiUrl":  "",
             }
@@ -475,6 +521,7 @@ def update_data_json(current_rt: dict | None, history: list) -> dict:
         "currentRT": {
             "rtNumber": (current_rt or {}).get("rtNumber") or ex_cur.get("rtNumber", ""),
             "schedule": (current_rt or {}).get("schedule") or ex_cur.get("schedule", {}),
+            "stages":   (current_rt or {}).get("stages")   or ex_cur.get("stages", []),
             "tasks":    (current_rt or {}).get("tasks")    or ex_cur.get("tasks", []),
             "wikiUrl":  (current_rt or {}).get("wikiUrl")  or ex_cur.get("wikiUrl", ""),
         },
