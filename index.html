@@ -188,6 +188,8 @@
       transition: background .12s, border-color .12s;
     }
     .chip:hover { background: var(--primary-light); border-color: var(--primary); }
+    a.chip { text-decoration: none; }
+    a.chip:hover { color: var(--primary); }
 
     /* ── History Table ───────────────────────────── */
     .htable { width: 100%; border-collapse: separate; border-spacing: 0 3px; }
@@ -595,6 +597,14 @@ function fmtShort(s) {
   const d = toD(s); if (!d) return '-';
   return `${d.getMonth()+1}.${String(d.getDate()).padStart(2,'0')}`;
 }
+function chipHtml(t) {
+  const name = (typeof t === 'string') ? t : t.name;
+  const url  = (typeof t === 'object' && t.ticketUrl) ? t.ticketUrl : '';
+  return url
+    ? `<a href="${url}" target="_blank" class="chip">${name}</a>`
+    : `<span class="chip">${name}</span>`;
+}
+
 function fmtFull(s) {
   const d = toD(s); if (!d) return '-';
   return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
@@ -648,7 +658,7 @@ function render() {
   const tasks = manual.tasks || rt.tasks || [];
   const chips = document.getElementById('taskChips');
   chips.innerHTML = tasks.length
-    ? tasks.map(t => `<span class="chip">${t}</span>`).join('')
+    ? tasks.map(chipHtml).join('')
     : '<span style="color:var(--text-muted)">등록된 과제가 없습니다</span>';
 
   // History
@@ -745,7 +755,7 @@ function renderHistory() {
     exp.innerHTML = `
       <td colspan="6">
         <div class="exp-inner" id="${eid}">
-          ${rt.tasks.map(t => `<span class="chip">${t}</span>`).join('')}
+          ${rt.tasks.map(chipHtml).join('')}
         </div>
       </td>
     `;
