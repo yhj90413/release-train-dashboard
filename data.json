@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-26T22:54:54",
+  "lastUpdated": "2026-05-26T23:18:57",
   "currentRT": {
     "rtNumber": "v11.3.0",
     "schedule": {
@@ -13,7 +13,8 @@
       "목적지 검색 자동완성 개선",
       "배터리 사용량 최적화",
       "접근성 WCAG 2.1 대응"
-    ]
+    ],
+    "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2410043667"
   },
   "history": [
     {
@@ -23,7 +24,8 @@
         "deployStart": null,
         "deployComplete": null
       },
-      "tasks": []
+      "tasks": [],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2571633308"
     },
     {
       "rtNumber": "v11.7.0",
@@ -32,7 +34,8 @@
         "deployStart": null,
         "deployComplete": null
       },
-      "tasks": []
+      "tasks": [],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2424637740"
     },
     {
       "rtNumber": "v11.6.0",
@@ -41,7 +44,8 @@
         "deployStart": null,
         "deployComplete": null
       },
-      "tasks": []
+      "tasks": [],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2426961937"
     },
     {
       "rtNumber": "v11.5.0",
@@ -50,7 +54,8 @@
         "deployStart": null,
         "deployComplete": null
       },
-      "tasks": []
+      "tasks": [],
+      "wikiUrl": ""
     },
     {
       "rtNumber": "v11.4.0",
@@ -59,37 +64,50 @@
         "deployStart": null,
         "deployComplete": null
       },
-      "tasks": [
-        "주차장 정보 모드",
-        "경로 재탐색 시 사용자 선택 기능(비용, 도로)→ 11.7 로 버전 수정재탐색 안내 문구 개선→ 11.7 로 버전 수정",
-        "후면 카메라 대응 (구간 단속 추가, 종료점연장, 음성안내 개선)",
-        "TBT, 차로정보의 비보호회전 표기"
-      ]
+      "tasks": [],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2424671196"
     },
     {
       "rtNumber": "v11.2.3",
       "schedule": {
-        "reviewRequest": "2026-05-26",
+        "reviewRequest": "2026-05-18",
         "deployStart": "2026-05-26",
         "deployComplete": "2026-06-02"
       },
-      "tasks": []
+      "tasks": [],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.2.2",
       "schedule": {
-        "reviewRequest": "2026-05-18",
+        "reviewRequest": "2026-05-13",
         "deployStart": null,
-        "deployComplete": null
+        "deployComplete": "2026-05-18"
       },
-      "tasks": []
+      "tasks": [
+        "CLIENTQA-9887",
+        "TMAPCLIENT-29141"
+      ],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
+    },
+    {
+      "rtNumber": "v11.2.1",
+      "schedule": {
+        "reviewRequest": "2026-05-08",
+        "deployStart": null,
+        "deployComplete": "2026-05-13"
+      },
+      "tasks": [
+        "TMAPCLIENT-23923"
+      ],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.2.0",
       "schedule": {
-        "reviewRequest": "2026-04-22",
+        "reviewRequest": "2026-04-17",
         "deployStart": null,
-        "deployComplete": "2026-05-06"
+        "deployComplete": "2026-05-07"
       },
       "tasks": [
         "사용자 참여형 제보 기능/서비스 개발",
@@ -102,30 +120,48 @@
         "주행중 > 에이닷 UI 개선",
         "비정상 케이스 발생시 공통화면을 노출한다 (aOS)iOS는 이미반영",
         "인증 이슈 발생시 표출 메세지 변경"
-      ]
+      ],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2180255678"
     },
     {
       "rtNumber": "v11.1.3",
       "schedule": {
-        "reviewRequest": "2026-05-06",
+        "reviewRequest": "2026-04-28",
         "deployStart": null,
-        "deployComplete": null
+        "deployComplete": "2026-05-01"
       },
-      "tasks": []
+      "tasks": [
+        "TMAPCLIENT-29016",
+        "CLIENTQA-9770"
+      ],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.1.2",
       "schedule": {
-        "reviewRequest": "2026-04-20",
+        "reviewRequest": "2026-04-15",
         "deployStart": null,
-        "deployComplete": null
+        "deployComplete": "2026-04-20"
       },
-      "tasks": []
+      "tasks": [
+        "TMAPCLIENT-28654"
+      ],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
+    },
+    {
+      "rtNumber": "v11.1.1",
+      "schedule": {
+        "reviewRequest": "2026-04-10",
+        "deployStart": null,
+        "deployComplete": "2026-04-13"
+      },
+      "tasks": [],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.1.0",
       "schedule": {
-        "reviewRequest": "2026-04-17",
+        "reviewRequest": "2026-03-31",
         "deployStart": "2026-04-13",
         "deployComplete": null
       },
@@ -152,22 +188,26 @@
         "현 위치/나침반 동작 사용성 및 오류 개선",
         "차로정보 V2 적용",
         "getAddress 앱스킴 내 법정동 코드 추가",
-        "계정 체계 변경 - MDC+ 추가",
-        "사용자 참여형 제보 기능/서비스 개발",
-        "Google AdManager 360 SDK 추가",
         "플레이스 홀더 내, 텍스트 말줄임",
         "미디어 버튼이 내비 홈 > 장소콜아웃 팝업의 도착 버튼을 가리는 현상",
         "‘맛집’ 검색한 상태에서 에이닷 발화 시 → 오퍼링 페이지 새롭게 오픈 되어야 하는데 이전 검색 결과가 노출 하는 현상"
-      ]
+      ],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/1552712015"
     },
     {
       "rtNumber": "v11.0.0",
       "schedule": {
-        "reviewRequest": "2026-03-31",
+        "reviewRequest": "2026-04-03",
         "deployStart": null,
-        "deployComplete": null
+        "deployComplete": "2026-04-10"
       },
-      "tasks": []
+      "tasks": [
+        "홈 화면내 지도 추가",
+        "오픈 프로필 기능 추가",
+        "안심 주행 모드 구간 단속 카메라 정보 안내",
+        "유고 정보 안내"
+      ],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v10.18.0",
@@ -176,38 +216,8 @@
         "deployStart": null,
         "deployComplete": null
       },
-      "tasks": [
-        "검색 결과 지도(웹)에서 콜아웃 > 장소상세 드래그 풀 확장 노출 시에  검색창 비노출에 대한 사전 대응",
-        "고속도로 휴게소 화장실 혼잡도 표출",
-        "AA - 클러스터 연동 지도 표출",
-        "폰트 사이즈 조정지도 주기(폰트 사이즈 옵션 추가)내비게이션 내 항목 조정(ETA 영역)",
-        "차단도로 지도내 표기(VSM 진행)",
-        "3D 카바타 적용(VSM SDK 포함)",
-        "GPS 위성신호 표기",
-        "안심센터 문자 112 기능을 위한 문자 API 추가",
-        "디바이스 알림 설정(단말 설정) ON/OFF 데이터 수집",
-        "iOS - 필수 약관 재동의 팝업 미노출 개선",
-        "T ID 2.0 - SDK 업그레이드",
-        "Android 로그아웃 이슈 개선",
-        "AOS - 음악play > 다음 곡 재생 시마다 컨트롤러UI 표출되는 현상 개선",
-        "AOS - 음악play > 노래 재생 중 종료 현상 개선네트워크 유실 시 음악 재생 중인 경우, 재생상태 유지되도록 개선",
-        "AOS - 음성인식/보이스크롬 동작 불가 현상 분석/테스트",
-        "AOS - 에이닷으로 미디어 재생 시 전화 수신 시 벨소리 재생되지 않는 이슈 (OS 16 한정)",
-        "홈 iOS 리뷰 모듈 간헐적 미노출 현상 개선",
-        "10.16에 적용한 버티컬 A/B 테스트 코드 클렌징",
-        "야간모드 미사용 설정 값 이슈",
-        "모멘티 SDK 업데이트 - 보안 취약점 해결",
-        "도보 경로 상세 만보기 배너 추가",
-        "버티컬 영역 인디케이터 추가",
-        "메인홈 하단 배너 클릭 불가 이슈",
-        "재로그인 시 IOS 인트로 광고 미노출",
-        "회원정보 > 휴대폰번호 입력 시 자릿수 체크(유효성 체크)",
-        "공항철도의 직통 열차 정보 제공 (급행 → 직통 표시 변경 건)",
-        "도보경로 ‘재탐색’ 기능 실행시시 회전모드 재 진입",
-        "스플래시 동영상형 광고 최초 노출 시 이미지 소재가 먼저 노출되는 이슈",
-        "DSP 광고 로딩 늦는 경우, 프로그레스바 노출",
-        "경로요약 PIN 광고 - 사내광고 클릭 동작 이슈"
-      ]
+      "tasks": [],
+      "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2205423352"
     }
   ]
 }
