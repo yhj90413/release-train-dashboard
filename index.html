@@ -243,6 +243,66 @@
     .wiki-btn:hover { background: #FFFBEB; border-color: #D97706; color: #D97706; }
     .wiki-btn-disabled { opacity: 0.35; pointer-events: none; }
 
+    /* ── Stage Progress Panels ───────────────────── */
+    .stages-section {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px;
+    }
+    .stages-panel, .review-panel {
+      background: var(--bg); border-radius: 10px; padding: 14px;
+    }
+    .panel-title {
+      font-size: 11px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px;
+    }
+    .stages-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .stages-tbl th {
+      text-align: left; padding: 5px 6px; font-size: 11px; font-weight: 600;
+      color: var(--text-muted); border-bottom: 2px solid var(--border);
+    }
+    .stages-tbl td { padding: 7px 6px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .stages-tbl tr:last-child td { border-bottom: none; }
+    .stage-past td:first-child { color: var(--text-muted); }
+    .stage-current td:first-child { color: var(--primary); font-weight: 700; }
+    .dday-pill {
+      display: inline-block; padding: 2px 8px; border-radius: 12px;
+      font-size: 11px; font-weight: 700; white-space: nowrap;
+    }
+    .dp-past   { background: #F1F5F9; color: var(--text-muted); }
+    .dp-today  { background: #FEF3C7; color: #92400E; }
+    .dp-near   { background: #FEE2E2; color: #991B1B; }
+    .dp-future { background: var(--primary-light); color: var(--primary); }
+    .panel-links { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .panel-link-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 6px 12px; font-size: 12px; font-weight: 600;
+      color: var(--text-muted); text-decoration: none; cursor: pointer;
+      background: var(--card); transition: all .12s;
+    }
+    .panel-link-btn:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+    .panel-link-btn.disabled { opacity: 0.35; pointer-events: none; }
+    .rv-item { padding: 9px 0; border-bottom: 1px solid var(--border); }
+    .rv-item:last-child { border-bottom: none; }
+    .rv-top { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; flex-wrap: wrap; }
+    .rv-ver-label { font-weight: 700; font-size: 13px; }
+    .rv-date { font-size: 12px; color: var(--text-muted); }
+    .rv-stores { display: flex; gap: 5px; flex-wrap: wrap; }
+    .rv-store-pill {
+      display: inline-flex; align-items: center; gap: 3px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 7px; padding: 3px 7px; font-size: 11px;
+    }
+    /* ── History Notes ───────────────────────────── */
+    .notes-input {
+      width: 100%; min-width: 90px; border: 1px solid transparent; border-radius: 6px;
+      padding: 5px 8px; font-size: 12px; color: var(--text);
+      background: transparent; outline: none; font-family: inherit;
+      transition: border-color .12s, background .12s;
+    }
+    .notes-input:hover { border-color: var(--border); background: #fff; }
+    .notes-input:focus { border-color: var(--primary); background: #fff; }
+    @media (max-width: 760px) { .stages-section { grid-template-columns: 1fr; } }
+
     /* ── Modal ───────────────────────────────────── */
     .overlay {
       display: none; position: fixed; inset: 0;
@@ -374,6 +434,22 @@
       </div>
     </div>
 
+    <!-- ── 진행단계 / 심사버전 현황 ── -->
+    <div class="stages-section">
+      <div class="stages-panel">
+        <div class="panel-title">버전 진행단계</div>
+        <table class="stages-tbl">
+          <thead><tr><th>단계</th><th>종료일</th><th>D-day</th></tr></thead>
+          <tbody id="stagesBody"></tbody>
+        </table>
+        <div class="panel-links" id="panelLinks"></div>
+      </div>
+      <div class="review-panel">
+        <div class="panel-title">심사요청 버전 현황</div>
+        <div id="reviewVersions"></div>
+      </div>
+    </div>
+
     <div class="stores-grid" id="storesGrid"></div>
 
     <div class="tasks-box">
@@ -397,6 +473,7 @@
           <th>배포완료</th>
           <th>배포과제</th>
           <th>과제 문서</th>
+          <th>비고</th>
         </tr>
       </thead>
       <tbody id="histBody"></tbody>
@@ -528,6 +605,40 @@
         </div>
       </div>
 
+      <div class="fsec">
+        <div class="fsec-title">버전 진행단계</div>
+        <div class="fgroup" style="margin-bottom:12px">
+          <label class="flabel">Jira QA 대시보드 URL</label>
+          <input class="finput" id="f-qa-url" placeholder="https://tmobi.atlassian.net/...">
+        </div>
+        <div class="fg2">
+          <div class="fgroup">
+            <label class="flabel">① 과제취합 종료일</label>
+            <input class="finput" type="date" id="f-stage-0">
+          </div>
+          <div class="fgroup">
+            <label class="flabel">② 상위기획리뷰 종료일</label>
+            <input class="finput" type="date" id="f-stage-1">
+          </div>
+          <div class="fgroup">
+            <label class="flabel">③ 과제 우선순위 확정 종료일</label>
+            <input class="finput" type="date" id="f-stage-2">
+          </div>
+          <div class="fgroup">
+            <label class="flabel">④ 상세기획/개발 종료일</label>
+            <input class="finput" type="date" id="f-stage-3">
+          </div>
+          <div class="fgroup">
+            <label class="flabel">⑤ QA 종료일</label>
+            <input class="finput" type="date" id="f-stage-4">
+          </div>
+          <div class="fgroup">
+            <label class="flabel">⑥ 심사요청 예정일</label>
+            <input class="finput" type="date" id="f-stage-5">
+          </div>
+        </div>
+      </div>
+
       <div class="modal-foot">
         <button class="btn btn-ghost" onclick="closeModal()">취소</button>
         <button class="btn btn-primary" onclick="saveRT()">저장하기</button>
@@ -544,6 +655,11 @@ const STORES = [
   { key: 'appstore',   name: 'App Store',    icon: '🍎', color: '#007AFF', track: '#DBEAFE' },
   { key: 'googleplay', name: 'Google Play',  icon: '🤖', color: '#34A853', track: '#DCFCE7' },
   { key: 'onestore',   name: 'One Store',    icon: '🟦', color: '#E8230A', track: '#FEE2E2' }
+];
+
+const STAGE_NAMES = [
+  '과제취합', '상위기획리뷰', '과제 우선순위 확정',
+  '상세기획/개발', 'QA', '심사요청'
 ];
 
 const STATUS = {
@@ -654,6 +770,10 @@ function render() {
   // Store cards
   renderStores();
 
+  // Stages + review panel
+  renderStages();
+  renderReviewVersions();
+
   // Tasks
   const tasks = manual.tasks || rt.tasks || [];
   const chips = document.getElementById('taskChips');
@@ -720,6 +840,92 @@ function renderStores() {
 }
 
 // ────────────────────────────────────────────────────────
+// RENDER: STAGE PROGRESS
+// ────────────────────────────────────────────────────────
+function renderStages() {
+  const tbody     = document.getElementById('stagesBody');
+  const panelLinks = document.getElementById('panelLinks');
+  const today     = new Date(); today.setHours(0,0,0,0);
+  const stages    = manual.stages || [];
+
+  tbody.innerHTML = STAGE_NAMES.map((name, i) => {
+    const endDate = stages[i]?.endDate || '';
+    const d = toD(endDate);
+    let ddayText = '-', ddayCls = 'dp-future', rowCls = '';
+    if (d) {
+      const diff = Math.round((d - today) / 86400000);
+      if      (diff < 0)  { ddayText = `D+${Math.abs(diff)}`; ddayCls = 'dp-past';   rowCls = 'stage-past'; }
+      else if (diff === 0) { ddayText = 'D-Day';              ddayCls = 'dp-today';  rowCls = 'stage-current'; }
+      else if (diff <= 7)  { ddayText = `D-${diff}`;          ddayCls = 'dp-near';   rowCls = 'stage-current'; }
+      else                 { ddayText = `D-${diff}`;          ddayCls = 'dp-future'; }
+    }
+    return `<tr class="${rowCls}">
+      <td>${name}</td>
+      <td style="color:var(--text-muted);font-size:12px">${endDate ? fmtFull(endDate) : '-'}</td>
+      <td><span class="dday-pill ${ddayCls}">${ddayText}</span></td>
+    </tr>`;
+  }).join('');
+
+  const wikiUrl = remote.currentRT?.wikiUrl || '';
+  const qaUrl   = manual.qaUrl || '';
+  panelLinks.innerHTML =
+    (wikiUrl ? `<a href="${wikiUrl}" target="_blank" class="panel-link-btn">📄 과제리스트</a>`
+              : `<span class="panel-link-btn disabled">📄 과제리스트</span>`) +
+    (qaUrl   ? `<a href="${qaUrl}"   target="_blank" class="panel-link-btn">🔗 QA 대시보드</a>`
+              : `<span class="panel-link-btn disabled">🔗 QA 대시보드</span>`);
+}
+
+// ────────────────────────────────────────────────────────
+// RENDER: REVIEW VERSIONS
+// ────────────────────────────────────────────────────────
+function renderReviewVersions() {
+  const container = document.getElementById('reviewVersions');
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  const candidates = [remote.currentRT, ...(remote.history || [])].filter(rt => {
+    if (!rt?.schedule?.reviewRequest) return false;
+    const rd = toD(rt.schedule.reviewRequest);
+    if (!rd || rd > today) return false;
+    const cd = toD(rt.schedule.deployComplete);
+    if (cd && Math.round((today - cd) / 86400000) > 30) return false;
+    return true;
+  });
+
+  if (!candidates.length) {
+    container.innerHTML = '<div style="color:var(--text-muted);font-size:13px;padding:8px 0">심사 진행 중인 버전이 없습니다</div>';
+    return;
+  }
+
+  container.innerHTML = candidates.map(rt => {
+    const s = rt.schedule;
+    let label, cls;
+    if (s.deployComplete)   { label = '배포완료'; cls = 'sb-deploy_complete'; }
+    else if (s.deployStart) { label = '배포중';   cls = 'sb-deploying'; }
+    else                    { label = '심사중';   cls = 'sb-review_requested'; }
+
+    // 현재 RT이면 스토어별 상태 표시
+    let storePills = '';
+    if (rt === remote.currentRT && manual.stores) {
+      storePills = `<div class="rv-stores">${STORES.map(sc => {
+        const st = STATUS[manual.stores[sc.key]?.status] || STATUS.review_requested;
+        return `<span class="rv-store-pill">${sc.icon} ${sc.name}
+          <span class="status-badge ${st.cls}" style="font-size:10px;padding:1px 5px">${st.label}</span>
+        </span>`;
+      }).join('')}</div>`;
+    }
+
+    return `<div class="rv-item">
+      <div class="rv-top">
+        <span class="rv-ver-label">${rt.rtNumber}</span>
+        <span class="status-badge ${cls}">${label}</span>
+        <span class="rv-date">심사요청 ${fmtFull(s.reviewRequest)}</span>
+      </div>
+      ${storePills}
+    </div>`;
+  }).join('');
+}
+
+// ────────────────────────────────────────────────────────
 // RENDER: HISTORY
 // ────────────────────────────────────────────────────────
 function renderHistory() {
@@ -727,16 +933,21 @@ function renderHistory() {
   tbody.innerHTML = '';
 
   if (!remote.history?.length) {
-    tbody.innerHTML = `<tr><td colspan="6" class="empty">히스토리 데이터가 없습니다</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" class="empty">히스토리 데이터가 없습니다</td></tr>`;
     return;
   }
 
   remote.history.forEach((rt, i) => {
     const eid = `exp${i}`;
 
-    const wikiLink = rt.wikiUrl
+    // 과제 0건이면 위키 링크 비활성화
+    const hasWiki = rt.wikiUrl && rt.tasks.length > 0;
+    const wikiLink = hasWiki
       ? `<a href="${rt.wikiUrl}" target="_blank" class="wiki-btn">📄 위키</a>`
       : `<span class="wiki-btn wiki-btn-disabled">📄 위키</span>`;
+
+    // 비고 (localStorage에서 불러오기)
+    const note = escHtml((manual.notes || {})[rt.rtNumber] || '');
 
     const tr = document.createElement('tr');
     tr.className = 'data-row';
@@ -747,13 +958,15 @@ function renderHistory() {
       <td class="dt">${fmtFull(rt.schedule.deployComplete)}</td>
       <td><button class="toggle-btn" onclick="toggleExp('${eid}',this)">과제 ${rt.tasks.length}건 보기 ▾</button></td>
       <td>${wikiLink}</td>
+      <td><input type="text" class="notes-input" value="${note}" placeholder="메모"
+            oninput="saveNote('${rt.rtNumber.replace(/'/g,"\\'")}', this.value)"></td>
     `;
     tbody.appendChild(tr);
 
     const exp = document.createElement('tr');
     exp.className = 'exp-row';
     exp.innerHTML = `
-      <td colspan="6">
+      <td colspan="7">
         <div class="exp-inner" id="${eid}">
           ${rt.tasks.map(chipHtml).join('')}
         </div>
@@ -769,6 +982,18 @@ function toggleExp(id, btn) {
   btn.textContent = open
     ? btn.textContent.replace('보기 ▾', '닫기 ▴')
     : btn.textContent.replace('닫기 ▴', '보기 ▾');
+}
+
+// 비고 저장
+function saveNote(rtNumber, value) {
+  if (!manual.notes) manual.notes = {};
+  manual.notes[rtNumber] = value;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(manual)); } catch(_) {}
+}
+
+// HTML 이스케이프
+function escHtml(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // ────────────────────────────────────────────────────────
@@ -789,8 +1014,16 @@ function openModal() {
     document.getElementById(`f-${sc.key}-status`).value = m.status || 'review_requested';
   });
 
+  // tasks: object 배열이면 name만 추출 (버그 픽스)
   const tasks = manual.tasks || rt.tasks || [];
-  document.getElementById('f-tasks').value = tasks.join('\n');
+  document.getElementById('f-tasks').value =
+    tasks.map(t => (typeof t === 'string') ? t : t.name).join('\n');
+
+  // 진행단계 날짜
+  STAGE_NAMES.forEach((_, i) => {
+    document.getElementById(`f-stage-${i}`).value = manual.stages?.[i]?.endDate || '';
+  });
+  document.getElementById('f-qa-url').value = manual.qaUrl || '';
 
   document.getElementById('overlay').classList.add('open');
 }
@@ -817,6 +1050,13 @@ function saveRT() {
 
   const raw = document.getElementById('f-tasks').value;
   manual.tasks = raw.split('\n').map(t => t.trim()).filter(Boolean);
+
+  // 진행단계 저장
+  manual.stages = STAGE_NAMES.map((name, i) => ({
+    name,
+    endDate: document.getElementById(`f-stage-${i}`).value
+  }));
+  manual.qaUrl = document.getElementById('f-qa-url').value.trim();
 
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(manual)); } catch(_) {}
 

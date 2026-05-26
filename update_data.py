@@ -193,6 +193,7 @@ def get_rt_pages_by_year(cfg: dict, year: int) -> list[dict]:
                 # ── 과제 표 (최종과제 = '확정' 상태) ──────────────────────
                 elif any(k in " ".join(headers) for k in ["상세 내용", "Product"]):
                     detail_idx = next((i for i, h in enumerate(headers) if "상세 내용" in h), 2)
+                    ticket_idx = next((i for i, h in enumerate(headers) if "티켓" in h), None)
                     status_idx = len(headers) - 1
 
                     for row in rows[1:]:
@@ -208,7 +209,16 @@ def get_rt_pages_by_year(cfg: dict, year: int) -> list[dict]:
                             continue
                         name = cells[detail_idx].get_text(strip=True)
                         if name and len(name) > 2:
-                            tasks.append({"name": name, "ticketUrl": ""})
+                            # 티켓 컬럼에서 Jira 티켓 URL 1:1 매핑
+                            ticket_url = ""
+                            if ticket_idx is not None and len(cells) > ticket_idx:
+                                jira_tag = cells[ticket_idx].find(attrs={"ac:name": "jira"})
+                                if jira_tag:
+                                    key_tag = jira_tag.find(attrs={"ac:name": "key"})
+                                    if key_tag:
+                                        key = key_tag.get_text(strip=True)
+                                        ticket_url = f"{CONF_BASE}/browse/{key}"
+                            tasks.append({"name": name, "ticketUrl": ticket_url})
 
         result.append({
             "version":  version,
