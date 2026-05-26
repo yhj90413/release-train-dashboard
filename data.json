@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-26T23:44:15",
+  "lastUpdated": "2026-05-27T00:13:06",
   "currentRT": {
     "rtNumber": "v11.3.0",
     "schedule": {
@@ -7,6 +7,7 @@
       "deployStart": null,
       "deployComplete": null
     },
+    "stages": [],
     "tasks": [
       "지도 렌더링 성능 개선",
       "실시간 교통정보 정확도 향상",
@@ -24,6 +25,7 @@
         "deployStart": null,
         "deployComplete": null
       },
+      "stages": [],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2571633308"
     },
@@ -34,6 +36,7 @@
         "deployStart": null,
         "deployComplete": null
       },
+      "stages": [],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2424637740"
     },
@@ -44,6 +47,7 @@
         "deployStart": null,
         "deployComplete": null
       },
+      "stages": [],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2426961937"
     },
@@ -54,6 +58,7 @@
         "deployStart": null,
         "deployComplete": null
       },
+      "stages": [],
       "tasks": [],
       "wikiUrl": ""
     },
@@ -64,6 +69,7 @@
         "deployStart": null,
         "deployComplete": null
       },
+      "stages": [],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2424671196"
     },
@@ -74,6 +80,7 @@
         "deployStart": "2026-05-26",
         "deployComplete": "2026-06-02"
       },
+      "stages": [],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
@@ -84,6 +91,7 @@
         "deployStart": null,
         "deployComplete": "2026-05-18"
       },
+      "stages": [],
       "tasks": [
         {
           "name": "CLIENTQA-9887",
@@ -103,6 +111,7 @@
         "deployStart": null,
         "deployComplete": "2026-05-13"
       },
+      "stages": [],
       "tasks": [
         {
           "name": "TMAPCLIENT-23923",
@@ -118,6 +127,24 @@
         "deployStart": null,
         "deployComplete": "2026-05-07"
       },
+      "stages": [
+        {
+          "name": "개발",
+          "date": "2026-04-03"
+        },
+        {
+          "name": "Sanity Test",
+          "date": "2026-04-03"
+        },
+        {
+          "name": "QA",
+          "date": "2026-04-06"
+        },
+        {
+          "name": "심사 요청",
+          "date": "2026-04-17"
+        }
+      ],
       "tasks": [
         {
           "name": "사용자 참여형 제보 기능/서비스 개발",
@@ -169,6 +196,7 @@
         "deployStart": null,
         "deployComplete": "2026-05-01"
       },
+      "stages": [],
       "tasks": [
         {
           "name": "TMAPCLIENT-29016",
@@ -188,6 +216,7 @@
         "deployStart": null,
         "deployComplete": "2026-04-20"
       },
+      "stages": [],
       "tasks": [
         {
           "name": "TMAPCLIENT-28654",
@@ -203,6 +232,7 @@
         "deployStart": null,
         "deployComplete": "2026-04-13"
       },
+      "stages": [],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
@@ -213,6 +243,28 @@
         "deployStart": "2026-04-13",
         "deployComplete": null
       },
+      "stages": [
+        {
+          "name": "개발 검토",
+          "date": "2026-02-10"
+        },
+        {
+          "name": "개발",
+          "date": "2026-03-06"
+        },
+        {
+          "name": "QA",
+          "date": "2026-03-31"
+        },
+        {
+          "name": "심사 요청",
+          "date": "2026-03-31"
+        },
+        {
+          "name": "릴리즈",
+          "date": "2026-04-13"
+        }
+      ],
       "tasks": [
         {
           "name": "홈 화면 내 지도 추가",
@@ -324,6 +376,7 @@
         "deployStart": null,
         "deployComplete": "2026-04-10"
       },
+      "stages": [],
       "tasks": [
         {
           "name": "홈 화면내 지도 추가",
@@ -351,6 +404,7 @@
         "deployStart": null,
         "deployComplete": null
       },
+      "stages": [],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2205423352"
     }
