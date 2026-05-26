@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Release Train Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
       --primary:       #2563EB;
@@ -442,27 +441,6 @@
       <span class="pill" id="curLabel">-</span>
     </div>
 
-    <div class="timeline">
-      <div class="tl-step" id="ts0">
-        <div class="tl-icon">📋</div>
-        <div class="tl-label">심사 요청</div>
-        <div class="tl-date" id="td0">-</div>
-        <div class="tl-dday" id="dd0"></div>
-      </div>
-      <div class="tl-step" id="ts1">
-        <div class="tl-icon">🚀</div>
-        <div class="tl-label">배포 시작</div>
-        <div class="tl-date" id="td1">-</div>
-        <div class="tl-dday" id="dd1"></div>
-      </div>
-      <div class="tl-step" id="ts2">
-        <div class="tl-icon">✅</div>
-        <div class="tl-label">배포 완료</div>
-        <div class="tl-date" id="td2">-</div>
-        <div class="tl-dday" id="dd2"></div>
-      </div>
-    </div>
-
     <!-- ── 진행단계 / 심사버전 현황 ── -->
     <div class="stages-section">
       <div class="stages-panel">
@@ -478,8 +456,6 @@
         <div id="reviewVersions"></div>
       </div>
     </div>
-
-    <div class="stores-grid" id="storesGrid"></div>
 
     <div class="tasks-box">
       <div class="tasks-title">배포 과제</div>
@@ -677,7 +653,6 @@ const STATUS = {
 // ────────────────────────────────────────────────────────
 let remote = null;   // from data.json
 let manual = {};     // from localStorage
-let charts = {};
 
 const STORAGE_KEY = 'rt_manual_v1';
 
@@ -762,23 +737,6 @@ function render() {
   // RT label
   document.getElementById('curLabel').textContent = manual.rtNumber || rt.rtNumber;
 
-  // Timeline — manual.schedule 우선 적용 (배포시작일 등 직접 입력 반영)
-  const ms = manual.schedule || {};
-  const sched = {
-    reviewRequest:  ms.reviewRequest  || rt.schedule.reviewRequest,
-    deployStart:    ms.deployStart    || rt.schedule.deployStart,
-    deployComplete: ms.deployComplete || rt.schedule.deployComplete,
-  };
-  const dates = [sched.reviewRequest, sched.deployStart, sched.deployComplete];
-  dates.forEach((d, i) => {
-    document.getElementById(`ts${i}`).className = `tl-step ${stepCls(d)}`;
-    document.getElementById(`td${i}`).textContent = fmtShort(d);
-    document.getElementById(`dd${i}`).textContent = dday(d);
-  });
-
-  // Store cards
-  renderStores();
-
   // Stages + review panel
   renderStages();
   renderReviewVersions();
@@ -795,58 +753,6 @@ function render() {
   document.getElementById('histYear').textContent = new Date().getFullYear();
 }
 
-function renderStores() {
-  Object.values(charts).forEach(c => c.destroy());
-  charts = {};
-
-  const grid = document.getElementById('storesGrid');
-  grid.innerHTML = '';
-
-  STORES.forEach(sc => {
-    const m   = manual.stores?.[sc.key] || {};
-    const st  = m.status || 'review_requested';
-    const pct = st === 'deploy_complete' ? 100 : Math.min(100, Math.max(0, parseInt(m.rate) || 0));
-    const ver = m.ver || '(미입력)';
-    const si  = STATUS[st] || STATUS.review_requested;
-
-    const div = document.createElement('div');
-    div.className = 'store-card';
-    div.innerHTML = `
-      <div class="sc-header">
-        <span class="sc-icon">${sc.icon}</span>
-        <span class="sc-name">${sc.name}</span>
-      </div>
-      <div class="donut-wrap">
-        <canvas id="c-${sc.key}" width="108" height="108"></canvas>
-        <div class="donut-center">
-          <span class="donut-pct">${pct}%</span>
-          <span class="donut-label">배포율</span>
-        </div>
-      </div>
-      <div class="sbadge ${si.cls}">${si.label}</div><br>
-      <div class="sc-version">${ver}</div>
-    `;
-    grid.appendChild(div);
-
-    const ctx = document.getElementById(`c-${sc.key}`).getContext('2d');
-    charts[sc.key] = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        datasets: [{
-          data: [pct, 100 - pct],
-          backgroundColor: [sc.color, sc.track],
-          borderWidth: 0,
-          hoverOffset: 0
-        }]
-      },
-      options: {
-        cutout: '72%', responsive: false,
-        plugins: { legend: { display: false }, tooltip: { enabled: false } },
-        animation: { duration: 800, easing: 'easeInOutCubic' }
-      }
-    });
-  });
-}
 
 // ────────────────────────────────────────────────────────
 // RENDER: STAGE PROGRESS (Confluence 일정 기반 다중 버전)
