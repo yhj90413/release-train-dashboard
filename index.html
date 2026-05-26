@@ -441,8 +441,12 @@
       <span class="pill" id="curLabel">-</span>
     </div>
 
-    <!-- ── 진행단계 / 심사버전 현황 ── -->
+    <!-- ── 심사현황(좌) / 진행단계(우) ── -->
     <div class="stages-section">
+      <div class="review-panel">
+        <div class="panel-title">현재 버전 심사현황</div>
+        <div id="reviewVersions"></div>
+      </div>
       <div class="stages-panel">
         <div class="panel-title">버전 진행단계</div>
         <table class="stages-tbl">
@@ -451,15 +455,6 @@
         </table>
         <div class="panel-links" id="panelLinks"></div>
       </div>
-      <div class="review-panel">
-        <div class="panel-title">현재 버전 심사현황</div>
-        <div id="reviewVersions"></div>
-      </div>
-    </div>
-
-    <div class="tasks-box">
-      <div class="tasks-title">배포 과제</div>
-      <div class="chips" id="taskChips"></div>
     </div>
   </div>
 
@@ -737,16 +732,9 @@ function render() {
   // RT label
   document.getElementById('curLabel').textContent = manual.rtNumber || rt.rtNumber;
 
-  // Stages + review panel
+  // Stages + review panel (배포과제 포함)
   renderStages();
   renderReviewVersions();
-
-  // Tasks
-  const tasks = manual.tasks || rt.tasks || [];
-  const chips = document.getElementById('taskChips');
-  chips.innerHTML = tasks.length
-    ? tasks.map(chipHtml).join('')
-    : '<span style="color:var(--text-muted)">등록된 과제가 없습니다</span>';
 
   // History
   renderHistory();
@@ -880,6 +868,12 @@ function renderReviewVersions() {
     </div>`;
   }).join('');
 
+  // 배포 과제
+  const tasks = manual.tasks || rt.tasks || [];
+  const taskHtml = tasks.length
+    ? `<div class="chips" style="margin-top:6px">${tasks.map(chipHtml).join('')}</div>`
+    : `<span style="color:var(--text-muted);font-size:12px">등록된 과제가 없습니다</span>`;
+
   container.innerHTML = `
     <div class="rv-header">
       <span class="rv-ver-label">${manual.rtNumber || rt.rtNumber}</span>
@@ -888,6 +882,8 @@ function renderReviewVersions() {
     <div class="rv-tl">${timeline}</div>
     <div class="rv-stores-title">스토어별 배포현황</div>
     ${storeCards}
+    <div class="rv-stores-title" style="margin-top:14px">배포 과제</div>
+    ${taskHtml}
   `;
 }
 
