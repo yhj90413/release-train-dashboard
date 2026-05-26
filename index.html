@@ -232,6 +232,15 @@
     }
     .toggle-btn:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
 
+    .wiki-btn {
+      display: inline-flex; align-items: center; gap: 3px;
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 4px 9px; font-size: 12px; color: var(--text-muted);
+      text-decoration: none; white-space: nowrap; transition: all .12s;
+    }
+    .wiki-btn:hover { background: #FFFBEB; border-color: #D97706; color: #D97706; }
+    .wiki-btn-disabled { opacity: 0.35; pointer-events: none; }
+
     /* ── Modal ───────────────────────────────────── */
     .overlay {
       display: none; position: fixed; inset: 0;
@@ -385,6 +394,7 @@
           <th>배포시작</th>
           <th>배포완료</th>
           <th>배포과제</th>
+          <th>과제 문서</th>
         </tr>
       </thead>
       <tbody id="histBody"></tbody>
@@ -707,12 +717,16 @@ function renderHistory() {
   tbody.innerHTML = '';
 
   if (!remote.history?.length) {
-    tbody.innerHTML = `<tr><td colspan="5" class="empty">히스토리 데이터가 없습니다</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="empty">히스토리 데이터가 없습니다</td></tr>`;
     return;
   }
 
   remote.history.forEach((rt, i) => {
     const eid = `exp${i}`;
+
+    const wikiLink = rt.wikiUrl
+      ? `<a href="${rt.wikiUrl}" target="_blank" class="wiki-btn">📄 위키</a>`
+      : `<span class="wiki-btn wiki-btn-disabled">📄 위키</span>`;
 
     const tr = document.createElement('tr');
     tr.className = 'data-row';
@@ -722,13 +736,14 @@ function renderHistory() {
       <td class="dt">${fmtFull(rt.schedule.deployStart)}</td>
       <td class="dt">${fmtFull(rt.schedule.deployComplete)}</td>
       <td><button class="toggle-btn" onclick="toggleExp('${eid}',this)">과제 ${rt.tasks.length}건 보기 ▾</button></td>
+      <td>${wikiLink}</td>
     `;
     tbody.appendChild(tr);
 
     const exp = document.createElement('tr');
     exp.className = 'exp-row';
     exp.innerHTML = `
-      <td colspan="5">
+      <td colspan="6">
         <div class="exp-inner" id="${eid}">
           ${rt.tasks.map(t => `<span class="chip">${t}</span>`).join('')}
         </div>
