@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-26T23:18:57",
+  "lastUpdated": "2026-05-26T23:26:49",
   "currentRT": {
     "rtNumber": "v11.3.0",
     "schedule": {
@@ -85,8 +85,14 @@
         "deployComplete": "2026-05-18"
       },
       "tasks": [
-        "CLIENTQA-9887",
-        "TMAPCLIENT-29141"
+        {
+          "name": "CLIENTQA-9887",
+          "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9887"
+        },
+        {
+          "name": "TMAPCLIENT-29141",
+          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29141"
+        }
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
@@ -98,7 +104,10 @@
         "deployComplete": "2026-05-13"
       },
       "tasks": [
-        "TMAPCLIENT-23923"
+        {
+          "name": "TMAPCLIENT-23923",
+          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-23923"
+        }
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
@@ -110,16 +119,46 @@
         "deployComplete": "2026-05-07"
       },
       "tasks": [
-        "사용자 참여형 제보 기능/서비스 개발",
-        "Google AdManager 360 SDK 추가",
-        "[이동로그] 유입 지점 개발(주행완료팝업 > 이동로그)",
-        "티맵에 로플랫 SDK 탑재",
-        "분기 후 합류되는 도로정보 안내",
-        "설정메뉴에 누락된 로그 추가 및 로그 통일 (AOS, iOS)",
-        "로그 추가 및 VOC 검토무음 팝업 노출 시 로그 추가타임 아웃 시 로그 추가ERROR_LISTENING_TIMEOUT마이크 열렸는지 로그 삽입",
-        "주행중 > 에이닷 UI 개선",
-        "비정상 케이스 발생시 공통화면을 노출한다 (aOS)iOS는 이미반영",
-        "인증 이슈 발생시 표출 메세지 변경"
+        {
+          "name": "사용자 참여형 제보 기능/서비스 개발",
+          "ticketUrl": ""
+        },
+        {
+          "name": "Google AdManager 360 SDK 추가",
+          "ticketUrl": ""
+        },
+        {
+          "name": "[이동로그] 유입 지점 개발(주행완료팝업 > 이동로그)",
+          "ticketUrl": ""
+        },
+        {
+          "name": "티맵에 로플랫 SDK 탑재",
+          "ticketUrl": ""
+        },
+        {
+          "name": "분기 후 합류되는 도로정보 안내",
+          "ticketUrl": ""
+        },
+        {
+          "name": "설정메뉴에 누락된 로그 추가 및 로그 통일 (AOS, iOS)",
+          "ticketUrl": ""
+        },
+        {
+          "name": "로그 추가 및 VOC 검토무음 팝업 노출 시 로그 추가타임 아웃 시 로그 추가ERROR_LISTENING_TIMEOUT마이크 열렸는지 로그 삽입",
+          "ticketUrl": ""
+        },
+        {
+          "name": "주행중 > 에이닷 UI 개선",
+          "ticketUrl": ""
+        },
+        {
+          "name": "비정상 케이스 발생시 공통화면을 노출한다 (aOS)iOS는 이미반영",
+          "ticketUrl": ""
+        },
+        {
+          "name": "인증 이슈 발생시 표출 메세지 변경",
+          "ticketUrl": ""
+        }
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2180255678"
     },
@@ -131,8 +170,14 @@
         "deployComplete": "2026-05-01"
       },
       "tasks": [
-        "TMAPCLIENT-29016",
-        "CLIENTQA-9770"
+        {
+          "name": "TMAPCLIENT-29016",
+          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29016"
+        },
+        {
+          "name": "CLIENTQA-9770",
+          "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9770"
+        }
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
@@ -144,7 +189,10 @@
         "deployComplete": "2026-04-20"
       },
       "tasks": [
-        "TMAPCLIENT-28654"
+        {
+          "name": "TMAPCLIENT-28654",
+          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28654"
+        }
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
@@ -166,31 +214,106 @@
         "deployComplete": null
       },
       "tasks": [
-        "홈 화면 내 지도 추가",
-        "티맵에 로플랫 SDK 탑재",
-        "오픈 프로필 런칭",
-        "[리뷰 플랫폼] 비디오 리뷰 제공",
-        "웹 지도 콜아웃 공통화 기반 앱 지면 상용 적용",
-        "콜아웃 노출 시의 하단 GNB hidden 처리 대응",
-        "AA/CP 연결시,Mobile의 타 기능 메뉴 활용가능하도록 구조 변경",
-        "경로요약 화면 개선경로 개선/경로상 유고정보 제공(사고/공사 정보)",
-        "안심운전모드에서 '구간단속(잔여거리/시간)'표기",
-        "고의사고 다발 구간 SDI 추가",
-        "AA/CP GPS 수신불가 안내",
-        "롱프레스로 저장한 즐겨찾기 장소명/메모명 1순위 검색이 되지 않는 현상 수정(x,y 좌표로 리스트 전달 시 클라 수정 이슈)",
-        "음성인식 모델 개선",
-        "iOS Firebase 로그 수집",
-        "통화중 위젯의 음성 버튼 선택시 에이닷 풀페이지 노출되는 현상 개선",
-        "티맵으로 전화받기 ON > 전화 앱 클릭 시에도 10초간 FG가 유지되는 현상10초에서 3초로 변경하여 개선",
-        "[주행중 어디갈까] 노출 POI 제한선 상향",
-        "저장 그룹 및 공유하기 기능 개선",
-        "저장 롱프레스 개선",
-        "현 위치/나침반 동작 사용성 및 오류 개선",
-        "차로정보 V2 적용",
-        "getAddress 앱스킴 내 법정동 코드 추가",
-        "플레이스 홀더 내, 텍스트 말줄임",
-        "미디어 버튼이 내비 홈 > 장소콜아웃 팝업의 도착 버튼을 가리는 현상",
-        "‘맛집’ 검색한 상태에서 에이닷 발화 시 → 오퍼링 페이지 새롭게 오픈 되어야 하는데 이전 검색 결과가 노출 하는 현상"
+        {
+          "name": "홈 화면 내 지도 추가",
+          "ticketUrl": ""
+        },
+        {
+          "name": "티맵에 로플랫 SDK 탑재",
+          "ticketUrl": ""
+        },
+        {
+          "name": "오픈 프로필 런칭",
+          "ticketUrl": ""
+        },
+        {
+          "name": "[리뷰 플랫폼] 비디오 리뷰 제공",
+          "ticketUrl": ""
+        },
+        {
+          "name": "웹 지도 콜아웃 공통화 기반 앱 지면 상용 적용",
+          "ticketUrl": ""
+        },
+        {
+          "name": "콜아웃 노출 시의 하단 GNB hidden 처리 대응",
+          "ticketUrl": ""
+        },
+        {
+          "name": "AA/CP 연결시,Mobile의 타 기능 메뉴 활용가능하도록 구조 변경",
+          "ticketUrl": ""
+        },
+        {
+          "name": "경로요약 화면 개선경로 개선/경로상 유고정보 제공(사고/공사 정보)",
+          "ticketUrl": ""
+        },
+        {
+          "name": "안심운전모드에서 '구간단속(잔여거리/시간)'표기",
+          "ticketUrl": ""
+        },
+        {
+          "name": "고의사고 다발 구간 SDI 추가",
+          "ticketUrl": ""
+        },
+        {
+          "name": "AA/CP GPS 수신불가 안내",
+          "ticketUrl": ""
+        },
+        {
+          "name": "롱프레스로 저장한 즐겨찾기 장소명/메모명 1순위 검색이 되지 않는 현상 수정(x,y 좌표로 리스트 전달 시 클라 수정 이슈)",
+          "ticketUrl": ""
+        },
+        {
+          "name": "음성인식 모델 개선",
+          "ticketUrl": ""
+        },
+        {
+          "name": "iOS Firebase 로그 수집",
+          "ticketUrl": ""
+        },
+        {
+          "name": "통화중 위젯의 음성 버튼 선택시 에이닷 풀페이지 노출되는 현상 개선",
+          "ticketUrl": ""
+        },
+        {
+          "name": "티맵으로 전화받기 ON > 전화 앱 클릭 시에도 10초간 FG가 유지되는 현상10초에서 3초로 변경하여 개선",
+          "ticketUrl": ""
+        },
+        {
+          "name": "[주행중 어디갈까] 노출 POI 제한선 상향",
+          "ticketUrl": ""
+        },
+        {
+          "name": "저장 그룹 및 공유하기 기능 개선",
+          "ticketUrl": ""
+        },
+        {
+          "name": "저장 롱프레스 개선",
+          "ticketUrl": ""
+        },
+        {
+          "name": "현 위치/나침반 동작 사용성 및 오류 개선",
+          "ticketUrl": ""
+        },
+        {
+          "name": "차로정보 V2 적용",
+          "ticketUrl": ""
+        },
+        {
+          "name": "getAddress 앱스킴 내 법정동 코드 추가",
+          "ticketUrl": ""
+        },
+        {
+          "name": "플레이스 홀더 내, 텍스트 말줄임",
+          "ticketUrl": ""
+        },
+        {
+          "name": "미디어 버튼이 내비 홈 > 장소콜아웃 팝업의 도착 버튼을 가리는 현상",
+          "ticketUrl": ""
+        },
+        {
+          "name": "‘맛집’ 검색한 상태에서 에이닷 발화 시 → 오퍼링 페이지 새롭게 오픈 되어야 하는데 이전 검색 결과가 노출 하는 현상",
+          "ticketUrl": ""
+        }
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/1552712015"
     },
@@ -202,10 +325,22 @@
         "deployComplete": "2026-04-10"
       },
       "tasks": [
-        "홈 화면내 지도 추가",
-        "오픈 프로필 기능 추가",
-        "안심 주행 모드 구간 단속 카메라 정보 안내",
-        "유고 정보 안내"
+        {
+          "name": "홈 화면내 지도 추가",
+          "ticketUrl": ""
+        },
+        {
+          "name": "오픈 프로필 기능 추가",
+          "ticketUrl": ""
+        },
+        {
+          "name": "안심 주행 모드 구간 단속 카메라 정보 안내",
+          "ticketUrl": ""
+        },
+        {
+          "name": "유고 정보 안내",
+          "ticketUrl": ""
+        }
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
