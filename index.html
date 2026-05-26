@@ -281,17 +281,39 @@
     }
     .panel-link-btn:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
     .panel-link-btn.disabled { opacity: 0.35; pointer-events: none; }
-    .rv-item { padding: 9px 0; border-bottom: 1px solid var(--border); }
-    .rv-item:last-child { border-bottom: none; }
-    .rv-top { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; flex-wrap: wrap; }
-    .rv-ver-label { font-weight: 700; font-size: 13px; }
-    .rv-date { font-size: 12px; color: var(--text-muted); }
-    .rv-stores { display: flex; gap: 5px; flex-wrap: wrap; }
-    .rv-store-pill {
-      display: inline-flex; align-items: center; gap: 3px;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 7px; padding: 3px 7px; font-size: 11px;
+    /* ── Review Panel (right) ────────────────────── */
+    .rv-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .rv-ver-label { font-weight: 700; font-size: 14px; }
+    .rv-tl { margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .rv-tl-row {
+      display: grid; grid-template-columns: 20px 52px 1fr auto;
+      align-items: center; gap: 5px; padding: 5px 0;
+      border-top: 1px solid var(--border); font-size: 12px;
     }
+    .rv-tl-row:first-child { border-top: none; }
+    .rv-tl-lbl { color: var(--text-muted); }
+    .rv-tl-date { color: var(--text-muted); font-size: 12px; }
+    .rv-tl-active .rv-tl-date { color: var(--text); font-weight: 600; }
+    .rv-stores-title { font-size: 11px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .rv-store-card {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 10px; margin-bottom: 6px;
+    }
+    .rv-store-card:last-child { margin-bottom: 0; }
+    .rv-mini-donut {
+      width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0; position: relative;
+    }
+    .rv-mini-inner {
+      position: absolute; inset: 8px; background: var(--bg);
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 9px; font-weight: 700; color: var(--text);
+    }
+    .rv-store-meta { flex: 1; min-width: 0; }
+    .rv-store-name { font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+    .rv-ver-code { font-size: 10px; color: var(--text-muted); margin-top: 3px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px; }
     /* ── History Notes ───────────────────────────── */
     .notes-input {
       width: 100%; min-width: 90px; border: 1px solid transparent; border-radius: 6px;
@@ -834,41 +856,40 @@ function renderStages() {
   const panelLinks = document.getElementById('panelLinks');
   const today      = new Date(); today.setHours(0,0,0,0);
 
-  // 현재 RT + 미래 히스토리 중 stages 있는 버전
+  // 조건: stages 있고 + 배포완료 안 됐고 + 남은 단계 존재
   const allVersions = [remote.currentRT, ...(remote.history || [])]
-    .filter(rt => rt?.stages?.length > 0);
+    .filter(rt => {
+      if (!rt?.stages?.length) return false;
+      const cd = toD(rt.schedule?.deployComplete);
+      if (cd && cd < today) return false;           // 배포완료 버전 제외
+      return rt.stages.some(s => { const d = toD(s.date); return d && d >= today; });
+    });
 
   if (!allVersions.length) {
     tbody.innerHTML = `<tr><td colspan="4" style="color:var(--text-muted);padding:12px 6px;font-size:13px">
-      진행단계 정보가 없습니다 (데이터 업데이트 후 자동 반영)</td></tr>`;
+      진행 중인 버전이 없습니다 (데이터 업데이트 후 자동 반영)</td></tr>`;
     panelLinks.innerHTML = '';
     return;
   }
 
   tbody.innerHTML = allVersions.map(rt => {
-    const stages = rt.stages;
-    // 현재 단계: 오늘 기준 아직 안 지난 첫 번째 단계
-    const currentIdx = stages.findIndex(s => {
-      const d = toD(s.date); return d && d >= today;
-    });
+    // 오늘 이후 단계만 표시 (지난 단계 제외)
+    const upcoming = rt.stages.filter(s => { const d = toD(s.date); return d && d >= today; });
 
-    const stageRows = stages.map((s, idx) => {
-      const d = toD(s.date);
-      let ddayText = '', ddayCls = '', rowCls = '';
-      if (d) {
-        const diff = Math.round((d - today) / 86400000);
-        if      (diff < 0)   { ddayText = `D+${Math.abs(diff)}`; ddayCls = 'dp-past'; rowCls = 'stage-past'; }
-        else if (diff === 0)  { ddayText = 'D-Day';              ddayCls = 'dp-today'; rowCls = 'stage-current'; }
-        else if (diff <= 7)   { ddayText = `D-${diff}`;          ddayCls = 'dp-near';  rowCls = 'stage-current'; }
-        else                  { ddayText = `D-${diff}`;          ddayCls = 'dp-future'; }
-      }
-      const isCurrent = idx === currentIdx;
+    const stageRows = upcoming.map((s, idx) => {
+      const d    = toD(s.date);
+      const diff = Math.round((d - today) / 86400000);
+      let ddayText, ddayCls, rowCls = '';
+      if      (diff === 0) { ddayText = 'D-Day';       ddayCls = 'dp-today'; rowCls = 'stage-current'; }
+      else if (diff <= 7)  { ddayText = `D-${diff}`;   ddayCls = 'dp-near';  rowCls = idx === 0 ? 'stage-current' : ''; }
+      else                 { ddayText = `D-${diff}`;   ddayCls = 'dp-future'; }
+      const isNext = idx === 0;
       return `<tr class="${rowCls}">
-        <td style="padding-left:12px;font-size:12px${isCurrent ? ';font-weight:700;color:var(--primary)' : ''}">
-          ${isCurrent ? '◉ ' : (idx < (currentIdx === -1 ? stages.length : currentIdx) ? '✓ ' : '○ ')}${s.name}
+        <td style="padding-left:12px;font-size:12px${isNext ? ';font-weight:700;color:var(--primary)' : ''}">
+          ${isNext ? '◉ ' : '○ '}${s.name}
         </td>
-        <td style="font-size:11px;color:var(--text-muted)">${s.date ? fmtFull(s.date) : ''}</td>
-        <td>${ddayText ? `<span class="dday-pill ${ddayCls}">${ddayText}</span>` : ''}</td>
+        <td style="font-size:11px;color:var(--text-muted)">${fmtFull(s.date)}</td>
+        <td><span class="dday-pill ${ddayCls}">${ddayText}</span></td>
         <td></td>
       </tr>`;
     }).join('');
@@ -893,46 +914,74 @@ function renderStages() {
 }
 
 // ────────────────────────────────────────────────────────
-// RENDER: CURRENT RT REVIEW STATUS
+// RENDER: CURRENT RT REVIEW STATUS (타임라인 + CSS 도넛)
 // ────────────────────────────────────────────────────────
 function renderReviewVersions() {
   const container = document.getElementById('reviewVersions');
   const rt  = remote.currentRT;
   const ms  = manual.schedule || {};
+  const today = new Date(); today.setHours(0,0,0,0);
   const s   = {
     reviewRequest:  ms.reviewRequest  || rt.schedule.reviewRequest,
     deployStart:    ms.deployStart    || rt.schedule.deployStart,
     deployComplete: ms.deployComplete || rt.schedule.deployComplete,
   };
 
+  // 전체 상태
   let overallLabel, overallCls;
-  if (s.deployComplete)   { overallLabel = '배포완료'; overallCls = 'sb-deploy_complete'; }
-  else if (s.deployStart) { overallLabel = '배포중';   overallCls = 'sb-deploying'; }
-  else if (s.reviewRequest) { overallLabel = '심사중'; overallCls = 'sb-review_requested'; }
-  else                    { overallLabel = '준비중';   overallCls = 'sb-review_requested'; }
+  if (s.deployComplete)     { overallLabel = '배포완료'; overallCls = 'sb-deploy_complete'; }
+  else if (s.deployStart)   { overallLabel = '배포중';   overallCls = 'sb-deploying'; }
+  else if (s.reviewRequest) { overallLabel = '심사중';   overallCls = 'sb-review_requested'; }
+  else                      { overallLabel = '준비중';   overallCls = 'sb-review_complete'; }
 
-  // 스토어별 상태
-  const storePills = STORES.map(sc => {
+  // 미니 타임라인
+  const tlDefs = [
+    { icon: '📋', label: '심사요청', key: 'reviewRequest' },
+    { icon: '🚀', label: '배포시작', key: 'deployStart'   },
+    { icon: '✅', label: '배포완료', key: 'deployComplete' },
+  ];
+  const timeline = tlDefs.map(({ icon, label, key }) => {
+    const dateStr = s[key];
+    const d = toD(dateStr);
+    const isActive = d && d <= today;
+    const ddStr = dateStr ? dday(dateStr) : '';
+    return `<div class="rv-tl-row ${isActive ? 'rv-tl-active' : ''}">
+      <span>${icon}</span>
+      <span class="rv-tl-lbl">${label}</span>
+      <span class="rv-tl-date">${dateStr ? fmtFull(dateStr) : '-'}</span>
+      ${ddStr ? `<span class="dday-pill ${isActive ? 'dp-past' : 'dp-future'}" style="font-size:10px;padding:1px 6px">${ddStr}</span>` : ''}
+    </div>`;
+  }).join('');
+
+  // 스토어 카드 (CSS conic-gradient 도넛)
+  const storeCards = STORES.map(sc => {
     const store = manual.stores?.[sc.key] || {};
     const st    = STATUS[store.status] || STATUS.review_requested;
-    const ver   = store.ver ? `<span style="color:var(--text-muted);font-size:10px;margin-left:4px">${store.ver}</span>` : '';
-    return `<div class="rv-item" style="padding:6px 0">
-      <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
-        <span style="font-size:14px">${sc.icon}</span>
-        <span style="font-size:12px;font-weight:600;flex:1">${sc.name}</span>
+    const rate  = Math.min(100, Math.max(0, store.rate || 0));
+    const deg   = Math.round(rate * 3.6);
+    const donut = `conic-gradient(${sc.color} 0deg ${deg}deg, ${sc.track} ${deg}deg 360deg)`;
+    const verHtml = store.ver
+      ? `<div class="rv-ver-code" title="${escHtml(store.ver)}">${escHtml(store.ver)}</div>` : '';
+    return `<div class="rv-store-card">
+      <div class="rv-mini-donut" style="background:${donut}">
+        <div class="rv-mini-inner">${rate}%</div>
+      </div>
+      <div class="rv-store-meta">
+        <div class="rv-store-name">${sc.icon} ${sc.name}</div>
         <span class="status-badge ${st.cls}">${st.label}</span>
-        ${ver}
+        ${verHtml}
       </div>
     </div>`;
   }).join('');
 
   container.innerHTML = `
-    <div class="rv-top" style="margin-bottom:10px">
+    <div class="rv-header">
       <span class="rv-ver-label">${manual.rtNumber || rt.rtNumber}</span>
       <span class="status-badge ${overallCls}">${overallLabel}</span>
     </div>
-    ${s.reviewRequest ? `<div style="font-size:12px;color:var(--text-muted);margin-bottom:10px">심사요청 ${fmtFull(s.reviewRequest)}</div>` : ''}
-    ${storePills}
+    <div class="rv-tl">${timeline}</div>
+    <div class="rv-stores-title">스토어별 배포현황</div>
+    ${storeCards}
   `;
 }
 
