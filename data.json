@@ -1,0 +1,110 @@
+{
+  "lastUpdated": "2026-05-26T10:00:00",
+  "currentRT": {
+    "rtNumber": "RT 2026-11",
+    "schedule": {
+      "reviewRequest": "2026-05-28",
+      "deployStart": "2026-06-04",
+      "deployComplete": "2026-06-11"
+    },
+    "tasks": [
+      "지도 렌더링 성능 개선",
+      "실시간 교통정보 정확도 향상",
+      "목적지 검색 자동완성 개선",
+      "배터리 사용량 최적화",
+      "접근성 WCAG 2.1 대응"
+    ]
+  },
+  "history": [
+    {
+      "rtNumber": "RT 2026-10",
+      "schedule": {
+        "reviewRequest": "2026-05-07",
+        "deployStart": "2026-05-14",
+        "deployComplete": "2026-05-21"
+      },
+      "tasks": ["경로 추천 알고리즘 개선", "UI 다크모드 대응", "즐겨찾기 동기화 버그 수정", "AR 내비게이션 베타"]
+    },
+    {
+      "rtNumber": "RT 2026-09",
+      "schedule": {
+        "reviewRequest": "2026-04-23",
+        "deployStart": "2026-04-30",
+        "deployComplete": "2026-05-07"
+      },
+      "tasks": ["주차장 실시간 잔여석 표시", "대중교통 환승 안내 개선", "음성 안내 개선"]
+    },
+    {
+      "rtNumber": "RT 2026-08",
+      "schedule": {
+        "reviewRequest": "2026-04-09",
+        "deployStart": "2026-04-16",
+        "deployComplete": "2026-04-23"
+      },
+      "tasks": ["메인화면 개편", "날씨 연동 안내 추가", "로그인 성능 개선", "광고 플랫폼 업데이트"]
+    },
+    {
+      "rtNumber": "RT 2026-07",
+      "schedule": {
+        "reviewRequest": "2026-03-26",
+        "deployStart": "2026-04-02",
+        "deployComplete": "2026-04-09"
+      },
+      "tasks": ["EV 충전소 정보 추가", "카풀 기능 개선", "결제 플로우 간소화"]
+    },
+    {
+      "rtNumber": "RT 2026-06",
+      "schedule": {
+        "reviewRequest": "2026-03-12",
+        "deployStart": "2026-03-19",
+        "deployComplete": "2026-03-26"
+      },
+      "tasks": ["앱 시작속도 개선 (-1.2초)", "POI 데이터 최신화", "신고기능 UX 개선"]
+    },
+    {
+      "rtNumber": "RT 2026-05",
+      "schedule": {
+        "reviewRequest": "2026-02-26",
+        "deployStart": "2026-03-05",
+        "deployComplete": "2026-03-12"
+      },
+      "tasks": ["지하철 실시간 혼잡도 표시", "드라이브 모드 개선", "앱 권한 정책 업데이트"]
+    },
+    {
+      "rtNumber": "RT 2026-04",
+      "schedule": {
+        "reviewRequest": "2026-02-12",
+        "deployStart": "2026-02-19",
+        "deployComplete": "2026-02-26"
+      },
+      "tasks": ["설 연휴 임시 기능 배포", "교통 예측 모델 업데이트", "알림 개인화 기능"]
+    },
+    {
+      "rtNumber": "RT 2026-03",
+      "schedule": {
+        "reviewRequest": "2026-01-29",
+        "deployStart": "2026-02-05",
+        "deployComplete": "2026-02-12"
+      },
+      "tasks": ["신년 UI 이벤트", "안전운전 점수 기능 강화", "지도 타일 캐시 개선"]
+    },
+    {
+      "rtNumber": "RT 2026-02",
+      "schedule": {
+        "reviewRequest": "2026-01-15",
+        "deployStart": "2026-01-22",
+        "deployComplete": "2026-01-29"
+      },
+      "tasks": ["앱 초기화 속도 개선", "탐색 히스토리 UI 개편", "장애 대응 모니터링 강화"]
+    },
+    {
+      "rtNumber": "RT 2026-01",
+      "schedule": {
+        "reviewRequest": "2026-01-02",
+        "deployStart": "2026-01-08",
+        "deployComplete": "2026-01-15"
+      },
+      "tasks": ["2026년 버전 초기 배포", "신규 온보딩 플로우", "개인정보처리방침 업데이트"]
+    }
+  ]
+}
