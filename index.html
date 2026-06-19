@@ -8,14 +8,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:#F8FAFC; --surface:#FFFFFF; --border:#E5E7EB; --border-light:#F3F4F6;
-      --text:#111827; --text-muted:#6B7280; --text-subtle:#9CA3AF;
-      --primary:#2563EB; --primary-hover:#1D4ED8; --primary-light:#EFF6FF; --primary-border:#BFDBFE;
-      --success:#16A34A; --success-light:#F0FDF4; --success-border:#BBF7D0;
-      --amber:#D97706; --amber-light:#FFFBEB; --amber-border:#FDE68A;
-      --red:#DC2626; --red-light:#FEF2F2; --red-border:#FECACA;
+      --bg:#F8FAFC;--surface:#FFFFFF;--border:#E5E7EB;--border-light:#F3F4F6;
+      --text:#111827;--text-muted:#6B7280;--text-subtle:#9CA3AF;
+      --primary:#2563EB;--primary-hover:#1D4ED8;--primary-light:#EFF6FF;--primary-border:#BFDBFE;
+      --success:#16A34A;--success-light:#F0FDF4;--success-border:#BBF7D0;
+      --amber:#D97706;--amber-light:#FFFBEB;--amber-border:#FDE68A;
+      --red:#DC2626;--red-light:#FEF2F2;--red-border:#FECACA;
       --shadow-sm:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
-      --radius-sm:6px; --radius-md:10px; --radius-lg:14px; --radius-xl:18px;
+      --radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-xl:18px;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -29,30 +29,24 @@
     .btn-edit{display:flex;align-items:center;gap:6px;background:var(--primary);color:#fff;border:none;padding:7px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;transition:background .15s}
     .btn-edit:hover{background:var(--primary-hover)}
 
-    /* Layout */
-    .container{max-width:1200px;margin:0 auto;padding:24px 24px 48px}
-    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-    .section-title{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.7px}
+    .container{max-width:1280px;margin:0 auto;padding:24px 24px 48px}
+    .section-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px}
 
     /* KPI */
-    .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-    .kpi-card{background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);padding:20px 22px;box-shadow:var(--shadow-sm)}
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+    .kpi-card{background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);padding:18px 20px;box-shadow:var(--shadow-sm)}
     .kpi-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
-    .kpi-value{font-size:24px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1;margin-bottom:4px}
-    .kpi-sub{font-size:12px;color:var(--text-muted)}
+    .kpi-value{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1.1;margin-bottom:4px}
+    .kpi-sub{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
     .kpi-card.primary{border-color:var(--primary-border);background:var(--primary-light)}
     .kpi-card.primary .kpi-value{color:var(--primary)}
+    .kpi-card.danger{border-color:var(--red-border);background:var(--red-light)}
     .kpi-card.danger .kpi-value{color:var(--red)}
+    .kpi-card.warning{border-color:var(--amber-border);background:var(--amber-light)}
     .kpi-card.warning .kpi-value{color:var(--amber)}
 
-    /* Card */
-    .card{background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow-sm);margin-bottom:16px;overflow:hidden}
-    .card-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border-light)}
-    .card-title{font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
-    .card-body{padding:20px}
-
     /* Badge */
-    .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+    .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
     .badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
     .badge-blue{background:var(--primary-light);color:var(--primary)}
     .badge-blue::before{background:var(--primary)}
@@ -67,94 +61,91 @@
     .badge-pulse::before{animation:pulse 1.6s ease-in-out infinite}
     @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 
-    /* Stores */
-    .stores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .store-card{border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;background:var(--surface);transition:border-color .15s,box-shadow .15s}
-    .store-card:hover{border-color:var(--primary-border);box-shadow:0 0 0 3px var(--primary-light)}
-    .store-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-    .store-name-row{display:flex;align-items:center;gap:6px}
-    .store-icon{font-size:18px}
-    .store-name{font-size:14px;font-weight:700}
-    .donut-wrap{position:relative;width:80px;height:80px;margin:0 auto 14px}
-    .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-    .donut-pct{font-size:18px;font-weight:800;line-height:1}
-    .donut-lbl{font-size:10px;color:var(--text-muted)}
-    .store-meta{text-align:center}
-    .ver-code{font-family:'SF Mono','Fira Code',monospace;font-size:10px;color:var(--text-muted);background:var(--bg);padding:3px 8px;border-radius:4px;margin-top:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;display:block}
-
-    /* Two col */
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-
-    /* Stages */
-    .stage-list{display:flex;flex-direction:column;gap:0}
-    .stage-item{display:grid;grid-template-columns:12px 1fr auto auto;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border-light)}
-    .stage-item:last-child{border-bottom:none}
-    .stage-dot{width:8px;height:8px;border-radius:50%;background:#D1D5DB;flex-shrink:0}
-    .stage-dot.done{background:var(--success)}
-    .stage-dot.active{background:var(--primary);box-shadow:0 0 0 2px var(--primary-light)}
-    .stage-dot.soon{background:var(--amber)}
-    .stage-name{font-size:13px;color:var(--text)}
-    .stage-name.done{color:var(--text-muted)}
-    .stage-name.active{font-weight:600;color:var(--primary)}
-    .stage-date{font-size:11px;color:var(--text-muted);white-space:nowrap}
-    .stage-dday{font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap}
+    /* dday chip */
+    .dday{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:10px}
     .dd-past{background:#F3F4F6;color:var(--text-muted)}
     .dd-today{background:#FEF3C7;color:#92400E}
     .dd-near{background:#FEE2E2;color:#991B1B}
-    .dd-active{background:var(--primary-light);color:var(--primary)}
-    .dd-future{background:#F3F4F6;color:var(--text-muted)}
+    .dd-future{background:var(--primary-light);color:var(--primary)}
+    .dd-done{background:var(--success-light);color:var(--success)}
 
-    /* Review */
-    .rv-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border-light)}
-    .rv-row:last-child{border-bottom:none}
-    .rv-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;background:var(--bg);border:1px solid var(--border)}
-    .rv-icon.done{background:var(--success-light);border-color:var(--success-border)}
-    .rv-icon.active{background:var(--primary-light);border-color:var(--primary-border)}
-    .rv-lbl{flex:1;font-size:13px;color:var(--text-muted)}
-    .rv-lbl.active{color:var(--text);font-weight:600}
-    .rv-date{font-size:12px;color:var(--text-muted)}
-    .rv-date.active{color:var(--text);font-weight:500}
+    /* Mid grid: store left, tasks right */
+    .mid-grid{display:grid;grid-template-columns:1fr 2fr;gap:16px;margin-bottom:16px}
 
-    /* Tasks */
+    /* Store panel */
+    .card{background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow-sm);overflow:hidden}
+    .card-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border-light)}
+    .card-title{font-size:13px;font-weight:700;color:var(--text)}
+    .store-list{display:flex;flex-direction:column;gap:0}
+    .store-item{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border-light);gap:14px}
+    .store-item:last-child{border-bottom:none}
+    .donut-wrap{position:relative;flex-shrink:0;width:72px;height:72px}
+    .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .donut-pct{font-size:14px;font-weight:800;line-height:1}
+    .donut-lbl{font-size:9px;color:var(--text-muted)}
+    .store-info{flex:1;min-width:0}
+    .store-name-row{display:flex;align-items:center;gap:5px;margin-bottom:4px;flex-wrap:wrap}
+    .store-icon{font-size:14px}
+    .store-name{font-size:13px;font-weight:700}
+    .store-ver{font-size:10px;color:var(--text-muted);background:var(--bg);border-radius:4px;padding:1px 6px;border:1px solid var(--border)}
+    .STATUS={review_requested:{label:'심사요청',cls:'badge-gray'},review_complete:{label:'심사완료',cls:'badge-amber'},deploying:{label:'배포중',cls:'badge-blue badge-pulse'},deploy_complete:{label:'배포완료',cls:'badge-green'}}
+
+    /* Tasks panel */
+    .task-card-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border-light)}
     .task-table{width:100%;border-collapse:collapse}
-    .task-table th{text-align:left;padding:8px 12px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;background:var(--bg);border-bottom:1px solid var(--border)}
-    .task-table td{padding:10px 12px;border-bottom:1px solid var(--border-light);vertical-align:middle}
+    .task-table th{text-align:left;padding:8px 14px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;background:var(--bg);border-bottom:1px solid var(--border)}
+    .task-table td{padding:10px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle}
     .task-table tr:last-child td{border-bottom:none}
     .task-table tr:hover td{background:#FAFAFA}
-    .task-link{color:var(--text);text-decoration:none;font-size:13px;display:flex;align-items:center;gap:6px}
+    .task-link{color:var(--text);text-decoration:none;font-size:13px}
     .task-link:hover{color:var(--primary)}
-    .task-type-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600}
-    .tb-신규{background:#EFF6FF;color:#1D4ED8}
-    .tb-운영{background:#F0FDF4;color:#15803D}
-    .tb-버그{background:#FFF7ED;color:#C2410C}
-    .priority-dot{width:6px;height:6px;border-radius:50%;background:var(--red);display:inline-block;margin-right:3px;vertical-align:middle}
-
-    /* Link Btn */
-    .link-btn{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:5px 10px;font-size:12px;font-weight:500;color:var(--text-muted);text-decoration:none;background:var(--surface);cursor:pointer;transition:all .12s}
+    .product-tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:500;background:#F3F4F6;color:var(--text-muted)}
+    .link-btn{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px 9px;font-size:11px;font-weight:500;color:var(--text-muted);text-decoration:none;background:var(--surface);cursor:pointer;transition:all .12s;white-space:nowrap}
     .link-btn:hover{background:var(--primary-light);border-color:var(--primary-border);color:var(--primary)}
-    .link-btn.disabled{opacity:.3;pointer-events:none}
-    .panel-links{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+    .link-btn.disabled{opacity:.25;pointer-events:none}
+
+    /* Timeline */
+    .tl-section{margin-bottom:16px}
+    .tl-block{background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow-sm);margin-bottom:10px;overflow:hidden}
+    .tl-head{display:flex;align-items:center;gap:10px;padding:11px 18px;border-bottom:1px solid var(--border-light);flex-wrap:wrap}
+    .tl-ver{font-size:14px;font-weight:800;letter-spacing:-.3px}
+    .tl-review-info{font-size:12px;color:var(--text-muted)}
+    .tl-links{display:flex;gap:6px;margin-left:auto}
+    .tl-stages{display:flex;align-items:center;padding:12px 18px;overflow-x:auto;gap:0;scrollbar-width:thin}
+    .tl-step{display:flex;flex-direction:column;align-items:center;min-width:72px;flex-shrink:0;position:relative}
+    .tl-dot{width:10px;height:10px;border-radius:50%;background:#D1D5DB;margin-bottom:5px;flex-shrink:0;transition:all .2s}
+    .tl-dot.done{background:var(--success)}
+    .tl-dot.active{background:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
+    .tl-dot.near{background:var(--amber)}
+    .tl-name{font-size:11px;color:var(--text-muted);text-align:center;line-height:1.3;max-width:68px;word-break:keep-all}
+    .tl-name.done{color:var(--text-subtle)}
+    .tl-name.active{color:var(--primary);font-weight:600}
+    .tl-date{font-size:10px;color:var(--text-subtle);margin-top:2px}
+    .tl-conn{flex:1;min-width:14px;height:2px;background:#E5E7EB;margin-bottom:20px;flex-shrink:1}
+    .tl-conn.done{background:var(--success)}
+    .tl-no-stages{padding:12px 18px;font-size:13px;color:var(--text-muted)}
 
     /* History */
+    .hist-section{margin-bottom:0}
     .htable{width:100%;border-collapse:collapse}
     .htable thead th{text-align:left;padding:9px 14px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;background:var(--bg);border-bottom:1px solid var(--border)}
-    .htable td{padding:11px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle;font-size:13px}
+    .htable td{padding:10px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle;font-size:13px}
     .htable tr:hover td{background:#FAFAFA}
     .htable tr.future-row td{background:var(--primary-light)}
     .htable tr.future-row:hover td{background:#DBEAFE}
-    .rt-tag{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:13px;color:var(--text)}
-    .rt-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0}
+    .rt-tag{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:13px}
+    .rt-dot{width:7px;height:7px;border-radius:50%;background:var(--primary);flex-shrink:0}
     .rt-dot.future{background:#93C5FD}
     .rt-dot.done{background:var(--success)}
     .dt{white-space:nowrap;color:var(--text-muted)}
     .future-badge{display:inline-block;background:var(--primary-light);color:var(--primary);border-radius:4px;padding:1px 6px;font-size:10px;font-weight:700;margin-left:4px;vertical-align:middle}
-    .toggle-btn{background:none;border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px 10px;font-size:12px;color:var(--text-muted);cursor:pointer;white-space:nowrap;transition:all .12s}
+    .toggle-btn{background:none;border:1px solid var(--border);border-radius:var(--radius-sm);padding:3px 9px;font-size:11px;color:var(--text-muted);cursor:pointer;white-space:nowrap;transition:all .12s}
     .toggle-btn:hover{background:var(--primary-light);border-color:var(--primary-border);color:var(--primary)}
     .exp-inner{overflow:hidden;max-height:0;transition:max-height .25s ease,padding .25s ease;padding:0 14px;display:flex;flex-wrap:wrap;gap:6px}
-    .exp-inner.open{max-height:200px;padding:8px 14px 12px}
-    .task-chip{background:var(--surface);border:1px solid var(--border);padding:4px 12px;border-radius:20px;font-size:12px;color:var(--text-muted);text-decoration:none;transition:all .12s}
+    .exp-inner.open{max-height:300px;padding:8px 14px 12px}
+    .task-chip{background:var(--surface);border:1px solid var(--border);padding:3px 11px;border-radius:20px;font-size:11px;color:var(--text-muted);text-decoration:none;transition:all .12s}
     .task-chip:hover{background:var(--primary-light);border-color:var(--primary-border);color:var(--primary)}
-    .notes-input{width:100%;border:1px solid transparent;border-radius:var(--radius-sm);padding:5px 8px;font-size:12px;color:var(--text);background:transparent;outline:none;font-family:inherit;transition:border-color .12s,background .12s}
+    .notes-input{width:100%;border:1px solid transparent;border-radius:var(--radius-sm);padding:4px 7px;font-size:12px;color:var(--text);background:transparent;outline:none;font-family:inherit;transition:border-color .12s,background .12s}
     .notes-input:hover{border-color:var(--border);background:#fff}
     .notes-input:focus{border-color:var(--primary);background:#fff}
 
@@ -163,35 +154,35 @@
     .overlay.open{display:flex}
     .modal{background:#fff;border-radius:var(--radius-xl);width:700px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18);animation:slideUp .18s ease}
     @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    .modal-head{display:flex;align-items:center;justify-content:space-between;padding:22px 26px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:1}
+    .modal-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:1}
     .modal-head-title{font-size:16px;font-weight:700}
     .modal-head-sub{font-size:12px;color:var(--text-muted);margin-top:2px}
     .close-btn{width:28px;height:28px;border-radius:50%;background:var(--bg);border:none;cursor:pointer;font-size:14px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all .12s}
     .close-btn:hover{background:var(--red-light);color:var(--red)}
-    .modal-body{padding:24px 26px 8px}
-    .fsec{margin-bottom:24px}
-    .fsec-title{font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.6px;padding-bottom:8px;margin-bottom:14px;border-bottom:1px solid var(--primary-light)}
+    .modal-body{padding:22px 24px 8px}
+    .fsec{margin-bottom:22px}
+    .fsec-title{font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.6px;padding-bottom:8px;margin-bottom:12px;border-bottom:1px solid var(--primary-light)}
     .fg2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
     .fg-span2{grid-column:span 2}
-    .fgroup{display:flex;flex-direction:column;gap:6px}
+    .fgroup{display:flex;flex-direction:column;gap:5px}
     .flabel{font-size:11px;font-weight:600;color:var(--text-muted)}
-    .finput,.fselect{padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;color:var(--text);outline:none;background:#fff;transition:border-color .15s}
+    .finput,.fselect{padding:8px 11px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;color:var(--text);outline:none;background:#fff;transition:border-color .15s}
     .finput:focus,.fselect:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
-    .ftextarea{padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;color:var(--text);outline:none;font-family:inherit;resize:vertical;min-height:100px;transition:border-color .15s}
+    .ftextarea{padding:8px 11px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;color:var(--text);outline:none;font-family:inherit;resize:vertical;min-height:90px;transition:border-color .15s}
     .ftextarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
-    .store-block{background:var(--bg);border-radius:var(--radius-md);padding:16px;margin-bottom:10px;border:1px solid var(--border-light)}
-    .store-block-title{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-    .modal-foot{display:flex;gap:8px;justify-content:flex-end;padding:16px 26px;border-top:1px solid var(--border);position:sticky;bottom:0;background:#fff}
-    .btn{padding:9px 20px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .12s}
+    .store-block{background:var(--bg);border-radius:var(--radius-md);padding:14px;margin-bottom:8px;border:1px solid var(--border-light)}
+    .store-block-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .modal-foot{display:flex;gap:8px;justify-content:flex-end;padding:14px 24px;border-top:1px solid var(--border);position:sticky;bottom:0;background:#fff}
+    .btn{padding:8px 18px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .12s}
     .btn-primary{background:var(--primary);color:#fff}
     .btn-primary:hover{background:var(--primary-hover)}
     .btn-ghost{background:transparent;color:var(--text-muted);border:1px solid var(--border)}
     .btn-ghost:hover{background:var(--bg)}
-    .empty{padding:32px;text-align:center;color:var(--text-muted);font-size:13px}
+    .empty{padding:28px;text-align:center;color:var(--text-muted);font-size:13px}
 
-    @media(max-width:960px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.stores-grid{grid-template-columns:1fr}.two-col{grid-template-columns:1fr}}
-    @media(max-width:640px){.fg2,.fg3{grid-template-columns:1fr}.fg-span2{grid-column:span 1}.modal{width:96vw}.header{padding:0 16px}.container{padding:16px 14px 40px}}
+    @media(max-width:960px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.mid-grid{grid-template-columns:1fr}}
+    @media(max-width:640px){.fg2,.fg3{grid-template-columns:1fr}.fg-span2{grid-column:span 1}.modal{width:96vw}.header{padding:0 14px}.container{padding:14px 12px 40px}}
   </style>
 </head>
 <body>
@@ -203,7 +194,7 @@
     <span class="header-meta" id="hMeta"></span>
   </div>
   <button class="btn-edit" onclick="openModal()">
-    <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M12.85 1.15a1.5 1.5 0 012.12 2.12L5.5 12.74 2 14l1.26-3.5L12.85 1.15z"/></svg>
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M12.85 1.15a1.5 1.5 0 012.12 2.12L5.5 12.74 2 14l1.26-3.5L12.85 1.15z"/></svg>
     현재 RT 편집
   </button>
 </div>
@@ -211,96 +202,85 @@
 <div class="container">
 
   <!-- KPI -->
-  <div class="section-header"><span class="section-title">Release Overview</span></div>
-  <div class="kpi-grid">
+  <div class="section-label">Release Overview</div>
+  <div class="kpi-grid" style="margin-bottom:20px">
     <div class="kpi-card primary">
       <div class="kpi-label">Current RT</div>
       <div class="kpi-value" id="kpiRT">-</div>
-      <div class="kpi-sub" id="kpiRTSub">현재 진행 중인 릴리즈</div>
+      <div class="kpi-sub">현재 진행 중인 릴리즈</div>
     </div>
-    <div class="kpi-card">
+    <div class="kpi-card" id="kpiStageCard">
       <div class="kpi-label">현재 단계</div>
-      <div class="kpi-value" style="font-size:17px;word-break:keep-all" id="kpiStage">-</div>
-      <div class="kpi-sub" id="kpiStageSub">-</div>
+      <div class="kpi-value" style="font-size:16px;word-break:keep-all;line-height:1.3" id="kpiStage">-</div>
+      <div class="kpi-sub" id="kpiStageSub"></div>
     </div>
     <div class="kpi-card" id="kpiDayCard">
       <div class="kpi-label">심사요청 D-Day</div>
       <div class="kpi-value" id="kpiDday">-</div>
-      <div class="kpi-sub" id="kpiDdaySub">-</div>
+      <div class="kpi-sub" id="kpiDdaySub"></div>
     </div>
-    <div class="kpi-card">
+    <div class="kpi-card" id="kpiStoreCard">
       <div class="kpi-label">스토어 배포 상태</div>
-      <div class="kpi-value" style="font-size:18px" id="kpiStore">-</div>
-      <div class="kpi-sub" id="kpiStoreSub">-</div>
+      <div class="kpi-value" style="font-size:17px" id="kpiStore">-</div>
+      <div class="kpi-sub" id="kpiStoreSub"></div>
     </div>
   </div>
 
-  <!-- Store Status -->
-  <div class="section-header"><span class="section-title">Store Release Status</span></div>
-  <div class="card" style="margin-bottom:16px">
-    <div class="card-body">
-      <div class="stores-grid" id="storesGrid"></div>
-    </div>
-  </div>
-
-  <!-- Tasks + Stages two-col -->
-  <div class="two-col" style="margin-bottom:16px">
+  <!-- Store + Tasks -->
+  <div class="mid-grid">
+    <!-- Store release status -->
     <div>
-      <div class="section-header"><span class="section-title">Release Tasks</span></div>
-      <div class="card" style="margin-bottom:0">
-        <table class="task-table" id="taskTable">
+      <div class="section-label">Store Release Status</div>
+      <div class="card">
+        <div class="store-list" id="storeList"></div>
+      </div>
+    </div>
+    <!-- Release tasks -->
+    <div>
+      <div class="section-label">Release Tasks</div>
+      <div class="card">
+        <div class="task-card-head">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="card-title" id="taskTitle">배포 과제</span>
+            <span class="badge badge-blue" id="taskCount" style="font-size:11px"></span>
+          </div>
+          <a id="taskWikiLink" href="#" target="_blank" class="link-btn disabled">📄 위키</a>
+        </div>
+        <table class="task-table">
           <thead><tr>
-            <th style="width:50%">과제</th>
-            <th style="width:15%">유형</th>
-            <th style="width:18%">우선순위</th>
-            <th style="width:17%">링크</th>
+            <th style="width:48%">과제</th>
+            <th style="width:18%">Product</th>
+            <th>링크</th>
           </tr></thead>
           <tbody id="taskBody"></tbody>
         </table>
       </div>
     </div>
-    <div>
-      <div class="section-header"><span class="section-title">진행 단계 및 심사 현황</span></div>
-      <div class="card" style="margin-bottom:10px">
-        <div class="card-header">
-          <span class="card-title">버전 진행 단계</span>
-          <span id="stageLabel"></span>
-        </div>
-        <div class="card-body" style="padding:14px 20px">
-          <div class="stage-list" id="stageList"></div>
-          <div class="panel-links" id="panelLinks"></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">심사 및 배포 현황</span>
-          <span id="overallBadge"></span>
-        </div>
-        <div class="card-body" style="padding:14px 20px">
-          <div id="rvTimeline"></div>
-        </div>
-      </div>
-    </div>
+  </div>
+
+  <!-- Version Timeline -->
+  <div class="tl-section">
+    <div class="section-label">진행 단계 현황</div>
+    <div id="tlContainer"></div>
   </div>
 
   <!-- History -->
-  <div class="section-header">
-    <span class="section-title">릴리즈 히스토리</span>
-    <span class="badge badge-gray" id="histYear"></span>
-  </div>
-  <div class="card" style="padding:0">
-    <table class="htable">
-      <thead><tr>
-        <th style="width:90px">버전</th>
-        <th>심사요청</th>
-        <th>배포시작</th>
-        <th>배포완료</th>
-        <th>배포과제</th>
-        <th style="width:72px">문서</th>
-        <th style="width:140px">비고</th>
-      </tr></thead>
-      <tbody id="histBody"></tbody>
-    </table>
+  <div class="hist-section">
+    <div class="section-label">릴리즈 히스토리</div>
+    <div class="card" style="padding:0">
+      <table class="htable">
+        <thead><tr>
+          <th style="width:90px">버전</th>
+          <th>심사요청</th>
+          <th>배포시작</th>
+          <th>배포완료</th>
+          <th>배포과제</th>
+          <th style="width:68px">문서</th>
+          <th style="width:150px">비고</th>
+        </tr></thead>
+        <tbody id="histBody"></tbody>
+      </table>
+    </div>
   </div>
 
 </div>
@@ -318,11 +298,8 @@
     <div class="modal-body">
       <div class="fsec">
         <div class="fsec-title">기본 정보</div>
-        <div class="fg2" style="margin-bottom:12px">
-          <div class="fgroup">
-            <label class="flabel">RT 번호</label>
-            <input class="finput" id="f-rt" placeholder="예: v11.4.0">
-          </div>
+        <div class="fg2" style="margin-bottom:10px">
+          <div class="fgroup"><label class="flabel">RT 번호</label><input class="finput" id="f-rt" placeholder="예: v11.4.0"></div>
         </div>
         <div class="fg3">
           <div class="fgroup"><label class="flabel">심사요청일</label><input class="finput" type="date" id="f-d0"></div>
@@ -335,26 +312,26 @@
         <div class="store-block">
           <div class="store-block-title">🍎 App Store</div>
           <div class="fg3">
-            <div class="fgroup fg-span2"><label class="flabel">바이너리 버전코드</label><input class="finput" id="f-appstore-ver" placeholder="예: 11.4.0 (build 1234)"></div>
+            <div class="fgroup fg-span2"><label class="flabel">배포 버전</label><input class="finput" id="f-appstore-ver" placeholder="예: 11.3.1"></div>
             <div class="fgroup"><label class="flabel">배포율 (%)</label><input class="finput" type="number" id="f-appstore-rate" min="0" max="100" placeholder="0"></div>
           </div>
-          <div style="margin-top:10px"><div class="fgroup"><label class="flabel">상태</label><select class="fselect" id="f-appstore-status"><option value="review_requested">심사요청</option><option value="review_complete">심사완료</option><option value="deploying">배포중</option><option value="deploy_complete">배포완료</option></select></div></div>
+          <div style="margin-top:8px"><div class="fgroup"><label class="flabel">상태</label><select class="fselect" id="f-appstore-status"><option value="review_requested">심사요청</option><option value="review_complete">심사완료</option><option value="deploying">배포중</option><option value="deploy_complete">배포완료</option></select></div></div>
         </div>
         <div class="store-block">
           <div class="store-block-title">🤖 Google Play Store</div>
           <div class="fg3">
-            <div class="fgroup fg-span2"><label class="flabel">바이너리 버전코드</label><input class="finput" id="f-googleplay-ver" placeholder="예: 11.4.0 (versionCode 5678)"></div>
+            <div class="fgroup fg-span2"><label class="flabel">배포 버전</label><input class="finput" id="f-googleplay-ver" placeholder="예: 11.3.2"></div>
             <div class="fgroup"><label class="flabel">배포율 (%)</label><input class="finput" type="number" id="f-googleplay-rate" min="0" max="100" placeholder="0"></div>
           </div>
-          <div style="margin-top:10px"><div class="fgroup"><label class="flabel">상태</label><select class="fselect" id="f-googleplay-status"><option value="review_requested">심사요청</option><option value="review_complete">심사완료</option><option value="deploying">배포중</option><option value="deploy_complete">배포완료</option></select></div></div>
+          <div style="margin-top:8px"><div class="fgroup"><label class="flabel">상태</label><select class="fselect" id="f-googleplay-status"><option value="review_requested">심사요청</option><option value="review_complete">심사완료</option><option value="deploying">배포중</option><option value="deploy_complete">배포완료</option></select></div></div>
         </div>
         <div class="store-block">
           <div class="store-block-title">🟦 One Store</div>
           <div class="fg3">
-            <div class="fgroup fg-span2"><label class="flabel">바이너리 버전코드</label><input class="finput" id="f-onestore-ver" placeholder="예: 11.4.0 (versionCode 9012)"></div>
+            <div class="fgroup fg-span2"><label class="flabel">배포 버전</label><input class="finput" id="f-onestore-ver" placeholder="예: 11.3.2"></div>
             <div class="fgroup"><label class="flabel">배포율 (%)</label><input class="finput" type="number" id="f-onestore-rate" min="0" max="100" placeholder="0"></div>
           </div>
-          <div style="margin-top:10px"><div class="fgroup"><label class="flabel">상태</label><select class="fselect" id="f-onestore-status"><option value="review_requested">심사요청</option><option value="review_complete">심사완료</option><option value="deploying">배포중</option><option value="deploy_complete">배포완료</option></select></div></div>
+          <div style="margin-top:8px"><div class="fgroup"><label class="flabel">상태</label><select class="fselect" id="f-onestore-status"><option value="review_requested">심사요청</option><option value="review_complete">심사완료</option><option value="deploying">배포중</option><option value="deploy_complete">배포완료</option></select></div></div>
         </div>
       </div>
       <div class="fsec">
@@ -374,11 +351,19 @@
 </div>
 
 <script>
-const STORES=[{key:'appstore',name:'App Store',icon:'🍎',color:'#007AFF',track:'#DBEAFE'},{key:'googleplay',name:'Google Play',icon:'🤖',color:'#34A853',track:'#DCFCE7'},{key:'onestore',name:'One Store',icon:'🟦',color:'#E8230A',track:'#FEE2E2'}];
-const STATUS={review_requested:{label:'심사요청',cls:'badge-gray'},review_complete:{label:'심사완료',cls:'badge-amber'},deploying:{label:'배포중',cls:'badge-blue badge-pulse'},deploy_complete:{label:'배포완료',cls:'badge-green'}};
+const STORES=[
+  {key:'appstore',name:'App Store',icon:'🍎',color:'#007AFF',track:'#DBEAFE'},
+  {key:'googleplay',name:'Google Play',icon:'🤖',color:'#34A853',track:'#DCFCE7'},
+  {key:'onestore',name:'One Store',icon:'🟦',color:'#E8230A',track:'#FEE2E2'}
+];
+const STATUS_MAP={
+  review_requested:{label:'심사요청',cls:'badge-gray'},
+  review_complete:{label:'심사완료',cls:'badge-amber'},
+  deploying:{label:'배포중',cls:'badge-blue badge-pulse'},
+  deploy_complete:{label:'배포완료',cls:'badge-green'}
+};
 const STORAGE_KEY='rt_manual_v2';
-const HISTORY_PAGE='https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389';
-let remote=null,manual={};
+let remote=null, manual={};
 
 async function init(){
   try{const r=await fetch('./data.json?'+Date.now(),{cache:'no-store'});if(r.ok)remote=await r.json();}catch(_){}
@@ -388,155 +373,248 @@ async function init(){
   render();
 }
 function defaultStores(){const s={};STORES.forEach(sc=>{s[sc.key]={ver:'',status:'review_requested',rate:0}});return s;}
+function saveManual(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(manual));}catch(_){}}
 
 const toD=s=>s?new Date(s+'T00:00:00'):null;
 const today=()=>{const d=new Date();d.setHours(0,0,0,0);return d;};
-function fmtFull(s){const d=toD(s);if(!d)return'-';return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())}`;}
-function fmtShort(s){const d=toD(s);if(!d)return'-';return `${d.getMonth()+1}/${pad(d.getDate())}`;}
-function pad(n){return String(n).padStart(2,'0');}
+const pad=n=>String(n).padStart(2,'0');
+function fmtFull(s){const d=toD(s);if(!d)return'-';return`${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())}`;}
+function fmtShort(s){const d=toD(s);if(!d)return'-';return`${d.getMonth()+1}/${pad(d.getDate())}`;}
 function diff(s){const d=toD(s);if(!d)return null;return Math.round((d-today())/86400000);}
 function ddayStr(s){const n=diff(s);if(n===null)return'';if(n<0)return`D+${Math.abs(n)}`;if(n===0)return'D-Day';return`D-${n}`;}
-function ddayCls(s){const n=diff(s);if(n===null)return'dd-future';if(n<0)return'dd-past';if(n===0)return'dd-today';if(n<=7)return'dd-near';return'dd-active';}
-function stepState(s){const n=diff(s);if(n===null)return'future';if(n<0)return'done';if(n===0)return'active';if(n<=7)return'soon';return'future';}
+function ddayCls(s){const n=diff(s);if(n===null)return'dd-future';if(n<0)return'dd-done';if(n===0)return'dd-today';if(n<=7)return'dd-near';return'dd-future';}
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmtWithFuture(s){const d=toD(s);if(!d)return'-';return d>today()?`${fmtFull(s)}<span class="future-badge">예정</span>`:fmtFull(s);}
-function isActiveWiki(rt){if(!rt.wikiUrl)return false;if(rt.wikiUrl===HISTORY_PAGE)return(rt.tasks||[]).some(t=>typeof t==='object'&&t.ticketUrl);return true;}
+function isActiveWiki(rt){if(!rt.wikiUrl)return false;if(rt.wikiUrl===HIST_WIKI)return false;return true;}
+const HIST_WIKI='https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389';
+
+// stages에서 "심사 요청" 단계의 날짜를 자동 추출
+function getReviewDate(rt, ms){
+  if(ms&&ms.reviewRequest)return ms.reviewRequest;
+  const stage=(rt.stages||[]).find(s=>s.name.replace(/\s/g,'').includes('심사요청'));
+  if(stage)return stage.date;
+  return rt.schedule&&rt.schedule.reviewRequest;
+}
 
 function render(){
   const rt=remote.currentRT;
   const ms=manual.schedule||{};
-  const sch={reviewRequest:ms.reviewRequest||rt.schedule.reviewRequest,deployStart:ms.deployStart||rt.schedule.deployStart,deployComplete:ms.deployComplete||rt.schedule.deployComplete};
+  const reviewDate=getReviewDate(rt,ms);
+  const sch={
+    reviewRequest:reviewDate,
+    deployStart:ms.deployStart||rt.schedule.deployStart,
+    deployComplete:ms.deployComplete||rt.schedule.deployComplete
+  };
   if(remote.lastUpdated){const d=new Date(remote.lastUpdated);document.getElementById('hMeta').textContent=`업데이트: ${d.toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})}`;}
-  renderKPI(rt,sch);renderStores(sch);renderTasks(rt);renderStages(rt);renderReview(sch);renderHistory();
-  document.getElementById('histYear').textContent=new Date().getFullYear()+'년';
+  renderKPI(rt,sch);
+  renderStores(sch);
+  renderTasks(rt);
+  renderTimeline();
+  renderHistory();
 }
 
-function renderKPI(rt,sch){
+function renderKPI(rt, sch){
+  // Current RT
   const rtNum=manual.rtNumber||rt.rtNumber;
   document.getElementById('kpiRT').textContent=rtNum;
+
+  // 현재단계: 다음 예정 단계 (오늘 이후 가장 가까운 단계)
   const stages=rt.stages||[];
-  const nextStage=stages.filter(s=>diff(s.date)!==null&&diff(s.date)>=0)[0];
+  const upcoming=stages.filter(s=>diff(s.date)!==null&&diff(s.date)>=0);
+  const nextStage=upcoming[0];
   const stageEl=document.getElementById('kpiStage');
   const stageSubEl=document.getElementById('kpiStageSub');
-  if(nextStage){stageEl.textContent=nextStage.name;stageSubEl.textContent=fmtFull(nextStage.date);}
-  else{stageEl.textContent='배포 완료';stageSubEl.textContent=sch.deployComplete?fmtFull(sch.deployComplete):'-';}
-  const card=document.getElementById('kpiDayCard');
+  const stageCard=document.getElementById('kpiStageCard');
+  if(nextStage){
+    stageEl.textContent=nextStage.name;
+    const n=diff(nextStage.date);
+    const ddStr=ddayStr(nextStage.date);
+    const ddCls=ddayCls(nextStage.date);
+    stageSubEl.innerHTML=`마감 ${fmtShort(nextStage.date)} <span class="dday ${ddCls}">${ddStr}</span>`;
+    stageCard.className='kpi-card';
+    if(n<=3&&n>=0)stageCard.className='kpi-card danger';
+    else if(n<=7&&n>=0)stageCard.className='kpi-card warning';
+  } else {
+    stageEl.textContent='배포 완료';
+    stageSubEl.textContent=sch.deployComplete?fmtFull(sch.deployComplete):'-';
+    stageCard.className='kpi-card';
+  }
+
+  // 심사요청 D-Day
+  const dCard=document.getElementById('kpiDayCard');
+  const ddN=diff(sch.reviewRequest);
   document.getElementById('kpiDday').textContent=ddayStr(sch.reviewRequest)||'-';
   document.getElementById('kpiDdaySub').textContent=sch.reviewRequest?`심사요청 ${fmtFull(sch.reviewRequest)}`:'-';
-  const n=diff(sch.reviewRequest);
-  card.className='kpi-card';
-  if(n!==null&&n<=3&&n>=0)card.className='kpi-card danger';
-  else if(n!==null&&n<=7&&n>=0)card.className='kpi-card warning';
-  const stores=manual.stores||{};
-  const allDone=STORES.every(sc=>stores[sc.key]?.status==='deploy_complete');
-  const anyDeploying=STORES.some(sc=>stores[sc.key]?.status==='deploying');
+  dCard.className='kpi-card';
+  if(ddN!==null&&ddN<=3&&ddN>=0)dCard.className='kpi-card danger';
+  else if(ddN!==null&&ddN<=7&&ddN>=0)dCard.className='kpi-card warning';
+  else if(ddN!==null&&ddN<0)dCard.className='kpi-card'; // 지난 경우
+
+  // 스토어 배포상태
   const storeEl=document.getElementById('kpiStore');
   const storeSubEl=document.getElementById('kpiStoreSub');
-  if(allDone){storeEl.textContent='배포완료';storeSubEl.textContent='전 스토어 배포 완료';}
-  else if(anyDeploying){storeEl.textContent='배포중';storeSubEl.textContent='점진 배포 진행 중';}
-  else{storeEl.textContent='심사중';storeSubEl.textContent='스토어 심사 진행 중';}
+  const storeCard=document.getElementById('kpiStoreCard');
+  const isBeforeReview=ddN===null||ddN>0; // 심사요청 전
+
+  if(isBeforeReview){
+    // 이전 버전의 배포상황 표출
+    const prevVer=getPrevDeployingVersion();
+    const prevNum=prevVer?prevVer.rtNumber:'';
+    const stores=manual.stores||{};
+    const allDone=STORES.every(sc=>stores[sc.key]?.status==='deploy_complete');
+    const anyDeploying=STORES.some(sc=>stores[sc.key]?.status==='deploying');
+    storeCard.className='kpi-card';
+    if(allDone){
+      storeEl.textContent=prevNum?`${prevNum}`:'배포완료';
+      storeSubEl.innerHTML=`${prevNum?prevNum+' ':''}배포완료`;
+    } else if(anyDeploying){
+      storeEl.textContent=prevNum||'배포중';
+      storeSubEl.innerHTML=`${prevNum?prevNum+' ':''}배포 진행중`;
+    } else {
+      storeEl.textContent=prevNum||'준비중';
+      storeSubEl.innerHTML=prevNum?`${prevNum} 배포 준비중`:'이전 버전 준비중';
+    }
+  } else {
+    // 현재 버전의 배포상황 표출
+    const stores=manual.stores||{};
+    const allDone=STORES.every(sc=>stores[sc.key]?.status==='deploy_complete');
+    const anyDeploying=STORES.some(sc=>stores[sc.key]?.status==='deploying');
+    storeCard.className='kpi-card';
+    if(allDone){storeEl.textContent='배포완료';storeSubEl.textContent=`${rtNum} 전 스토어 완료`;}
+    else if(anyDeploying){storeEl.textContent='배포중';storeSubEl.textContent=`${rtNum} 점진 배포 진행 중`;}
+    else{storeEl.textContent='심사중';storeSubEl.textContent=`${rtNum} 스토어 심사 진행 중`;}
+  }
+}
+
+function getPrevDeployingVersion(){
+  // history에서 deployStart가 있고 deployComplete가 없는 가장 최신 버전
+  const hist=remote.history||[];
+  return hist.find(h=>h.schedule.deployStart&&!h.schedule.deployComplete)
+      || hist.find(h=>h.schedule.reviewRequest&&toD(h.schedule.reviewRequest)<=today()&&!h.schedule.deployComplete)
+      || null;
 }
 
 function renderStores(sch){
-  document.getElementById('storesGrid').innerHTML=STORES.map(sc=>{
+  const isBeforeReview=(()=>{const n=diff(getReviewDate(remote.currentRT,manual.schedule||{}));return n===null||n>0;})();
+  document.getElementById('storeList').innerHTML=STORES.map(sc=>{
     const st=manual.stores?.[sc.key]||{};
-    const si=STATUS[st.status]||STATUS.review_requested;
+    const si=STATUS_MAP[st.status]||STATUS_MAP.review_requested;
     const rate=Math.min(100,Math.max(0,st.rate||0));
-    const circ=Math.round(rate*2.0106);
-    const verHtml=st.ver?`<span class="ver-code" title="${escHtml(st.ver)}">${escHtml(st.ver)}</span>`:'';
-    return `<div class="store-card">
-      <div class="store-header">
-        <div class="store-name-row"><span class="store-icon">${sc.icon}</span><span class="store-name">${sc.name}</span></div>
-        <span class="badge ${si.cls}">${si.label}</span>
-      </div>
+    const circ=Math.round(rate*2.2619); // 2*pi*r where r=36 → circumference=226.19
+    const verDisplay=st.ver||'';
+    return `<div class="store-item">
       <div class="donut-wrap">
-        <svg width="80" height="80" viewBox="0 0 80 80" style="position:absolute;inset:0">
-          <circle cx="40" cy="40" r="32" fill="none" stroke="${sc.track}" stroke-width="10"/>
-          <circle cx="40" cy="40" r="32" fill="none" stroke="${sc.color}" stroke-width="10"
-            stroke-dasharray="${circ} 200.96" stroke-linecap="round"
-            transform="rotate(-90 40 40)" style="transition:stroke-dasharray .4s ease"/>
+        <svg width="72" height="72" viewBox="0 0 72 72" style="position:absolute;inset:0">
+          <circle cx="36" cy="36" r="28" fill="none" stroke="${sc.track}" stroke-width="9"/>
+          <circle cx="36" cy="36" r="28" fill="none" stroke="${sc.color}" stroke-width="9"
+            stroke-dasharray="${circ} 175.93" stroke-linecap="round"
+            transform="rotate(-90 36 36)" style="transition:stroke-dasharray .4s ease"/>
         </svg>
         <div class="donut-center">
           <span class="donut-pct" style="color:${sc.color}">${rate}%</span>
           <span class="donut-lbl">배포율</span>
         </div>
       </div>
-      <div class="store-meta">
-        ${verHtml}
-        ${sch.deployStart?`<div style="font-size:12px;color:var(--text-muted);margin-top:6px">배포시작 ${fmtShort(sch.deployStart)}</div>`:''}
+      <div class="store-info">
+        <div class="store-name-row">
+          <span class="store-icon">${sc.icon}</span>
+          <span class="store-name">${sc.name}</span>
+          ${verDisplay?`<span class="store-ver">${escHtml(verDisplay)}</span>`:''}
+        </div>
+        <span class="badge ${si.cls}">${si.label}</span>
+        ${sch.deployStart&&!isBeforeReview?`<div style="font-size:11px;color:var(--text-muted);margin-top:3px">배포시작 ${fmtShort(sch.deployStart)}</div>`:''}
       </div>
     </div>`;
   }).join('');
 }
 
 function renderTasks(rt){
-  const tasks=(manual.tasks?manual.tasks.map(t=>typeof t==='string'?{name:t,ticketUrl:'',type:'',priority:''}:t):(rt.tasks||[]));
+  const rtNum=manual.rtNumber||rt.rtNumber;
+  document.getElementById('taskTitle').textContent=`${rtNum} 배포 과제`;
+  const tasks=(manual.tasks?manual.tasks.map(t=>typeof t==='string'?{name:t,ticketUrl:'',product:''}:t):(rt.tasks||[]));
+  document.getElementById('taskCount').textContent=`${tasks.length}건`;
+  const wikiUrl=rt.wikiUrl||'';
+  const wikiLink=document.getElementById('taskWikiLink');
+  if(wikiUrl){wikiLink.href=wikiUrl;wikiLink.classList.remove('disabled');}
+  else{wikiLink.href='#';wikiLink.classList.add('disabled');}
   const tbody=document.getElementById('taskBody');
-  if(!tasks.length){tbody.innerHTML=`<tr><td colspan="4" class="empty">등록된 과제가 없습니다</td></tr>`;return;}
+  if(!tasks.length){tbody.innerHTML=`<tr><td colspan="3" class="empty">등록된 과제가 없습니다</td></tr>`;return;}
   tbody.innerHTML=tasks.map(t=>{
     const name=typeof t==='string'?t:t.name;
     const url=(typeof t==='object'&&t.ticketUrl)?t.ticketUrl:'';
-    const type=(typeof t==='object'&&t.type)?t.type:'';
-    const prio=(typeof t==='object'&&t.priority==='필수');
+    const product=(typeof t==='object'&&t.product)?t.product:'';
     const nameHtml=url?`<a href="${url}" target="_blank" class="task-link">${escHtml(name)}</a>`:`<span class="task-link">${escHtml(name)}</span>`;
-    const typeHtml=type?`<span class="task-type-badge tb-${type}">${type}</span>`:'-';
-    const prioHtml=prio?`<span><span class="priority-dot"></span>필수</span>`:`<span style="color:var(--text-subtle)">-</span>`;
-    const linkHtml=url?`<a href="${url}" target="_blank" class="link-btn">Jira</a>`:`<span class="link-btn disabled">Jira</span>`;
-    return `<tr><td>${nameHtml}</td><td>${typeHtml}</td><td>${prioHtml}</td><td>${linkHtml}</td></tr>`;
+    const prodHtml=product?`<span class="product-tag">${escHtml(product)}</span>`:`<span style="color:var(--text-subtle)">-</span>`;
+    const linkHtml=url?`<a href="${url}" target="_blank" class="link-btn">Jira</a>`:`<span class="link-btn disabled">-</span>`;
+    return `<tr><td>${nameHtml}</td><td>${prodHtml}</td><td>${linkHtml}</td></tr>`;
   }).join('');
 }
 
-function renderStages(rt){
-  const list=document.getElementById('stageList');
-  const label=document.getElementById('stageLabel');
-  const panelLinks=document.getElementById('panelLinks');
-  const rtNum=manual.rtNumber||rt.rtNumber;
-  label.innerHTML=`<span class="badge badge-blue">${rtNum}</span>`;
-  const stages=rt.stages||[];
-  if(!stages.length){list.innerHTML=`<div class="empty" style="padding:12px">단계 정보가 없습니다</div>`;}
-  else{
-    list.innerHTML=stages.map(s=>{
-      const state=stepState(s.date);
-      const dotCls=state==='done'?'done':state==='active'?'active':state==='soon'?'soon':'';
-      const nameCls=state==='done'?'done':state==='active'?'active':'';
-      const dd=ddayStr(s.date);
-      const ddCls=ddayCls(s.date);
-      return `<div class="stage-item">
-        <div class="stage-dot ${dotCls}"></div>
-        <span class="stage-name ${nameCls}">${s.name}</span>
-        <span class="stage-date">${fmtShort(s.date)}</span>
-        ${dd?`<span class="stage-dday ${ddCls}">${dd}</span>`:''}
-      </div>`;
-    }).join('');
-  }
-  const qaUrl=manual.qaUrl||'';
-  const wikiUrl=rt.wikiUrl||'';
-  panelLinks.innerHTML=
-    (wikiUrl?`<a href="${wikiUrl}" target="_blank" class="link-btn">📄 위키</a>`:'')+
-    (qaUrl?`<a href="${qaUrl}" target="_blank" class="link-btn">🔗 QA 대시보드</a>`:`<span class="link-btn disabled">🔗 QA 대시보드</span>`);
-}
-
-function renderReview(sch){
-  const badge=document.getElementById('overallBadge');
-  const tl=document.getElementById('rvTimeline');
+function renderTimeline(){
+  const rt=remote.currentRT;
+  const hist=remote.history||[];
   const t=today();
-  let overallLabel,overallCls;
-  if(sch.deployComplete&&toD(sch.deployComplete)<=t){overallLabel='배포완료';overallCls='badge-green';}
-  else if(sch.deployStart&&toD(sch.deployStart)<=t){overallLabel='배포중';overallCls='badge-blue badge-pulse';}
-  else if(sch.reviewRequest&&toD(sch.reviewRequest)<=t){overallLabel='심사완료';overallCls='badge-amber';}
-  else{overallLabel='심사대기';overallCls='badge-gray';}
-  badge.innerHTML=`<span class="badge ${overallCls}">${overallLabel}</span>`;
-  const defs=[{icon:'📋',label:'심사요청',key:'reviewRequest'},{icon:'🚀',label:'배포시작',key:'deployStart'},{icon:'✅',label:'배포완료',key:'deployComplete'}];
-  tl.innerHTML=defs.map(def=>{
-    const dateStr=sch[def.key];
-    const d=toD(dateStr);
-    const isDone=d&&d<=t;
-    const dd=ddayStr(dateStr);
-    return `<div class="rv-row">
-      <div class="rv-icon ${isDone?'done':''}">${def.icon}</div>
-      <span class="rv-lbl ${isDone?'active':''}">${def.label}</span>
-      <span class="rv-date ${isDone?'active':''}">${dateStr?fmtFull(dateStr):'-'}</span>
-      ${dd?`<span class="badge ${isDone?'badge-green':'badge-blue'}" style="margin-left:6px;font-size:11px">${dd}</span>`:''}
+  const cutoff=new Date(t);cutoff.setDate(cutoff.getDate()-60); // 60일 전
+
+  // 현재 진행 중인 버전: deployComplete가 없는 것들
+  const active=[
+    {rt:rt,extra:true},
+    ...hist.filter(h=>!h.schedule.deployComplete).map(h=>({rt:h,extra:false}))
+  ];
+
+  const container=document.getElementById('tlContainer');
+  if(!active.length){container.innerHTML='<div class="empty">진행 중인 버전이 없습니다</div>';return;}
+
+  container.innerHTML=active.map(({rt:v,extra})=>{
+    const ms=extra?(manual.schedule||{}):{};
+    const reviewDate=getReviewDate(v,ms);
+    const rtNum=(extra&&manual.rtNumber)||v.rtNumber;
+
+    // 단계 필터링: 60일 이상 지난 단계 제외
+    let stages=v.stages||[];
+    stages=stages.filter(s=>{const d=toD(s.date);return!d||d>=cutoff;});
+
+    // stages가 없으면 심사/배포시작/완료를 합성
+    if(!stages.length){
+      const sch=v.schedule||{};
+      const synth=[];
+      if(sch.reviewRequest)synth.push({name:'심사요청',date:sch.reviewRequest});
+      if(sch.deployStart)synth.push({name:'배포시작',date:sch.deployStart});
+      if(sch.deployComplete)synth.push({name:'배포완료',date:sch.deployComplete});
+      stages=synth.filter(s=>{const d=toD(s.date);return!d||d>=cutoff;});
+    }
+
+    const wikiUrl=v.wikiUrl||'';
+    const qaUrl=(extra&&manual.qaUrl)||'';
+    const dd=ddayStr(reviewDate);
+    const ddC=ddayCls(reviewDate);
+
+    const stepsHtml=stages.length?stages.map((s,i)=>{
+      const n=diff(s.date);
+      const isDone=n!==null&&n<0;
+      const isNear=n!==null&&n>=0&&n<=7;
+      const dotCls=isDone?'done':isNear?'near':'';
+      const nameCls=isDone?'done':'';
+      const ddStep=ddayStr(s.date);
+      const connDone=isDone&&i<stages.length-1;
+      return `<div class="tl-step">
+        <div class="tl-dot ${dotCls}"></div>
+        <div class="tl-name ${nameCls}">${escHtml(s.name)}</div>
+        <div class="tl-date">${fmtShort(s.date)}${ddStep?` ${ddStep}`:''}</div>
+      </div>${i<stages.length-1?`<div class="tl-conn ${connDone?'done':''}"></div>`:''}`
+    }).join(''):'<span style="color:var(--text-subtle);font-size:12px;padding:4px 0">단계 정보 없음</span>';
+
+    return `<div class="tl-block">
+      <div class="tl-head">
+        <span class="tl-ver">${escHtml(rtNum)}</span>
+        ${reviewDate?`<span class="tl-review-info">심사요청 ${fmtFull(reviewDate)}</span>`:''}
+        ${dd?`<span class="dday ${ddC}">${dd}</span>`:''}
+        <div class="tl-links">
+          ${wikiUrl?`<a href="${wikiUrl}" target="_blank" class="link-btn">📄 위키</a>`:''}
+          ${qaUrl?`<a href="${qaUrl}" target="_blank" class="link-btn">🔗 QA</a>`:''}
+        </div>
+      </div>
+      <div class="tl-stages">${stepsHtml}</div>
     </div>`;
   }).join('');
 }
@@ -547,34 +625,34 @@ function renderHistory(){
   const all=[...(remote.history||[])];
   const t=today();
   if(!all.length){tbody.innerHTML=`<tr><td colspan="7" class="empty">히스토리 데이터가 없습니다</td></tr>`;return;}
-  all.forEach((rt,i)=>{
+  all.forEach((rv,i)=>{
     const eid=`exp${i}`;
-    const isFuture=rt.schedule.reviewRequest&&toD(rt.schedule.reviewRequest)>t;
-    const isDone=rt.schedule.deployComplete&&toD(rt.schedule.deployComplete)<=t;
+    const isFuture=rv.schedule.reviewRequest&&toD(rv.schedule.reviewRequest)>t;
+    const isDone=rv.schedule.deployComplete&&toD(rv.schedule.deployComplete)<=t;
     const dotCls=isFuture?'future':isDone?'done':'';
     const rowCls=isFuture?'future-row':'';
-    const wikiLink=isActiveWiki(rt)?`<a href="${rt.wikiUrl}" target="_blank" class="link-btn">📄</a>`:`<span class="link-btn disabled">📄</span>`;
-    const taskCount=(rt.tasks||[]).length;
-    const note=escHtml((manual.notes||{})[rt.rtNumber]||'');
+    const wikiLink=isActiveWiki(rv)?`<a href="${rv.wikiUrl}" target="_blank" class="link-btn">📄</a>`:`<span class="link-btn disabled">📄</span>`;
+    const taskCount=(rv.tasks||[]).length;
+    const note=escHtml((manual.notes||{})[rv.rtNumber]||'');
     const tr=document.createElement('tr');
     tr.className=rowCls;
     tr.innerHTML=`
-      <td><span class="rt-tag"><span class="rt-dot ${dotCls}"></span>${rt.rtNumber}</span></td>
-      <td class="dt">${fmtWithFuture(rt.schedule.reviewRequest)}</td>
-      <td class="dt">${fmtWithFuture(rt.schedule.deployStart)}</td>
-      <td class="dt">${fmtWithFuture(rt.schedule.deployComplete)}</td>
-      <td>${taskCount?`<button class="toggle-btn" onclick="toggleExp('${eid}',this)">과제 ${taskCount}건 ▾</button>`:'<span style="color:var(--text-subtle);font-size:12px">-</span>'}</td>
+      <td><span class="rt-tag"><span class="rt-dot ${dotCls}"></span>${rv.rtNumber}</span></td>
+      <td class="dt">${fmtWithFuture(rv.schedule.reviewRequest)}</td>
+      <td class="dt">${fmtWithFuture(rv.schedule.deployStart)}</td>
+      <td class="dt">${fmtWithFuture(rv.schedule.deployComplete)}</td>
+      <td>${taskCount?`<button class="toggle-btn" onclick="toggleExp('${eid}',this)">과제 ${taskCount}건 ▾</button>`:`<span style="color:var(--text-subtle);font-size:12px">-</span>`}</td>
       <td>${wikiLink}</td>
-      <td><input type="text" class="notes-input" value="${note}" placeholder="메모" oninput="saveNote('${rt.rtNumber.replace(/'/g,"\\'")}',this.value)"></td>
+      <td><input type="text" class="notes-input" value="${note}" placeholder="" oninput="saveNote('${rv.rtNumber.replace(/'/g,"\\'")}',this.value)"></td>
     `;
     tbody.appendChild(tr);
     if(taskCount){
       const exp=document.createElement('tr');
       exp.innerHTML=`<td colspan="7" style="padding:0;background:var(--bg)">
         <div class="exp-inner" id="${eid}">
-          ${(rt.tasks||[]).map(t=>{
-            const name=typeof t==='string'?t:t.name;
-            const url=typeof t==='object'&&t.ticketUrl?t.ticketUrl:'';
+          ${(rv.tasks||[]).map(tk=>{
+            const name=typeof tk==='string'?tk:tk.name;
+            const url=typeof tk==='object'&&tk.ticketUrl?tk.ticketUrl:'';
             return url?`<a href="${url}" target="_blank" class="task-chip">${escHtml(name)}</a>`:`<span class="task-chip">${escHtml(name)}</span>`;
           }).join('')}
         </div>
@@ -585,12 +663,12 @@ function renderHistory(){
 }
 
 function toggleExp(id,btn){const el=document.getElementById(id);const open=el.classList.toggle('open');btn.textContent=open?btn.textContent.replace('▾','▴'):btn.textContent.replace('▴','▾');}
-function saveNote(rtNumber,value){if(!manual.notes)manual.notes={};manual.notes[rtNumber]=value;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(manual));}catch(_){}}
+function saveNote(n,v){if(!manual.notes)manual.notes={};manual.notes[n]=v;saveManual();}
 
 function openModal(){
   const rt=remote.currentRT;
-  document.getElementById('f-rt').value=manual.rtNumber||rt.rtNumber||'';
   const ms=manual.schedule||{};
+  document.getElementById('f-rt').value=manual.rtNumber||rt.rtNumber||'';
   document.getElementById('f-d0').value=ms.reviewRequest||rt.schedule.reviewRequest||'';
   document.getElementById('f-d1').value=ms.deployStart||rt.schedule.deployStart||'';
   document.getElementById('f-d2').value=ms.deployComplete||rt.schedule.deployComplete||'';
@@ -615,8 +693,7 @@ function saveRT(){
   const raw=document.getElementById('f-tasks').value;
   manual.tasks=raw.split('\n').map(t=>t.trim()).filter(Boolean);
   manual.qaUrl=document.getElementById('f-qa-url').value.trim();
-  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(manual));}catch(_){}
-  render();closeModal();
+  saveManual();render();closeModal();
 }
 
 const EMBEDDED_DATA={
@@ -632,31 +709,46 @@ const EMBEDDED_DATA={
       {name:"심사 요청",date:"2026-06-23"}
     ],
     tasks:[
-      {name:"주차장 정보 모드",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/1209401347",type:"신규",priority:"필수"},
-      {name:"후면 카메라 대응 (구간단속, 종료점연장, 음성안내)",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/2207941020",type:"신규",priority:"필수"},
-      {name:"TBT, 차로정보의 비보호회전 표기",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/1975091700",type:"신규",priority:"필수"},
-      {name:"주행종료팝업 로그 추가 (MDP만 적재)",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28770",type:"운영",priority:""},
-      {name:"에이닷 VOC 검토를 위한 로그 삽입 작업",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27617",type:"운영",priority:""},
-      {name:"가로모드 고속도로모드 제보버튼 이슈 해결 (AOS)",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29210",type:"버그",priority:""}
+      {name:"주차장 정보 모드",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/1209401347",type:"신규",priority:"필수",product:""},
+      {name:"후면 카메라 대응 (구간단속 추가, 종료점연장, 음성안내 개선)",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/2207941020",type:"신규",priority:"필수",product:""},
+      {name:"TBT, 차로정보의 비보호회전 표기",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/1975091700",type:"신규",priority:"필수",product:""},
+      {name:"주행종료팝업 로그 추가 (MDP만 적재)",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28770",type:"운영",priority:"",product:""},
+      {name:"에이닷 VOC 검토를 위한 로그 삽입 작업",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27617",type:"운영",priority:"",product:""},
+      {name:"가로모드 고속도로모드 제보버튼 이슈 해결 (AOS)",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29210",type:"버그",priority:"",product:""}
     ],
     wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2424671196"
   },
   history:[
     {rtNumber:"v11.8.0",schedule:{reviewRequest:"2026-08-24",deployStart:null,deployComplete:null},
-     stages:[{name:"과제 취합",date:"2026-06-22"},{name:"상위 기획 개발 검토",date:"2026-06-29"},{name:"과제 우선순위 확정",date:"2026-07-01"},{name:"개발 협의",date:"2026-07-08"},{name:"개발 (+Sanity, Feature QA)",date:"2026-08-06"},{name:"QA",date:"2026-08-21"},{name:"심사 요청",date:"2026-08-24"}],
-     tasks:[{name:"주행중 검색 UIUX 개선 1차",ticketUrl:"https://tmobi.atlassian.net/browse/SCH-380",type:"신규",priority:"필수"},{name:"지도 통합 2차",ticketUrl:"https://tmobi.atlassian.net/browse/MAPSERVICE-191",type:"신규",priority:"필수"},{name:"차꾸미기 고도화",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/2603090086",type:"신규",priority:"필수"},{name:"루팅/에뮬레이터 탐지 도입",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28864",type:"신규",priority:""}],
+     stages:[{name:"과제 취합",date:"2026-06-22"},{name:"상위 기획 개발 검토",date:"2026-06-29"},{name:"과제 우선순위 확정",date:"2026-07-01"},{name:"개발 협의 (상세 기획 리뷰)",date:"2026-07-08"},{name:"m/d 산정",date:"2026-07-13"},{name:"진행 과제 최종 확정",date:"2026-07-15"},{name:"개발 (+Sanity, Feature QA)",date:"2026-08-06"},{name:"QA",date:"2026-08-21"},{name:"심사 요청",date:"2026-08-24"}],
+     tasks:[{name:"주행중 검색 UIUX 개선 1차",ticketUrl:"https://tmobi.atlassian.net/browse/SCH-380",type:"신규",priority:"필수",product:""},{name:"지도 통합 2차",ticketUrl:"https://tmobi.atlassian.net/browse/MAPSERVICE-191",type:"신규",priority:"필수",product:""},{name:"본인인증 전환 유도 플로우 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28635",type:"신규",priority:"필수",product:""},{name:"다크모드 컬러 추가/수정",ticketUrl:"https://tmobi.atlassian.net/browse/TMDS-108",type:"신규",priority:"필수",product:""},{name:"차꾸미기 고도화",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/2603090086",type:"신규",priority:"필수",product:""},{name:"대설, 태풍 SDI 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29537",type:"신규",priority:"필수",product:""},{name:"숏폼 피드 팔로우 버튼 및 스테이터스 기능",ticketUrl:"https://tmobi.atlassian.net/browse/SHORTFORM-498",type:"신규",priority:"",product:""},{name:"루팅/에뮬레이터 탐지 도입",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28864",type:"신규",priority:"",product:""},{name:"계단회피 경로 옵션 (도보)",ticketUrl:"https://tmobi.atlassian.net/wiki/x/GAFNjQ",type:"신규",priority:"",product:""}],
      wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2424637740"},
     {rtNumber:"v11.6.0",schedule:{reviewRequest:"2026-06-30",deployStart:null,deployComplete:null},
-     stages:[{name:"개발 (+Sanity, Feature QA)",date:"2026-06-05"},{name:"QA",date:"2026-06-29"},{name:"심사 요청",date:"2026-06-30"}],
-     tasks:[{name:"실시간 도보 따라가기 제공",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPONE-824",type:"신규",priority:"필수"},{name:"카바타 스토어",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28318",type:"신규",priority:"필수"},{name:"경로 재탐색 사용자 선택 기능",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27694",type:"신규",priority:"필수"}],
+     stages:[{name:"과제 취합",date:"2026-04-21"},{name:"상위 기획 개발 검토",date:"2026-04-28"},{name:"과제 우선순위 확정",date:"2026-04-30"},{name:"개발 협의 (상세 기획 리뷰)",date:"2026-05-12"},{name:"m/d 산정",date:"2026-05-15"},{name:"진행 과제 최종 확정",date:"2026-05-19"},{name:"개발 (+Sanity, Feature QA)",date:"2026-06-05"},{name:"QA",date:"2026-06-29"},{name:"심사 요청",date:"2026-06-30"}],
+     tasks:[{name:"실시간 도보 따라가기 제공",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPONE-824",type:"신규",priority:"필수",product:""},{name:"지도 통합 2차 (개발)",ticketUrl:"https://tmobi.atlassian.net/browse/MAPSERVICE-191",type:"신규",priority:"",product:""},{name:"앱지면 공유하기 og태그 고도화",ticketUrl:"https://tmobi.atlassian.net/browse/POIDETAIL-780",type:"신규",priority:"",product:""},{name:"카카오 adfit SDK 업데이트",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29019",type:"운영",priority:"",product:""},{name:"카바타 스토어",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28318",type:"신규",priority:"필수",product:""},{name:"경로 재탐색 사용자 선택 기능",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27694",type:"신규",priority:"필수",product:""},{name:"고의사고다발구간 AI SDI 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27886",type:"신규",priority:"",product:""},{name:"WUW 모델 업데이트 (에이닷)",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9919",type:"운영",priority:"",product:""}],
      wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2426961937"},
-    {rtNumber:"v11.3.0",schedule:{reviewRequest:"2026-06-04",deployStart:"2026-06-09",deployComplete:null},stages:[],tasks:[{name:"소셜제보",ticketUrl:"https://tmobi.atlassian.net/browse/SOCREP-1",type:"신규",priority:"필수"},{name:"이동로그 인사이트탭",ticketUrl:"",type:"신규",priority:""}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2410043667"},
-    {rtNumber:"v11.3.2",schedule:{reviewRequest:"2026-06-12",deployStart:"2026-06-13",deployComplete:null},stages:[],tasks:[],wikiUrl:""},
-    {rtNumber:"v11.3.1",schedule:{reviewRequest:"2026-06-10",deployStart:"2026-06-11",deployComplete:null},stages:[],tasks:[],wikiUrl:""},
-    {rtNumber:"v11.2.3",schedule:{reviewRequest:"2026-05-18",deployStart:"2026-05-26",deployComplete:"2026-06-02"},stages:[],tasks:[],wikiUrl:""},
-    {rtNumber:"v11.2.2",schedule:{reviewRequest:"2026-05-13",deployStart:"2026-05-18",deployComplete:"2026-05-25"},stages:[],tasks:[{name:"CLIENTQA-9887",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9887",type:"버그",priority:""}],wikiUrl:""},
-    {rtNumber:"v11.2.0",schedule:{reviewRequest:"2026-04-17",deployStart:null,deployComplete:"2026-05-07"},stages:[],tasks:[{name:"사용자 참여형 제보 기능",ticketUrl:"https://tmobi.atlassian.net/browse/SOCREP-1",type:"신규",priority:"필수"},{name:"Google AdManager 360 SDK",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27507",type:"신규",priority:"필수"}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2180255678"},
-    {rtNumber:"v11.1.0",schedule:{reviewRequest:"2026-03-31",deployStart:"2026-04-13",deployComplete:"2026-04-23"},stages:[],tasks:[{name:"홈 화면 내 지도 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27496",type:"신규",priority:"필수"},{name:"오픈 프로필 런칭",ticketUrl:"",type:"신규",priority:""}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/1552712015"}
+    {rtNumber:"v11.3.0",schedule:{reviewRequest:"2026-06-04",deployStart:"2026-06-09",deployComplete:null},stages:[],
+     tasks:[{name:"사용자 참여형 소셜 제보",ticketUrl:"https://tmobi.atlassian.net/browse/SOCREP-1",type:"신규",priority:"필수",product:""},{name:"이동로그 인사이트탭",ticketUrl:"https://tmobi.atlassian.net/browse/MOVING-32",type:"신규",priority:"",product:""},{name:"주행중 어디갈까 고도화",ticketUrl:"https://tmobi.atlassian.net/browse/TPLACEHOME-922",type:"신규",priority:"",product:""},{name:"주행 종료 팝업 CPM 광고 연동",ticketUrl:"https://tmobi.atlassian.net/browse/LOCALSVC-478",type:"신규",priority:"",product:""}],
+     wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2410043667"},
+    {rtNumber:"v11.3.2",schedule:{reviewRequest:"2026-06-12",deployStart:"2026-06-13",deployComplete:null},stages:[],tasks:[],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
+    {rtNumber:"v11.3.1",schedule:{reviewRequest:"2026-06-10",deployStart:"2026-06-11",deployComplete:null},stages:[],tasks:[],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
+    {rtNumber:"v11.2.3",schedule:{reviewRequest:"2026-05-18",deployStart:"2026-05-26",deployComplete:"2026-06-02"},stages:[],
+     tasks:[{name:"MDC+ 후속 개선",ticketUrl:"",type:"운영",priority:"",product:""}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
+    {rtNumber:"v11.2.2",schedule:{reviewRequest:"2026-05-13",deployStart:"2026-05-18",deployComplete:"2026-05-25"},stages:[],
+     tasks:[{name:"CLIENTQA-9887",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9887",type:"버그",priority:"",product:""},{name:"TMAPCLIENT-29141",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29141",type:"버그",priority:"",product:""}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
+    {rtNumber:"v11.2.1",schedule:{reviewRequest:"2026-05-08",deployStart:null,deployComplete:"2026-05-13"},stages:[],
+     tasks:[{name:"TMAPCLIENT-23923",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-23923",type:"버그",priority:"",product:""}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
+    {rtNumber:"v11.2.0",schedule:{reviewRequest:"2026-04-17",deployStart:null,deployComplete:"2026-05-07"},stages:[],
+     tasks:[{name:"사용자 참여형 제보 기능/서비스 개발",ticketUrl:"https://tmobi.atlassian.net/browse/SOCREP-1",type:"신규",priority:"필수",product:""},{name:"Google AdManager 360 SDK 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27507",type:"신규",priority:"필수",product:""},{name:"[이동로그] 유입 지점 개발",ticketUrl:"https://tmobi.atlassian.net/browse/MOVING-32",type:"신규",priority:"",product:""},{name:"분기 후 합류되는 도로정보 안내",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPBIZ-506",type:"신규",priority:"",product:""},{name:"주행중 > 에이닷 UI 개선",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9267",type:"신규",priority:"",product:""}],
+     wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2180255678"},
+    {rtNumber:"v11.1.3",schedule:{reviewRequest:"2026-04-28",deployStart:null,deployComplete:"2026-05-01"},stages:[],
+     tasks:[{name:"TMAPCLIENT-29016",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29016",type:"버그",priority:"",product:""}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
+    {rtNumber:"v11.1.2",schedule:{reviewRequest:"2026-04-15",deployStart:null,deployComplete:"2026-04-20"},stages:[],
+     tasks:[{name:"TMAPCLIENT-28654",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28654",type:"버그",priority:"",product:""}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
+    {rtNumber:"v11.1.1",schedule:{reviewRequest:"2026-04-10",deployStart:null,deployComplete:"2026-04-13"},stages:[],tasks:[],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
+    {rtNumber:"v11.1.0",schedule:{reviewRequest:"2026-03-31",deployStart:"2026-04-13",deployComplete:"2026-04-23"},stages:[],
+     tasks:[{name:"홈 화면 내 지도 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27496",type:"신규",priority:"필수",product:""},{name:"오픈 프로필 런칭",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPWEB-4425",type:"신규",priority:"",product:""},{name:"경로요약 화면 개선 및 유고정보 제공",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-25332",type:"신규",priority:"",product:""},{name:"안심운전모드 구간단속 잔여거리/시간 표기",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-26517",type:"신규",priority:"",product:""},{name:"차로정보 V2 적용",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-26606",type:"신규",priority:"",product:""},{name:"현위치/나침반 동작 사용성 개선",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPONE-810",type:"신규",priority:"",product:""}],
+     wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/1552712015"}
   ]
 };
 init();
