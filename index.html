@@ -104,26 +104,36 @@
     .link-btn:hover{background:var(--primary-light);border-color:var(--primary-border);color:var(--primary)}
     .link-btn.disabled{opacity:.25;pointer-events:none}
 
-    /* Timeline */
+    /* Timeline — redesigned */
     .tl-section{margin-bottom:16px}
     .tl-block{background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow-sm);margin-bottom:10px;overflow:hidden}
-    .tl-head{display:flex;align-items:center;gap:10px;padding:11px 18px;border-bottom:1px solid var(--border-light);flex-wrap:wrap}
-    .tl-ver{font-size:14px;font-weight:800;letter-spacing:-.3px}
-    .tl-review-info{font-size:12px;color:var(--text-muted)}
+    .tl-head{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--border-light)}
+    .tl-ver{font-size:15px;font-weight:800;letter-spacing:-.3px}
     .tl-links{display:flex;gap:6px;margin-left:auto}
-    .tl-stages{display:flex;align-items:center;padding:12px 18px;overflow-x:auto;gap:0;scrollbar-width:thin}
-    .tl-step{display:flex;flex-direction:column;align-items:center;min-width:72px;flex-shrink:0;position:relative}
-    .tl-dot{width:10px;height:10px;border-radius:50%;background:#D1D5DB;margin-bottom:5px;flex-shrink:0;transition:all .2s}
-    .tl-dot.done{background:var(--success)}
-    .tl-dot.active{background:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
-    .tl-dot.near{background:var(--amber)}
-    .tl-name{font-size:11px;color:var(--text-muted);text-align:center;line-height:1.3;max-width:68px;word-break:keep-all}
-    .tl-name.done{color:var(--text-subtle)}
-    .tl-name.active{color:var(--primary);font-weight:600}
-    .tl-date{font-size:10px;color:var(--text-subtle);margin-top:2px}
-    .tl-conn{flex:1;min-width:14px;height:2px;background:#E5E7EB;margin-bottom:20px;flex-shrink:1}
+    /* current stage banner */
+    .tl-curr-wrap{padding:10px 16px 10px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:10px}
+    .tl-curr-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+    .tl-curr-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:20px;font-size:13px;font-weight:700;background:var(--primary);color:#fff}
+    .tl-curr-pill.done-pill{background:var(--success)}
+    .tl-curr-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.6);animation:pulse 1.6s ease-in-out infinite}
+    .tl-curr-pill.done-pill::before{animation:none;background:rgba(255,255,255,.7)}
+    /* timeline rail */
+    .tl-stages{display:flex;align-items:center;padding:14px 18px 8px;overflow-x:auto;gap:0;scrollbar-width:thin}
+    .tl-step{display:flex;flex-direction:column;align-items:center;min-width:54px;flex-shrink:0}
+    .tl-node-done{width:22px;height:22px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
+    .tl-node-curr{padding:3px 8px;border-radius:20px;background:var(--primary);color:#fff;font-size:11px;font-weight:700;flex-shrink:0;white-space:nowrap}
+    .tl-node-next{width:18px;height:18px;border-radius:50%;border:2px solid #CBD5E1;background:#fff;flex-shrink:0}
+    .tl-sname{font-size:10px;color:var(--text-subtle);margin-top:5px;text-align:center;white-space:nowrap}
+    .tl-sname.s-done{color:var(--text-subtle)}
+    .tl-sname.s-curr{color:var(--primary);font-weight:600}
+    .tl-sdate{font-size:10px;color:#C4C9D4;margin-top:1px;text-align:center}
+    .tl-sdate.s-done{color:#B0B7BF}
+    .tl-sdate.s-curr{color:var(--primary)}
+    .tl-conn{flex:1;min-width:10px;height:2px;background:#E5E7EB;margin-bottom:26px;flex-shrink:1}
     .tl-conn.done{background:var(--success)}
-    .tl-no-stages{padding:12px 18px;font-size:13px;color:var(--text-muted)}
+    /* review date footer */
+    .tl-footer{display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:8px 18px 10px;border-top:1px solid var(--border-light);font-size:12px;color:var(--text-muted)}
+    .tl-footer strong{color:var(--text);font-weight:600}
 
     /* History */
     .hist-section{margin-bottom:0}
@@ -211,7 +221,7 @@
     </div>
     <div class="kpi-card" id="kpiStageCard">
       <div class="kpi-label">현재 단계</div>
-      <div class="kpi-value" style="font-size:16px;word-break:keep-all;line-height:1.3" id="kpiStage">-</div>
+      <div class="kpi-value" id="kpiStage">-</div>
       <div class="kpi-sub" id="kpiStageSub"></div>
     </div>
     <div class="kpi-card" id="kpiDayCard">
@@ -221,7 +231,7 @@
     </div>
     <div class="kpi-card" id="kpiStoreCard">
       <div class="kpi-label">스토어 배포 상태</div>
-      <div class="kpi-value" style="font-size:17px" id="kpiStore">-</div>
+      <div class="kpi-value" id="kpiStore">-</div>
       <div class="kpi-sub" id="kpiStoreSub"></div>
     </div>
   </div>
@@ -378,11 +388,28 @@ function saveManual(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(manual
 const toD=s=>s?new Date(s+'T00:00:00'):null;
 const today=()=>{const d=new Date();d.setHours(0,0,0,0);return d;};
 const pad=n=>String(n).padStart(2,'0');
+const DAYS=['일','월','화','수','목','금','토'];
 function fmtFull(s){const d=toD(s);if(!d)return'-';return`${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())}`;}
 function fmtShort(s){const d=toD(s);if(!d)return'-';return`${d.getMonth()+1}/${pad(d.getDate())}`;}
+function fmtMD(s){const d=toD(s);if(!d)return'-';return`${d.getMonth()+1}/${pad(d.getDate())}(${DAYS[d.getDay()]})`;}
 function diff(s){const d=toD(s);if(!d)return null;return Math.round((d-today())/86400000);}
 function ddayStr(s){const n=diff(s);if(n===null)return'';if(n<0)return`D+${Math.abs(n)}`;if(n===0)return'D-Day';return`D-${n}`;}
 function ddayCls(s){const n=diff(s);if(n===null)return'dd-future';if(n<0)return'dd-done';if(n===0)return'dd-today';if(n<=7)return'dd-near';return'dd-future';}
+function shortStageName(name){
+  const n=name.replace(/\s/g,'');
+  if(n.includes('취합'))return'취합';
+  if(n.includes('상위기획')||n.includes('상위기획개발'))return'상위기획';
+  if(n.includes('우선순위'))return'우선순위';
+  if(n.includes('개발협의'))return'개발협의';
+  if(n.includes('m/d')||n.includes('M/D')||n.toLowerCase().includes('m/d'))return'M/D';
+  if(n.includes('최종확정'))return'확정';
+  if(n.includes('개발'))return'개발';
+  if(n.includes('QA'))return'QA';
+  if(n.includes('심사'))return'심사';
+  if(n.includes('배포완료'))return'배포완료';
+  if(n.includes('배포시작')||n.includes('배포'))return'배포';
+  return name.split(' ')[0];
+}
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmtWithFuture(s){const d=toD(s);if(!d)return'-';return d>today()?`${fmtFull(s)}<span class="future-badge">예정</span>`:fmtFull(s);}
 function isActiveWiki(rt){if(!rt.wikiUrl)return false;if(rt.wikiUrl===HIST_WIKI)return false;return true;}
@@ -426,17 +453,17 @@ function renderKPI(rt, sch){
   const stageSubEl=document.getElementById('kpiStageSub');
   const stageCard=document.getElementById('kpiStageCard');
   if(nextStage){
-    stageEl.textContent=nextStage.name;
+    stageEl.textContent=shortStageName(nextStage.name);
     const n=diff(nextStage.date);
     const ddStr=ddayStr(nextStage.date);
     const ddCls=ddayCls(nextStage.date);
-    stageSubEl.innerHTML=`마감 ${fmtShort(nextStage.date)} <span class="dday ${ddCls}">${ddStr}</span>`;
+    stageSubEl.innerHTML=`마감 ${fmtMD(nextStage.date)} <span class="dday ${ddCls}">${ddStr}</span>`;
     stageCard.className='kpi-card';
     if(n<=3&&n>=0)stageCard.className='kpi-card danger';
     else if(n<=7&&n>=0)stageCard.className='kpi-card warning';
   } else {
     stageEl.textContent='배포 완료';
-    stageSubEl.textContent=sch.deployComplete?fmtFull(sch.deployComplete):'-';
+    stageSubEl.textContent=sch.deployComplete?fmtMD(sch.deployComplete):'-';
     stageCard.className='kpi-card';
   }
 
@@ -444,7 +471,7 @@ function renderKPI(rt, sch){
   const dCard=document.getElementById('kpiDayCard');
   const ddN=diff(sch.reviewRequest);
   document.getElementById('kpiDday').textContent=ddayStr(sch.reviewRequest)||'-';
-  document.getElementById('kpiDdaySub').textContent=sch.reviewRequest?`심사요청 ${fmtFull(sch.reviewRequest)}`:'-';
+  document.getElementById('kpiDdaySub').textContent=sch.reviewRequest?`심사요청 ${fmtMD(sch.reviewRequest)}`:'-';
   dCard.className='kpi-card';
   if(ddN!==null&&ddN<=3&&ddN>=0)dCard.className='kpi-card danger';
   else if(ddN!==null&&ddN<=7&&ddN>=0)dCard.className='kpi-card warning';
@@ -553,10 +580,9 @@ function renderTasks(rt){
 function renderTimeline(){
   const rt=remote.currentRT;
   const hist=remote.history||[];
-  const t=today();
-  const cutoff=new Date(t);cutoff.setDate(cutoff.getDate()-60); // 60일 전
+  const cutoff=new Date(today());cutoff.setDate(cutoff.getDate()-60);
 
-  // 현재 진행 중인 버전: deployComplete가 없는 것들
+  // 배포완료(deployComplete 있음)된 버전은 제외
   const active=[
     {rt:rt,extra:true},
     ...hist.filter(h=>!h.schedule.deployComplete).map(h=>({rt:h,extra:false}))
@@ -570,11 +596,11 @@ function renderTimeline(){
     const reviewDate=getReviewDate(v,ms);
     const rtNum=(extra&&manual.rtNumber)||v.rtNumber;
 
-    // 단계 필터링: 60일 이상 지난 단계 제외
     let stages=v.stages||[];
+    // 60일 이전 단계 제외
     stages=stages.filter(s=>{const d=toD(s.date);return!d||d>=cutoff;});
 
-    // stages가 없으면 심사/배포시작/완료를 합성
+    // stages 없으면 schedule에서 합성
     if(!stages.length){
       const sch=v.schedule||{};
       const synth=[];
@@ -584,37 +610,76 @@ function renderTimeline(){
       stages=synth.filter(s=>{const d=toD(s.date);return!d||d>=cutoff;});
     }
 
+    // 현재 단계: 오늘 이후 가장 가까운 단계 (diff >= 0)
+    const currIdx=stages.findIndex(s=>diff(s.date)!==null&&diff(s.date)>=0);
+    const currStage=currIdx>=0?stages[currIdx]:null;
+    const allDoneStages=currIdx<0&&stages.length>0;
+
     const wikiUrl=v.wikiUrl||'';
     const qaUrl=(extra&&manual.qaUrl)||'';
     const dd=ddayStr(reviewDate);
     const ddC=ddayCls(reviewDate);
 
+    // 현재단계 pill
+    let currPillHtml='';
+    if(currStage){
+      const shortName=shortStageName(currStage.name);
+      currPillHtml=`<span class="tl-curr-pill">${shortName} 진행중</span>`;
+    } else if(allDoneStages){
+      currPillHtml=`<span class="tl-curr-pill done-pill">배포 준비</span>`;
+    } else {
+      currPillHtml=`<span class="tl-curr-pill done-pill">완료</span>`;
+    }
+
+    // 타임라인 노드
     const stepsHtml=stages.length?stages.map((s,i)=>{
       const n=diff(s.date);
       const isDone=n!==null&&n<0;
-      const isNear=n!==null&&n>=0&&n<=7;
-      const dotCls=isDone?'done':isNear?'near':'';
-      const nameCls=isDone?'done':'';
-      const ddStep=ddayStr(s.date);
-      const connDone=isDone&&i<stages.length-1;
+      const isCurr=i===currIdx;
+      const connDone=isDone&&!isCurr&&i<stages.length-1;
+      const shortName=shortStageName(s.name);
+      let nodeHtml,nameCls,dateCls;
+      if(isDone){
+        nodeHtml=`<div class="tl-node-done">✓</div>`;
+        nameCls='s-done';dateCls='s-done';
+      } else if(isCurr){
+        nodeHtml=`<div class="tl-node-curr">${shortName}</div>`;
+        nameCls='s-curr';dateCls='s-curr';
+      } else {
+        nodeHtml=`<div class="tl-node-next"></div>`;
+        nameCls='';dateCls='';
+      }
+      const dateStr=fmtShort(s.date);
+      const ddStep=isCurr?ddayStr(s.date):'';
       return `<div class="tl-step">
-        <div class="tl-dot ${dotCls}"></div>
-        <div class="tl-name ${nameCls}">${escHtml(s.name)}</div>
-        <div class="tl-date">${fmtShort(s.date)}${ddStep?` ${ddStep}`:''}</div>
+        ${nodeHtml}
+        ${!isCurr?`<div class="tl-sname ${nameCls}">${escHtml(shortName)}</div>`:'<div class="tl-sname s-curr" style="visibility:hidden">.</div>'}
+        <div class="tl-sdate ${dateCls}">${dateStr}${ddStep?`<br><span style="color:var(--primary);font-weight:600">${ddStep}</span>`:''}</div>
       </div>${i<stages.length-1?`<div class="tl-conn ${connDone?'done':''}"></div>`:''}`
-    }).join(''):'<span style="color:var(--text-subtle);font-size:12px;padding:4px 0">단계 정보 없음</span>';
+    }).join(''):'<span style="color:var(--text-subtle);font-size:12px">단계 정보 없음</span>';
+
+    // footer
+    const footerHtml=reviewDate?`
+      <div class="tl-footer">
+        <span>심사요청 ${allDoneStages||!currStage?'':'예정'}</span>
+        <strong>${fmtMD(reviewDate)}</strong>
+        ${dd?`<span class="dday ${ddC}" style="font-size:11px">${dd}</span>`:''}
+      </div>`:'';
 
     return `<div class="tl-block">
       <div class="tl-head">
         <span class="tl-ver">${escHtml(rtNum)}</span>
-        ${reviewDate?`<span class="tl-review-info">심사요청 ${fmtFull(reviewDate)}</span>`:''}
-        ${dd?`<span class="dday ${ddC}">${dd}</span>`:''}
         <div class="tl-links">
           ${wikiUrl?`<a href="${wikiUrl}" target="_blank" class="link-btn">📄 위키</a>`:''}
           ${qaUrl?`<a href="${qaUrl}" target="_blank" class="link-btn">🔗 QA</a>`:''}
         </div>
       </div>
+      <div class="tl-curr-wrap">
+        <span class="tl-curr-label">현재 단계</span>
+        ${currPillHtml}
+      </div>
       <div class="tl-stages">${stepsHtml}</div>
+      ${footerHtml}
     </div>`;
   }).join('');
 }
