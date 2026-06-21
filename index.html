@@ -118,18 +118,20 @@
     .tl-curr-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.6);animation:pulse 1.6s ease-in-out infinite}
     .tl-curr-pill.done-pill::before{animation:none;background:rgba(255,255,255,.7)}
     /* timeline rail */
-    .tl-stages{display:flex;align-items:center;padding:14px 18px 8px;overflow-x:auto;gap:0;scrollbar-width:thin}
+    .tl-stages{display:flex;align-items:flex-start;padding:14px 18px 8px;overflow-x:auto;gap:0;scrollbar-width:thin}
     .tl-step{display:flex;flex-direction:column;align-items:center;min-width:54px;flex-shrink:0}
+    .tl-node-wrap{height:26px;display:flex;align-items:center;justify-content:center}
     .tl-node-done{width:22px;height:22px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
     .tl-node-curr{padding:3px 8px;border-radius:20px;background:var(--primary);color:#fff;font-size:11px;font-weight:700;flex-shrink:0;white-space:nowrap}
     .tl-node-next{width:18px;height:18px;border-radius:50%;border:2px solid #CBD5E1;background:#fff;flex-shrink:0}
-    .tl-sname{font-size:10px;color:var(--text-subtle);margin-top:5px;text-align:center;white-space:nowrap}
+    .tl-sname{font-size:10px;color:var(--text-subtle);margin-top:4px;text-align:center;white-space:nowrap;height:14px;line-height:14px}
     .tl-sname.s-done{color:var(--text-subtle)}
     .tl-sname.s-curr{color:var(--primary);font-weight:600}
-    .tl-sdate{font-size:10px;color:#C4C9D4;margin-top:1px;text-align:center}
+    .tl-sdate{font-size:10px;color:#C4C9D4;margin-top:1px;text-align:center;height:13px;line-height:13px}
     .tl-sdate.s-done{color:#B0B7BF}
     .tl-sdate.s-curr{color:var(--primary)}
-    .tl-conn{flex:1;min-width:10px;height:2px;background:#E5E7EB;margin-bottom:26px;flex-shrink:1}
+    .tl-sdday{font-size:10px;font-weight:600;color:var(--primary);height:14px;line-height:14px;margin-top:1px;text-align:center}
+    .tl-conn{flex:1;min-width:10px;height:2px;background:#E5E7EB;margin-top:13px;flex-shrink:1}
     .tl-conn.done{background:var(--success)}
     /* review date footer */
     .tl-footer{display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:8px 18px 10px;border-top:1px solid var(--border-light);font-size:12px;color:var(--text-muted)}
@@ -139,7 +141,9 @@
     .hist-section{margin-bottom:0}
     .htable{width:100%;border-collapse:collapse}
     .htable thead th{text-align:left;padding:9px 14px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;background:var(--bg);border-bottom:1px solid var(--border)}
-    .htable td{padding:10px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle;font-size:13px}
+    .htable td{padding:8px 14px;border-bottom:1px solid var(--border-light);vertical-align:middle;font-size:13px;white-space:nowrap}
+    .htable td:first-child{white-space:normal}
+    .htable thead th{white-space:nowrap}
     .htable tr:hover td{background:#FAFAFA}
     .htable tr.future-row td{background:var(--primary-light)}
     .htable tr.future-row:hover td{background:#DBEAFE}
@@ -254,7 +258,7 @@
             <span class="card-title" id="taskTitle">배포 과제</span>
             <span class="badge badge-blue" id="taskCount" style="font-size:11px"></span>
           </div>
-          <a id="taskWikiLink" href="#" target="_blank" class="link-btn disabled">📄 위키</a>
+          <a id="taskWikiLink" href="#" target="_blank" class="link-btn disabled">📄 과제리스트</a>
         </div>
         <table class="task-table">
           <thead><tr>
@@ -285,7 +289,7 @@
           <th>배포시작</th>
           <th>배포완료</th>
           <th>배포과제</th>
-          <th style="width:68px">문서</th>
+          <th style="width:80px">과제리스트</th>
           <th style="width:150px">비고</th>
         </tr></thead>
         <tbody id="histBody"></tbody>
@@ -412,8 +416,13 @@ function shortStageName(name){
 }
 function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmtWithFuture(s){const d=toD(s);if(!d)return'-';return d>today()?`${fmtFull(s)}<span class="future-badge">예정</span>`:fmtFull(s);}
-function isActiveWiki(rt){if(!rt.wikiUrl)return false;if(rt.wikiUrl===HIST_WIKI)return false;return true;}
+function isActiveWiki(rt){return !!rt.wikiUrl;}
 const HIST_WIKI='https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389';
+function isTaskConfirmed(rt){
+  const s=(rt.stages||[]).find(s=>s.name.replace(/\s/g,'').includes('최종확정'));
+  if(!s)return (rt.tasks||[]).length>0;
+  return diff(s.date)!==null&&diff(s.date)<0;
+}
 
 // stages에서 "심사 요청" 단계의 날짜를 자동 추출
 function getReviewDate(rt, ms){
@@ -477,39 +486,24 @@ function renderKPI(rt, sch){
   else if(ddN!==null&&ddN<=7&&ddN>=0)dCard.className='kpi-card warning';
   else if(ddN!==null&&ddN<0)dCard.className='kpi-card'; // 지난 경우
 
-  // 스토어 배포상태
+  // 스토어 배포상태 — Store Release Status 기반 3단계
   const storeEl=document.getElementById('kpiStore');
   const storeSubEl=document.getElementById('kpiStoreSub');
   const storeCard=document.getElementById('kpiStoreCard');
-  const isBeforeReview=ddN===null||ddN>0; // 심사요청 전
-
-  if(isBeforeReview){
-    // 이전 버전의 배포상황 표출
-    const prevVer=getPrevDeployingVersion();
-    const prevNum=prevVer?prevVer.rtNumber:'';
-    const stores=manual.stores||{};
-    const allDone=STORES.every(sc=>stores[sc.key]?.status==='deploy_complete');
-    const anyDeploying=STORES.some(sc=>stores[sc.key]?.status==='deploying');
+  const stores=manual.stores||{};
+  const allDone=STORES.every(sc=>(stores[sc.key]?.status||'review_requested')==='deploy_complete');
+  const anyDeploying=STORES.some(sc=>{const s=stores[sc.key]?.status||'review_requested';return s==='deploying';});
+  storeCard.className='kpi-card';
+  if(allDone){
+    storeEl.textContent='배포완료';
+    storeSubEl.textContent=`${rtNum} 전 스토어 완료`;
     storeCard.className='kpi-card';
-    if(allDone){
-      storeEl.textContent=prevNum?`${prevNum}`:'배포완료';
-      storeSubEl.innerHTML=`${prevNum?prevNum+' ':''}배포완료`;
-    } else if(anyDeploying){
-      storeEl.textContent=prevNum||'배포중';
-      storeSubEl.innerHTML=`${prevNum?prevNum+' ':''}배포 진행중`;
-    } else {
-      storeEl.textContent=prevNum||'준비중';
-      storeSubEl.innerHTML=prevNum?`${prevNum} 배포 준비중`:'이전 버전 준비중';
-    }
+  } else if(anyDeploying){
+    storeEl.textContent='배포중';
+    storeSubEl.textContent=`${rtNum} 점진 배포 진행 중`;
   } else {
-    // 현재 버전의 배포상황 표출
-    const stores=manual.stores||{};
-    const allDone=STORES.every(sc=>stores[sc.key]?.status==='deploy_complete');
-    const anyDeploying=STORES.some(sc=>stores[sc.key]?.status==='deploying');
-    storeCard.className='kpi-card';
-    if(allDone){storeEl.textContent='배포완료';storeSubEl.textContent=`${rtNum} 전 스토어 완료`;}
-    else if(anyDeploying){storeEl.textContent='배포중';storeSubEl.textContent=`${rtNum} 점진 배포 진행 중`;}
-    else{storeEl.textContent='심사중';storeSubEl.textContent=`${rtNum} 스토어 심사 진행 중`;}
+    storeEl.textContent='심사요청';
+    storeSubEl.textContent=`${rtNum} 스토어 심사 진행 중`;
   }
 }
 
@@ -558,7 +552,9 @@ function renderStores(sch){
 function renderTasks(rt){
   const rtNum=manual.rtNumber||rt.rtNumber;
   document.getElementById('taskTitle').textContent=`${rtNum} 배포 과제`;
-  const tasks=(manual.tasks?manual.tasks.map(t=>typeof t==='string'?{name:t,ticketUrl:'',product:''}:t):(rt.tasks||[]));
+  // manual.tasks 문자열이면 rt.tasks의 동일 이름 항목으로 대체 (product/ticketUrl 유지)
+  const rtTaskMap=Object.fromEntries((rt.tasks||[]).map(t=>[t.name,t]));
+  const tasks=(manual.tasks?manual.tasks.map(t=>typeof t==='string'?(rtTaskMap[t]||{name:t,ticketUrl:'',product:''}):(t)):(rt.tasks||[]));
   document.getElementById('taskCount').textContent=`${tasks.length}건`;
   const wikiUrl=rt.wikiUrl||'';
   const wikiLink=document.getElementById('taskWikiLink');
@@ -572,7 +568,8 @@ function renderTasks(rt){
     const product=(typeof t==='object'&&t.product)?t.product:'';
     const nameHtml=url?`<a href="${url}" target="_blank" class="task-link">${escHtml(name)}</a>`:`<span class="task-link">${escHtml(name)}</span>`;
     const prodHtml=product?`<span class="product-tag">${escHtml(product)}</span>`:`<span style="color:var(--text-subtle)">-</span>`;
-    const linkHtml=url?`<a href="${url}" target="_blank" class="link-btn">Jira</a>`:`<span class="link-btn disabled">-</span>`;
+    const isJira=url&&url.includes('/browse/');
+    const linkHtml=url?`<a href="${url}" target="_blank" class="link-btn">${isJira?'Jira':'Wiki'}</a>`:`<span class="link-btn disabled">-</span>`;
     return `<tr><td>${nameHtml}</td><td>${prodHtml}</td><td>${linkHtml}</td></tr>`;
   }).join('');
 }
@@ -582,11 +579,13 @@ function renderTimeline(){
   const hist=remote.history||[];
   const cutoff=new Date(today());cutoff.setDate(cutoff.getDate()-60);
 
-  // 배포완료(deployComplete 있음)된 버전은 제외
+  // 배포완료(deployComplete 있음)된 버전은 제외, 버전 번호 오름차순 정렬
   const active=[
     {rt:rt,extra:true},
     ...hist.filter(h=>!h.schedule.deployComplete).map(h=>({rt:h,extra:false}))
   ];
+  const parseVer=v=>v.rtNumber.replace('v','').split('.').map(Number);
+  active.sort((a,b)=>{const va=parseVer(a.rt),vb=parseVer(b.rt);for(let i=0;i<3;i++){if((va[i]||0)!==(vb[i]||0))return (va[i]||0)-(vb[i]||0);}return 0;});
 
   const container=document.getElementById('tlContainer');
   if(!active.length){container.innerHTML='<div class="empty">진행 중인 버전이 없습니다</div>';return;}
@@ -636,7 +635,7 @@ function renderTimeline(){
       const n=diff(s.date);
       const isDone=n!==null&&n<0;
       const isCurr=i===currIdx;
-      const connDone=isDone&&!isCurr&&i<stages.length-1;
+      const connDone=isDone&&i<stages.length-1;
       const shortName=shortStageName(s.name);
       let nodeHtml,nameCls,dateCls;
       if(isDone){
@@ -649,12 +648,12 @@ function renderTimeline(){
         nodeHtml=`<div class="tl-node-next"></div>`;
         nameCls='';dateCls='';
       }
-      const dateStr=fmtShort(s.date);
       const ddStep=isCurr?ddayStr(s.date):'';
       return `<div class="tl-step">
-        ${nodeHtml}
-        ${!isCurr?`<div class="tl-sname ${nameCls}">${escHtml(shortName)}</div>`:'<div class="tl-sname s-curr" style="visibility:hidden">.</div>'}
-        <div class="tl-sdate ${dateCls}">${dateStr}${ddStep?`<br><span style="color:var(--primary);font-weight:600">${ddStep}</span>`:''}</div>
+        <div class="tl-node-wrap">${nodeHtml}</div>
+        <div class="tl-sname ${nameCls}">${isCurr?'':escHtml(shortName)}</div>
+        <div class="tl-sdate ${dateCls}">${fmtMD(s.date)}</div>
+        <div class="tl-sdday">${ddStep}</div>
       </div>${i<stages.length-1?`<div class="tl-conn ${connDone?'done':''}"></div>`:''}`
     }).join(''):'<span style="color:var(--text-subtle);font-size:12px">단계 정보 없음</span>';
 
@@ -666,12 +665,18 @@ function renderTimeline(){
         ${dd?`<span class="dday ${ddC}" style="font-size:11px">${dd}</span>`:''}
       </div>`:'';
 
+    // QA 링크: currentRT는 항상 버튼 노출 (qaUrl 없으면 dimmed → 클릭 시 편집 모달)
+    const qaBtn=extra
+      ?(qaUrl?`<a href="${qaUrl}" target="_blank" class="link-btn">🔗 QA</a>`
+              :`<button class="link-btn" style="opacity:.45" onclick="openModal()" title="QA 링크 설정">🔗 QA</button>`)
+      :'';
+
     return `<div class="tl-block">
       <div class="tl-head">
         <span class="tl-ver">${escHtml(rtNum)}</span>
         <div class="tl-links">
-          ${wikiUrl?`<a href="${wikiUrl}" target="_blank" class="link-btn">📄 위키</a>`:''}
-          ${qaUrl?`<a href="${qaUrl}" target="_blank" class="link-btn">🔗 QA</a>`:''}
+          ${wikiUrl?`<a href="${wikiUrl}" target="_blank" class="link-btn">📄 과제리스트</a>`:''}
+          ${qaBtn}
         </div>
       </div>
       <div class="tl-curr-wrap">
@@ -696,8 +701,9 @@ function renderHistory(){
     const isDone=rv.schedule.deployComplete&&toD(rv.schedule.deployComplete)<=t;
     const dotCls=isFuture?'future':isDone?'done':'';
     const rowCls=isFuture?'future-row':'';
-    const wikiLink=isActiveWiki(rv)?`<a href="${rv.wikiUrl}" target="_blank" class="link-btn">📄</a>`:`<span class="link-btn disabled">📄</span>`;
-    const taskCount=(rv.tasks||[]).length;
+    const wikiLink=isActiveWiki(rv)?`<a href="${rv.wikiUrl}" target="_blank" class="link-btn">📄 과제리스트</a>`:`<span class="link-btn disabled">📄 과제리스트</span>`;
+    const taskConfirmed=isTaskConfirmed(rv);
+    const taskCount=taskConfirmed?(rv.tasks||[]).length:0;
     const note=escHtml((manual.notes||{})[rv.rtNumber]||'');
     const tr=document.createElement('tr');
     tr.className=rowCls;
@@ -775,8 +781,8 @@ const EMBEDDED_DATA={
     ],
     tasks:[
       {name:"주차장 정보 모드",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/1209401347",type:"신규",priority:"필수",product:"내비게이션"},
-      {name:"후면 카메라 대응 (구간단속 추가, 종료점연장, 음성안내 개선)",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/2207941020",type:"신규",priority:"필수",product:"내비게이션"},
-      {name:"TBT, 차로정보의 비보호회전 표기",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/1975091700",type:"신규",priority:"필수",product:"내비게이션"},
+      {name:"후면 카메라 대응 (구간단속 추가, 종료점연장, 음성안내 개선)",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27506",type:"신규",priority:"필수",product:"내비게이션"},
+      {name:"TBT, 차로정보의 비보호회전 표기",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28669",type:"신규",priority:"필수",product:"내비게이션"},
       {name:"주행종료팝업 로그 추가 (MDP만 적재)",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28770",type:"운영",priority:"",product:"주행종료팝업"},
       {name:"에이닷 VOC 검토를 위한 로그 삽입 작업",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27617",type:"운영",priority:"",product:"에이닷"},
       {name:"가로모드 고속도로모드 제보버튼 이슈 해결 (AOS)",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29210",type:"버그",priority:"",product:"소셜제보"}
@@ -793,7 +799,7 @@ const EMBEDDED_DATA={
      tasks:[{name:"실시간 도보 따라가기 제공",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPONE-824",type:"신규",priority:"필수",product:"도보 경로"},{name:"지도 통합 2차 (개발)",ticketUrl:"https://tmobi.atlassian.net/browse/MAPSERVICE-191",type:"신규",priority:"",product:"지도"},{name:"앱지면 공유하기 og태그 고도화",ticketUrl:"https://tmobi.atlassian.net/browse/POIDETAIL-780",type:"신규",priority:"",product:"장소상세"},{name:"카카오 adfit SDK 업데이트",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29019",type:"운영",priority:"",product:"광고"},{name:"카바타 스토어",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28318",type:"신규",priority:"필수",product:"내비게이션"},{name:"경로 재탐색 사용자 선택 기능",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27694",type:"신규",priority:"필수",product:"내비게이션"},{name:"고의사고다발구간 AI SDI 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27886",type:"신규",priority:"",product:"내비게이션"},{name:"WUW 모델 업데이트 (에이닷)",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9919",type:"운영",priority:"",product:"에이닷"}],
      wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2426961937"},
     {rtNumber:"v11.3.0",schedule:{reviewRequest:"2026-06-04",deployStart:"2026-06-09",deployComplete:null},stages:[],
-     tasks:[{name:"사용자 참여형 소셜 제보",ticketUrl:"https://tmobi.atlassian.net/browse/SOCREP-1",type:"신규",priority:"필수",product:"소셜제보"},{name:"이동로그 인사이트탭",ticketUrl:"https://tmobi.atlassian.net/browse/MOVING-32",type:"신규",priority:"",product:"이동로그"},{name:"주행중 어디갈까 고도화",ticketUrl:"https://tmobi.atlassian.net/browse/TPLACEHOME-922",type:"신규",priority:"",product:"Place"},{name:"주행 종료 팝업 CPM 광고 연동",ticketUrl:"https://tmobi.atlassian.net/browse/LOCALSVC-478",type:"신규",priority:"",product:"주행종료팝업"}],
+     tasks:[{name:"주행 종료 팝업 CPM 광고 연동",ticketUrl:"https://tmobi.atlassian.net/browse/LOCALSVC-478",type:"신규",priority:"",product:"주행종료팝업"}],
      wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2410043667"},
     {rtNumber:"v11.3.2",schedule:{reviewRequest:"2026-06-12",deployStart:"2026-06-13",deployComplete:null},stages:[],tasks:[],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
     {rtNumber:"v11.3.1",schedule:{reviewRequest:"2026-06-10",deployStart:"2026-06-11",deployComplete:null},stages:[],tasks:[],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
