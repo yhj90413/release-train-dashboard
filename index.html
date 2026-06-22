@@ -30,7 +30,7 @@
     .btn-edit:hover{background:var(--primary-hover)}
 
     .container{max-width:1280px;margin:0 auto;padding:24px 24px 48px}
-    .section-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px}
+    .section-label{font-size:13px;font-weight:700;color:var(--text);border-left:3px solid var(--primary);padding-left:10px;margin-bottom:12px}
 
     /* KPI */
     .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
@@ -123,6 +123,7 @@
     .tl-node-wrap{height:26px;display:flex;align-items:center;justify-content:center}
     .tl-node-done{width:22px;height:22px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
     .tl-node-curr{padding:3px 8px;border-radius:20px;background:var(--primary);color:#fff;font-size:11px;font-weight:700;flex-shrink:0;white-space:nowrap}
+    .tl-node-curr-dot{width:22px;height:22px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.18);flex-shrink:0}
     .tl-node-next{width:18px;height:18px;border-radius:50%;border:2px solid #CBD5E1;background:#fff;flex-shrink:0}
     .tl-sname{font-size:10px;color:var(--text-subtle);margin-top:4px;text-align:center;white-space:nowrap;height:14px;line-height:14px}
     .tl-sname.s-done{color:var(--text-subtle)}
@@ -258,7 +259,10 @@
             <span class="card-title" id="taskTitle">배포 과제</span>
             <span class="badge badge-blue" id="taskCount" style="font-size:11px"></span>
           </div>
-          <a id="taskWikiLink" href="#" target="_blank" class="link-btn disabled">📄 과제리스트</a>
+          <div style="display:flex;gap:6px">
+            <a id="taskQaLink" href="#" target="_blank" class="link-btn disabled">🔗 QA 대시보드</a>
+            <a id="taskWikiLink" href="#" target="_blank" class="link-btn disabled">📄</a>
+          </div>
         </div>
         <table class="task-table">
           <thead><tr>
@@ -486,24 +490,39 @@ function renderKPI(rt, sch){
   else if(ddN!==null&&ddN<=7&&ddN>=0)dCard.className='kpi-card warning';
   else if(ddN!==null&&ddN<0)dCard.className='kpi-card'; // 지난 경우
 
-  // 스토어 배포상태 — Store Release Status 기반 3단계
+  // 스토어 배포상태 — 심사요청 전이면 이전 버전 상태 표시
   const storeEl=document.getElementById('kpiStore');
   const storeSubEl=document.getElementById('kpiStoreSub');
   const storeCard=document.getElementById('kpiStoreCard');
   const stores=manual.stores||{};
   const allDone=STORES.every(sc=>(stores[sc.key]?.status||'review_requested')==='deploy_complete');
   const anyDeploying=STORES.some(sc=>{const s=stores[sc.key]?.status||'review_requested';return s==='deploying';});
+  const isBeforeReview=(ddN===null||ddN>0);
   storeCard.className='kpi-card';
-  if(allDone){
-    storeEl.textContent='배포완료';
-    storeSubEl.textContent=`${rtNum} 전 스토어 완료`;
-    storeCard.className='kpi-card';
-  } else if(anyDeploying){
-    storeEl.textContent='배포중';
-    storeSubEl.textContent=`${rtNum} 점진 배포 진행 중`;
+  if(isBeforeReview){
+    const prev=getPrevDeployingVersion();
+    const pv=prev?prev.rtNumber:'';
+    if(allDone){
+      storeEl.textContent=`${pv} 배포완료`.trim();
+      storeSubEl.textContent=`${pv} 전 스토어 완료`.trim();
+    } else if(anyDeploying){
+      storeEl.textContent=`${pv} 배포중`.trim();
+      storeSubEl.textContent=`${pv} 점진 배포 진행 중`.trim();
+    } else {
+      storeEl.textContent=`${pv} 심사요청`.trim();
+      storeSubEl.textContent=`${pv} 스토어 심사 진행 중`.trim();
+    }
   } else {
-    storeEl.textContent='심사요청';
-    storeSubEl.textContent=`${rtNum} 스토어 심사 진행 중`;
+    if(allDone){
+      storeEl.textContent=`${rtNum} 배포완료`;
+      storeSubEl.textContent=`${rtNum} 전 스토어 완료`;
+    } else if(anyDeploying){
+      storeEl.textContent=`${rtNum} 배포중`;
+      storeSubEl.textContent=`${rtNum} 점진 배포 진행 중`;
+    } else {
+      storeEl.textContent=`${rtNum} 심사요청`;
+      storeSubEl.textContent=`${rtNum} 스토어 심사 진행 중`;
+    }
   }
 }
 
@@ -560,6 +579,8 @@ function renderTasks(rt){
   const wikiLink=document.getElementById('taskWikiLink');
   if(wikiUrl){wikiLink.href=wikiUrl;wikiLink.classList.remove('disabled');}
   else{wikiLink.href='#';wikiLink.classList.add('disabled');}
+  const qaLink=document.getElementById('taskQaLink');
+  if(qaLink){const qu=manual.qaUrl||'';if(qu){qaLink.href=qu;qaLink.classList.remove('disabled');}else{qaLink.href='#';qaLink.classList.add('disabled');}}
   const tbody=document.getElementById('taskBody');
   if(!tasks.length){tbody.innerHTML=`<tr><td colspan="3" class="empty">등록된 과제가 없습니다</td></tr>`;return;}
   tbody.innerHTML=tasks.map(t=>{
@@ -642,7 +663,7 @@ function renderTimeline(){
         nodeHtml=`<div class="tl-node-done">✓</div>`;
         nameCls='s-done';dateCls='s-done';
       } else if(isCurr){
-        nodeHtml=`<div class="tl-node-curr">${shortName}</div>`;
+        nodeHtml=`<div class="tl-node-curr-dot"></div>`;
         nameCls='s-curr';dateCls='s-curr';
       } else {
         nodeHtml=`<div class="tl-node-next"></div>`;
@@ -651,7 +672,7 @@ function renderTimeline(){
       const ddStep=isCurr?ddayStr(s.date):'';
       return `<div class="tl-step">
         <div class="tl-node-wrap">${nodeHtml}</div>
-        <div class="tl-sname ${nameCls}">${isCurr?'':escHtml(shortName)}</div>
+        <div class="tl-sname ${nameCls}">${escHtml(shortName)}</div>
         <div class="tl-sdate ${dateCls}">${fmtMD(s.date)}</div>
         <div class="tl-sdday">${ddStep}</div>
       </div>${i<stages.length-1?`<div class="tl-conn ${connDone?'done':''}"></div>`:''}`
@@ -675,7 +696,7 @@ function renderTimeline(){
       <div class="tl-head">
         <span class="tl-ver">${escHtml(rtNum)}</span>
         <div class="tl-links">
-          ${wikiUrl?`<a href="${wikiUrl}" target="_blank" class="link-btn">📄 과제리스트</a>`:''}
+          ${wikiUrl?`<a href="${wikiUrl}" target="_blank" class="link-btn" title="과제리스트">📄</a>`:''}
           ${qaBtn}
         </div>
       </div>
@@ -701,7 +722,7 @@ function renderHistory(){
     const isDone=rv.schedule.deployComplete&&toD(rv.schedule.deployComplete)<=t;
     const dotCls=isFuture?'future':isDone?'done':'';
     const rowCls=isFuture?'future-row':'';
-    const wikiLink=isActiveWiki(rv)?`<a href="${rv.wikiUrl}" target="_blank" class="link-btn">📄 과제리스트</a>`:`<span class="link-btn disabled">📄 과제리스트</span>`;
+    const wikiLink=isActiveWiki(rv)?`<a href="${rv.wikiUrl}" target="_blank" class="link-btn" title="과제리스트">📄</a>`:`<span class="link-btn disabled">📄</span>`;
     const taskConfirmed=isTaskConfirmed(rv);
     const taskCount=taskConfirmed?(rv.tasks||[]).length:0;
     const note=escHtml((manual.notes||{})[rv.rtNumber]||'');
@@ -796,13 +817,13 @@ const EMBEDDED_DATA={
      wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2424637740"},
     {rtNumber:"v11.6.0",schedule:{reviewRequest:"2026-07-16",deployStart:null,deployComplete:null},
      stages:[{name:"과제 취합",date:"2026-04-21"},{name:"상위 기획 개발 검토",date:"2026-04-28"},{name:"과제 우선순위 확정",date:"2026-04-30"},{name:"개발 협의 (상세 기획 리뷰)",date:"2026-05-12"},{name:"m/d 산정",date:"2026-05-15"},{name:"진행 과제 최종 확정",date:"2026-05-19"},{name:"개발 (+Sanity, Feature QA)",date:"2026-07-01"},{name:"QA",date:"2026-07-15"},{name:"심사 요청",date:"2026-07-16"}],
-     tasks:[{name:"실시간 도보 따라가기 제공",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPONE-824",type:"신규",priority:"필수",product:"도보 경로"},{name:"지도 통합 2차 (개발)",ticketUrl:"https://tmobi.atlassian.net/browse/MAPSERVICE-191",type:"신규",priority:"",product:"지도"},{name:"앱지면 공유하기 og태그 고도화",ticketUrl:"https://tmobi.atlassian.net/browse/POIDETAIL-780",type:"신규",priority:"",product:"장소상세"},{name:"카카오 adfit SDK 업데이트",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29019",type:"운영",priority:"",product:"광고"},{name:"카바타 스토어",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28318",type:"신규",priority:"필수",product:"내비게이션"},{name:"경로 재탐색 사용자 선택 기능",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27694",type:"신규",priority:"필수",product:"내비게이션"},{name:"고의사고다발구간 AI SDI 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27886",type:"신규",priority:"",product:"내비게이션"},{name:"WUW 모델 업데이트 (에이닷)",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9919",type:"운영",priority:"",product:"에이닷"}],
+     tasks:[{name:"실시간 도보 따라가기 제공",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPONE-824",type:"신규",priority:"필수",product:"도보 경로"},{name:"지도 통합 2차",ticketUrl:"https://tmobi.atlassian.net/browse/MAPSERVICE-191",type:"신규",priority:"필수",product:"지도"},{name:"주행중 검색 UIUX 개선",ticketUrl:"https://tmobi.atlassian.net/browse/SCH-380",type:"신규",priority:"필수",product:"Biz&Search"},{name:"앱지면 공유하기 og태그 고도화",ticketUrl:"https://tmobi.atlassian.net/browse/POIDETAIL-780",type:"신규",priority:"",product:"장소상세"},{name:"카카오 adfit SDK 업데이트",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29019",type:"운영",priority:"",product:"광고"},{name:"홈 리뷰 영역 오픈프로필 연결점 마련",ticketUrl:"https://tmobi.atlassian.net/browse/AIM-301",type:"신규",priority:"",product:"홈"},{name:"하차알림 VoC 로그 수집 환경 검토",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPONE-845",type:"운영",priority:"",product:"대중교통"},{name:"카바타 스토어",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28318",type:"신규",priority:"필수",product:"내비게이션"},{name:"경로 재탐색 사용자 선택 기능",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27694",type:"신규",priority:"필수",product:"내비게이션"},{name:"고의사고다발구간 AI SDI 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27886",type:"신규",priority:"",product:"내비게이션"},{name:"D2S광고-GAM 연동",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29175",type:"신규",priority:"",product:"광고"},{name:"화면 기본방향 고정 activity 개선",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29106",type:"운영",priority:"",product:"공통"},{name:"에어브릿지 SDK device ID 전송 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPDRIVER-12371",type:"운영",priority:"",product:"대리"},{name:"WUW 모델 업데이트 (에이닷)",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9919",type:"운영",priority:"",product:"에이닷"},{name:"소셜제보 자동 팝업 On/Off 설정 지원",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29216",type:"신규",priority:"",product:"소셜제보"},{name:"Google AdManager eCPM 외부 네트워크 SDK 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29330",type:"신규",priority:"",product:"미션"},{name:"IOS 검색결과 랜딩 키패드 노출 오류",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29575",type:"버그",priority:"",product:"검색"},{name:"마이크로 내비 안내 음성 인입 수정",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9542",type:"버그",priority:"",product:"에이닷"}],
      wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2426961937"},
-    {rtNumber:"v11.3.0",schedule:{reviewRequest:"2026-06-04",deployStart:"2026-06-09",deployComplete:null},stages:[],
-     tasks:[{name:"주행 종료 팝업 CPM 광고 연동",ticketUrl:"https://tmobi.atlassian.net/browse/LOCALSVC-478",type:"신규",priority:"",product:"주행종료팝업"}],
+    {rtNumber:"v11.3.0",schedule:{reviewRequest:"2026-06-04",deployStart:"2026-06-09",deployComplete:"2026-06-11"},stages:[],
+     tasks:[{name:"실시간 도보 따라가기 제공",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPONE-824",type:"신규",priority:"필수",product:"도보 경로"},{name:"스플래시 스킨 적용",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28549",type:"신규",priority:"필수",product:"광고"},{name:"주행 종료 팝업 CPM 광고 연동",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-26195",type:"신규",priority:"필수",product:"주행 종료 팝업"},{name:"주행중 검색 UIUX 개선",ticketUrl:"https://tmobi.atlassian.net/browse/SCH-380",type:"신규",priority:"상",product:"Biz&Search"},{name:"지도 내 실시간 주행수 노출 추가 (N대 가는중)",ticketUrl:"https://tmobi.atlassian.net/browse/MAPSERVICE-173",type:"신규",priority:"필수",product:"지도"},{name:"스마트배너 UI 변경 (iOS)",ticketUrl:"https://tmobi.atlassian.net/browse/AIM-259",type:"신규",priority:"필수",product:"홈"},{name:"알림 설정 세분화 + 모인게이지 적재",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27440",type:"운영",priority:"필수",product:"Core"},{name:"알림 설정 세분화",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28166",type:"운영",priority:"필수",product:"Core"},{name:"주행 중 앱스킴/알림 진입 정책",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27404",type:"운영",priority:"필수",product:"공통"},{name:"에이닷 툴팁 즉시 등록 개선",ticketUrl:"https://tmobi.atlassian.net/wiki/spaces/TAIA/pages/2363719957",type:"운영",priority:"필수",product:"에이닷"},{name:"지도 내 광고 주기 클릭 로그 추가",ticketUrl:"https://tmobi.atlassian.net/browse/MAPSERVICE-170",type:"운영",priority:"필수",product:"지도"},{name:"지도 개선",ticketUrl:"https://tmobi.atlassian.net/browse/MAPSERVICE-186",type:"운영",priority:"필수",product:"지도"},{name:"홈 스마트배너 믹스패널 로그 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27499",type:"운영",priority:"필수",product:"홈"},{name:"주행 완료 팝업 모인게이지 커스텀 이벤트",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28879",type:"운영",priority:"필수",product:"Moengage"},{name:"사용자 발화 문자 읽기 오류 수정",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9028",type:"버그",priority:"필수",product:"에이닷"},{name:"광고 노출/클릭 트래킹 수정",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28265",type:"버그",priority:"필수",product:"광고"},{name:"광고 믹스패널 로그 수정",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28309",type:"버그",priority:"필수",product:"광고"}],
      wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2410043667"},
-    {rtNumber:"v11.3.2",schedule:{reviewRequest:"2026-06-12",deployStart:"2026-06-13",deployComplete:null},stages:[],tasks:[],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
-    {rtNumber:"v11.3.1",schedule:{reviewRequest:"2026-06-10",deployStart:"2026-06-11",deployComplete:null},stages:[],tasks:[],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
+    {rtNumber:"v11.3.2",schedule:{reviewRequest:"2026-06-12",deployStart:"2026-06-13",deployComplete:"2026-06-17"},stages:[],tasks:[],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
+    {rtNumber:"v11.3.1",schedule:{reviewRequest:"2026-06-10",deployStart:"2026-06-11",deployComplete:"2026-06-13"},stages:[],tasks:[],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
     {rtNumber:"v11.2.3",schedule:{reviewRequest:"2026-05-18",deployStart:"2026-05-26",deployComplete:"2026-06-02"},stages:[],
      tasks:[{name:"MDC+ 후속 개선",ticketUrl:"",type:"운영",priority:"",product:"Core"}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
     {rtNumber:"v11.2.2",schedule:{reviewRequest:"2026-05-13",deployStart:"2026-05-18",deployComplete:"2026-05-25"},stages:[],
@@ -810,7 +831,7 @@ const EMBEDDED_DATA={
     {rtNumber:"v11.2.1",schedule:{reviewRequest:"2026-05-08",deployStart:null,deployComplete:"2026-05-13"},stages:[],
      tasks:[{name:"TMAPCLIENT-23923",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-23923",type:"버그",priority:"",product:"내비게이션"}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
     {rtNumber:"v11.2.0",schedule:{reviewRequest:"2026-04-17",deployStart:null,deployComplete:"2026-05-07"},stages:[],
-     tasks:[{name:"사용자 참여형 제보 기능/서비스 개발",ticketUrl:"https://tmobi.atlassian.net/browse/SOCREP-1",type:"신규",priority:"필수",product:"소셜제보"},{name:"Google AdManager 360 SDK 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27507",type:"신규",priority:"필수",product:"광고"},{name:"[이동로그] 유입 지점 개발",ticketUrl:"https://tmobi.atlassian.net/browse/MOVING-32",type:"신규",priority:"",product:"이동로그"},{name:"분기 후 합류되는 도로정보 안내",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPBIZ-506",type:"신규",priority:"",product:"내비게이션"},{name:"주행중 > 에이닷 UI 개선",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9267",type:"신규",priority:"",product:"에이닷"}],
+     tasks:[{name:"사용자 참여형 제보 기능/서비스 개발",ticketUrl:"https://tmobi.atlassian.net/browse/SOCREP-1",type:"신규",priority:"필수",product:"소셜제보"},{name:"Google AdManager 360 SDK 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27507",type:"신규",priority:"필수",product:"광고"},{name:"[이동로그] 유입 지점 개발",ticketUrl:"https://tmobi.atlassian.net/browse/MOVING-32",type:"신규",priority:"필수",product:"이동로그"},{name:"티맵에 로플랫 SDK 탑재",ticketUrl:"https://tmobi.atlassian.net/browse/MOVING-2",type:"신규",priority:"필수",product:"이동로그"},{name:"분기 후 합류되는 도로정보 안내",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPBIZ-506",type:"신규",priority:"",product:"내비게이션"},{name:"설정메뉴에 누락된 로그 추가 및 로그 통일",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27983",type:"운영",priority:"",product:"공통"},{name:"에이닷 로그 추가 및 VOC 검토",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9047",type:"운영",priority:"필수",product:"에이닷"},{name:"주행중 에이닷 UI 개선",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9267",type:"신규",priority:"필수",product:"에이닷"},{name:"비정상 케이스 공통화면 노출 (AOS)",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28142",type:"운영",priority:"",product:"Core"},{name:"인증 이슈 발생시 표출 메세지 변경",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28237",type:"운영",priority:"",product:"기타"}],
      wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2180255678"},
     {rtNumber:"v11.1.3",schedule:{reviewRequest:"2026-04-28",deployStart:null,deployComplete:"2026-05-01"},stages:[],
      tasks:[{name:"TMAPCLIENT-29016",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-29016",type:"버그",priority:"",product:"내비게이션"}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
@@ -818,7 +839,7 @@ const EMBEDDED_DATA={
      tasks:[{name:"TMAPCLIENT-28654",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-28654",type:"버그",priority:"",product:"내비게이션"}],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
     {rtNumber:"v11.1.1",schedule:{reviewRequest:"2026-04-10",deployStart:null,deployComplete:"2026-04-13"},stages:[],tasks:[],wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"},
     {rtNumber:"v11.1.0",schedule:{reviewRequest:"2026-03-31",deployStart:"2026-04-13",deployComplete:"2026-04-23"},stages:[],
-     tasks:[{name:"홈 화면 내 지도 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27496",type:"신규",priority:"필수",product:"홈"},{name:"오픈 프로필 런칭",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPWEB-4425",type:"신규",priority:"",product:"프로필"},{name:"경로요약 화면 개선 및 유고정보 제공",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-25332",type:"신규",priority:"",product:"내비게이션"},{name:"안심운전모드 구간단속 잔여거리/시간 표기",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-26517",type:"신규",priority:"",product:"내비게이션"},{name:"차로정보 V2 적용",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-26606",type:"신규",priority:"",product:"내비게이션"},{name:"현위치/나침반 동작 사용성 개선",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPONE-810",type:"신규",priority:"",product:"대중교통/도보"}],
+     tasks:[{name:"홈 화면 내 지도 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27496",type:"신규",priority:"필수",product:"홈"},{name:"오픈 프로필 런칭",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPWEB-4425",type:"신규",priority:"필수",product:"프로필"},{name:"[리뷰 플랫폼] 비디오 리뷰 제공",ticketUrl:"https://tmobi.atlassian.net/browse/LOCALSVC-295",type:"신규",priority:"필수",product:"Place"},{name:"웹 지도 콜아웃 공통화 기반 앱 지면 상용 적용",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27562",type:"신규",priority:"필수",product:"지도"},{name:"콜아웃 노출 시의 하단 GNB hidden 처리 대응",ticketUrl:"https://tmobi.atlassian.net/browse/MAPSERVICE-131",type:"운영",priority:"필수",product:"지도"},{name:"AA/CP 연결시 Mobile 타 기능 메뉴 활용 가능 구조 변경",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-26109",type:"운영",priority:"필수",product:"내비게이션"},{name:"경로요약 화면 개선 및 유고정보 제공",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-25332",type:"신규",priority:"필수",product:"내비게이션"},{name:"안심운전모드 구간단속 잔여거리/시간 표기",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-26517",type:"신규",priority:"필수",product:"내비게이션"},{name:"고의사고 다발 구간 SDI 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-26985",type:"신규",priority:"필수",product:"내비게이션"},{name:"AA/CP GPS 수신불가 안내",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27722",type:"신규",priority:"필수",product:"내비게이션"},{name:"차로정보 V2 적용",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-26606",type:"신규",priority:"중",product:"내비게이션"},{name:"롱프레스로 저장한 즐겨찾기 장소명 1순위 검색 미적용 수정",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-8714",type:"버그",priority:"필수",product:"에이닷"},{name:"음성인식 모델 개선",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-8487",type:"운영",priority:"필수",product:"에이닷"},{name:"iOS Firebase 로그 수집",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-27728",type:"운영",priority:"필수",product:"에이닷"},{name:"통화중 위젯 음성 버튼 선택시 에이닷 풀페이지 노출 현상 개선",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-8847",type:"버그",priority:"필수",product:"에이닷"},{name:"티맵으로 전화받기 ON 10초→3초 개선",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-9026",type:"버그",priority:"필수",product:"에이닷"},{name:"[주행중 어디갈까] 노출 POI 제한선 상향",ticketUrl:"https://tmobi.atlassian.net/browse/CLIENTQA-8816",type:"운영",priority:"필수",product:"Place"},{name:"저장 그룹 및 공유하기 기능 개선",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPSAVE-115",type:"신규",priority:"필수",product:"저장"},{name:"저장 롱프레스 개선",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPSAVE-65",type:"신규",priority:"필수",product:"저장"},{name:"현위치/나침반 동작 사용성 개선",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPONE-810",type:"신규",priority:"필수",product:"대중교통/도보"},{name:"getAddress 앱스킴 내 법정동 코드 추가",ticketUrl:"https://tmobi.atlassian.net/browse/TMAPCLIENT-26637",type:"운영",priority:"중",product:"Biz&Search"},{name:"플레이스 홀더 내, 텍스트 말줄임",ticketUrl:"https://tmobi.atlassian.net/browse/SCH-23",type:"버그",priority:"필수",product:"Biz&Search"}],
      wikiUrl:"https://tmobi.atlassian.net/wiki/spaces/Product/pages/1552712015"}
   ]
 };

@@ -1,566 +1,234 @@
 {
-  "lastUpdated": "2026-06-19T12:00:00",
+  "lastUpdated": "2026-06-22T12:00:00",
   "currentRT": {
     "rtNumber": "v11.4.0",
     "schedule": {
-      "reviewRequest": "2026-06-23",
+      "reviewRequest": "2026-06-25",
       "deployStart": null,
       "deployComplete": null
     },
     "stages": [
-      {
-        "name": "과제 취합",
-        "date": "2026-03-24"
-      },
-      {
-        "name": "상위 기획 개발 검토",
-        "date": "2026-03-31"
-      },
-      {
-        "name": "과제 우선순위 확정",
-        "date": "2026-04-02"
-      },
-      {
-        "name": "개발 협의 (상세 기획 리뷰)",
-        "date": "2026-04-09"
-      },
-      {
-        "name": "m/d 산정",
-        "date": "2026-04-14"
-      },
-      {
-        "name": "진행 과제 최종 확정",
-        "date": "2026-04-16"
-      },
-      {
-        "name": "개발 (+Sanity, Feature QA)",
-        "date": "2026-06-15"
-      },
-      {
-        "name": "QA",
-        "date": "2026-06-25"
-      },
-      {
-        "name": "심사 요청",
-        "date": "2026-06-25"
-      }
+      {"name": "과제 취합", "date": "2026-03-24"},
+      {"name": "상위 기획 개발 검토", "date": "2026-03-31"},
+      {"name": "과제 우선순위 확정", "date": "2026-04-02"},
+      {"name": "개발 협의 (상세 기획 리뷰)", "date": "2026-04-09"},
+      {"name": "m/d 산정", "date": "2026-04-14"},
+      {"name": "진행 과제 최종 확정", "date": "2026-04-16"},
+      {"name": "개발 (+Sanity, Feature QA)", "date": "2026-06-15"},
+      {"name": "QA", "date": "2026-06-25"},
+      {"name": "심사 요청", "date": "2026-06-25"}
     ],
     "tasks": [
-      {
-        "name": "주차장 정보 모드",
-        "ticketUrl": "https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/1209401347",
-        "type": "신규",
-        "priority": "필수",
-        "product": "내비게이션"
-      },
-      {
-        "name": "후면 카메라 대응 (구간단속 추가, 종료점연장, 음성안내 개선)",
-        "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27506",
-        "type": "신규",
-        "priority": "필수",
-        "product": "내비게이션"
-      },
-      {
-        "name": "TBT, 차로정보의 비보호회전 표기",
-        "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28669",
-        "type": "신규",
-        "priority": "필수",
-        "product": "내비게이션"
-      },
-      {
-        "name": "주행종료팝업 로그 추가 (MDP만 적재)",
-        "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28770",
-        "type": "운영",
-        "priority": "",
-        "product": "주행종료팝업"
-      },
-      {
-        "name": "에이닷 VOC 검토를 위한 로그 삽입 작업",
-        "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27617",
-        "type": "운영",
-        "priority": "",
-        "product": "에이닷"
-      },
-      {
-        "name": "가로모드 고속도로모드 제보버튼 이슈 해결 (AOS)",
-        "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29210",
-        "type": "버그",
-        "priority": "",
-        "product": "소셜제보"
-      }
+      {"name": "주차장 정보 모드", "ticketUrl": "https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/1209401347", "type": "신규", "priority": "필수", "product": "내비게이션"},
+      {"name": "후면 카메라 대응 (구간단속 추가, 종료점연장, 음성안내 개선)", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27506", "type": "신규", "priority": "필수", "product": "내비게이션"},
+      {"name": "TBT, 차로정보의 비보호회전 표기", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28669", "type": "신규", "priority": "필수", "product": "내비게이션"},
+      {"name": "주행종료팝업 로그 추가 (MDP만 적재)", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28770", "type": "운영", "priority": "", "product": "주행종료팝업"},
+      {"name": "에이닷 VOC 검토를 위한 로그 삽입 작업", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27617", "type": "운영", "priority": "", "product": "에이닷"},
+      {"name": "가로모드 고속도로모드 제보버튼 이슈 해결 (AOS)", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29210", "type": "버그", "priority": "", "product": "소셜제보"}
     ],
     "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2424671196"
   },
   "history": [
     {
       "rtNumber": "v11.8.0",
-      "schedule": {
-        "reviewRequest": "2026-08-24",
-        "deployStart": null,
-        "deployComplete": null
-      },
+      "schedule": {"reviewRequest": "2026-08-24", "deployStart": null, "deployComplete": null},
       "stages": [
-        {
-          "name": "과제 취합",
-          "date": "2026-06-22"
-        },
-        {
-          "name": "상위 기획 개발 검토",
-          "date": "2026-06-29"
-        },
-        {
-          "name": "과제 우선순위 확정",
-          "date": "2026-07-01"
-        },
-        {
-          "name": "개발 협의 (상세 기획 리뷰)",
-          "date": "2026-07-08"
-        },
-        {
-          "name": "m/d 산정",
-          "date": "2026-07-13"
-        },
-        {
-          "name": "진행 과제 최종 확정",
-          "date": "2026-07-15"
-        },
-        {
-          "name": "개발 (+Sanity, Feature QA)",
-          "date": "2026-08-06"
-        },
-        {
-          "name": "QA",
-          "date": "2026-08-21"
-        },
-        {
-          "name": "심사 요청",
-          "date": "2026-08-24"
-        }
+        {"name": "과제 취합", "date": "2026-06-22"},
+        {"name": "상위 기획 개발 검토", "date": "2026-06-29"},
+        {"name": "과제 우선순위 확정", "date": "2026-07-01"},
+        {"name": "개발 협의 (상세 기획 리뷰)", "date": "2026-07-08"},
+        {"name": "m/d 산정", "date": "2026-07-13"},
+        {"name": "진행 과제 최종 확정", "date": "2026-07-15"},
+        {"name": "개발 (+Sanity, Feature QA)", "date": "2026-08-06"},
+        {"name": "QA", "date": "2026-08-21"},
+        {"name": "심사 요청", "date": "2026-08-24"}
       ],
       "tasks": [
-        {
-          "name": "주행중 검색 UIUX 개선 1차",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/SCH-380",
-          "type": "신규",
-          "priority": "필수",
-          "product": "검색"
-        },
-        {
-          "name": "지도 통합 2차",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/MAPSERVICE-191",
-          "type": "신규",
-          "priority": "필수",
-          "product": "지도"
-        },
-        {
-          "name": "본인인증 전환 유도 플로우 추가",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28635",
-          "type": "신규",
-          "priority": "필수",
-          "product": "Core"
-        },
-        {
-          "name": "다크모드 컬러 추가/수정",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMDS-108",
-          "type": "신규",
-          "priority": "필수",
-          "product": "UX"
-        },
-        {
-          "name": "차꾸미기 고도화",
-          "ticketUrl": "https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/2603090086",
-          "type": "신규",
-          "priority": "필수",
-          "product": "내비게이션"
-        },
-        {
-          "name": "대설, 태풍 SDI 추가",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29537",
-          "type": "신규",
-          "priority": "필수",
-          "product": "내비게이션"
-        },
-        {
-          "name": "숏폼 피드 팔로우 버튼 및 스테이터스 기능",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/SHORTFORM-498",
-          "type": "신규",
-          "priority": "",
-          "product": "숏폼"
-        },
-        {
-          "name": "루팅/에뮬레이터 탐지 도입",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28864",
-          "type": "신규",
-          "priority": "",
-          "product": "Security"
-        },
-        {
-          "name": "계단회피 경로 옵션 (도보)",
-          "ticketUrl": "https://tmobi.atlassian.net/wiki/x/GAFNjQ",
-          "type": "신규",
-          "priority": "",
-          "product": "도보"
-        }
+        {"name": "주행중 검색 UIUX 개선 1차", "ticketUrl": "https://tmobi.atlassian.net/browse/SCH-380", "type": "신규", "priority": "필수", "product": "검색"},
+        {"name": "지도 통합 2차", "ticketUrl": "https://tmobi.atlassian.net/browse/MAPSERVICE-191", "type": "신규", "priority": "필수", "product": "지도"},
+        {"name": "본인인증 전환 유도 플로우 추가", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28635", "type": "신규", "priority": "필수", "product": "Core"},
+        {"name": "다크모드 컬러 추가/수정", "ticketUrl": "https://tmobi.atlassian.net/browse/TMDS-108", "type": "신규", "priority": "필수", "product": "UX"},
+        {"name": "차꾸미기 고도화", "ticketUrl": "https://tmobi.atlassian.net/wiki/spaces/CMPFTeam/pages/2603090086", "type": "신규", "priority": "필수", "product": "내비게이션"},
+        {"name": "대설, 태풍 SDI 추가", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29537", "type": "신규", "priority": "필수", "product": "내비게이션"},
+        {"name": "숏폼 피드 팔로우 버튼 및 스테이터스 기능", "ticketUrl": "https://tmobi.atlassian.net/browse/SHORTFORM-498", "type": "신규", "priority": "", "product": "숏폼"},
+        {"name": "루팅/에뮬레이터 탐지 도입", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28864", "type": "신규", "priority": "", "product": "Security"},
+        {"name": "계단회피 경로 옵션 (도보)", "ticketUrl": "https://tmobi.atlassian.net/wiki/x/GAFNjQ", "type": "신규", "priority": "", "product": "도보"}
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2424637740"
     },
     {
       "rtNumber": "v11.6.0",
-      "schedule": {
-        "reviewRequest": "2026-07-16",
-        "deployStart": null,
-        "deployComplete": null
-      },
+      "schedule": {"reviewRequest": "2026-07-16", "deployStart": null, "deployComplete": null},
       "stages": [
-        {
-          "name": "과제 취합",
-          "date": "2026-04-21"
-        },
-        {
-          "name": "상위 기획 개발 검토",
-          "date": "2026-04-28"
-        },
-        {
-          "name": "과제 우선순위 확정",
-          "date": "2026-04-30"
-        },
-        {
-          "name": "개발 협의 (상세 기획 리뷰)",
-          "date": "2026-05-12"
-        },
-        {
-          "name": "m/d 산정",
-          "date": "2026-05-15"
-        },
-        {
-          "name": "진행 과제 최종 확정",
-          "date": "2026-05-19"
-        },
-        {
-          "name": "개발 (+Sanity, Feature QA)",
-          "date": "2026-07-01"
-        },
-        {
-          "name": "QA",
-          "date": "2026-07-15"
-        },
-        {
-          "name": "심사 요청",
-          "date": "2026-07-16"
-        }
+        {"name": "과제 취합", "date": "2026-04-21"},
+        {"name": "상위 기획 개발 검토", "date": "2026-04-28"},
+        {"name": "과제 우선순위 확정", "date": "2026-04-30"},
+        {"name": "개발 협의 (상세 기획 리뷰)", "date": "2026-05-12"},
+        {"name": "m/d 산정", "date": "2026-05-15"},
+        {"name": "진행 과제 최종 확정", "date": "2026-05-19"},
+        {"name": "개발 (+Sanity, Feature QA)", "date": "2026-07-01"},
+        {"name": "QA", "date": "2026-07-15"},
+        {"name": "심사 요청", "date": "2026-07-16"}
       ],
       "tasks": [
-        {
-          "name": "실시간 도보 따라가기 제공",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPONE-824",
-          "type": "신규",
-          "priority": "필수",
-          "product": "도보 경로"
-        },
-        {
-          "name": "지도 통합 2차 (개발)",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/MAPSERVICE-191",
-          "type": "신규",
-          "priority": "",
-          "product": "지도"
-        },
-        {
-          "name": "앱지면 공유하기 og태그 고도화",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/POIDETAIL-780",
-          "type": "신규",
-          "priority": "",
-          "product": "장소상세"
-        },
-        {
-          "name": "카카오 adfit SDK 업데이트",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29019",
-          "type": "운영",
-          "priority": "",
-          "product": "광고"
-        },
-        {
-          "name": "카바타 스토어",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28318",
-          "type": "신규",
-          "priority": "필수",
-          "product": "내비게이션"
-        },
-        {
-          "name": "경로 재탐색 사용자 선택 기능",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27694",
-          "type": "신규",
-          "priority": "필수",
-          "product": "내비게이션"
-        },
-        {
-          "name": "고의사고다발구간 AI SDI 추가",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27886",
-          "type": "신규",
-          "priority": "",
-          "product": "내비게이션"
-        },
-        {
-          "name": "WUW 모델 업데이트 (에이닷)",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9919",
-          "type": "운영",
-          "priority": "",
-          "product": "에이닷"
-        }
+        {"name": "실시간 도보 따라가기 제공", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPONE-824", "type": "신규", "priority": "필수", "product": "도보 경로"},
+        {"name": "지도 통합 2차", "ticketUrl": "https://tmobi.atlassian.net/browse/MAPSERVICE-191", "type": "신규", "priority": "필수", "product": "지도"},
+        {"name": "주행중 검색 UIUX 개선", "ticketUrl": "https://tmobi.atlassian.net/browse/SCH-380", "type": "신규", "priority": "필수", "product": "Biz&Search"},
+        {"name": "앱지면 공유하기 og태그 고도화", "ticketUrl": "https://tmobi.atlassian.net/browse/POIDETAIL-780", "type": "신규", "priority": "", "product": "장소상세"},
+        {"name": "카카오 adfit SDK 업데이트", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29019", "type": "운영", "priority": "", "product": "광고"},
+        {"name": "홈 리뷰 영역 오픈프로필 연결점 마련", "ticketUrl": "https://tmobi.atlassian.net/browse/AIM-301", "type": "신규", "priority": "", "product": "홈"},
+        {"name": "하차알림 VoC 로그 수집 환경 검토", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPONE-845", "type": "운영", "priority": "", "product": "대중교통"},
+        {"name": "카바타 스토어", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28318", "type": "신규", "priority": "필수", "product": "내비게이션"},
+        {"name": "경로 재탐색 사용자 선택 기능", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27694", "type": "신규", "priority": "필수", "product": "내비게이션"},
+        {"name": "고의사고다발구간 AI SDI 추가", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27886", "type": "신규", "priority": "", "product": "내비게이션"},
+        {"name": "D2S광고-GAM 연동", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29175", "type": "신규", "priority": "", "product": "광고"},
+        {"name": "화면 기본방향 고정 activity 개선", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29106", "type": "운영", "priority": "", "product": "공통"},
+        {"name": "에어브릿지 SDK device ID 전송 추가", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPDRIVER-12371", "type": "운영", "priority": "", "product": "대리"},
+        {"name": "WUW 모델 업데이트 (에이닷)", "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9919", "type": "운영", "priority": "", "product": "에이닷"},
+        {"name": "소셜제보 자동 팝업 On/Off 설정 지원", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29216", "type": "신규", "priority": "", "product": "소셜제보"},
+        {"name": "Google AdManager eCPM 외부 네트워크 SDK 추가", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29330", "type": "신규", "priority": "", "product": "미션"},
+        {"name": "IOS 검색결과 랜딩 키패드 노출 오류", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29575", "type": "버그", "priority": "", "product": "검색"},
+        {"name": "마이크로 내비 안내 음성 인입 수정", "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9542", "type": "버그", "priority": "", "product": "에이닷"}
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2426961937"
     },
     {
       "rtNumber": "v11.3.0",
-      "schedule": {
-        "reviewRequest": "2026-06-04",
-        "deployStart": "2026-06-09",
-        "deployComplete": null
-      },
+      "schedule": {"reviewRequest": "2026-06-04", "deployStart": "2026-06-09", "deployComplete": "2026-06-11"},
       "stages": [],
       "tasks": [
-        {
-          "name": "주행 종료 팝업 CPM 광고 연동",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/LOCALSVC-478",
-          "type": "신규",
-          "priority": "",
-          "product": "주행종료팝업"
-        }
+        {"name": "실시간 도보 따라가기 제공", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPONE-824", "type": "신규", "priority": "필수", "product": "도보 경로"},
+        {"name": "스플래시 스킨 적용", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28549", "type": "신규", "priority": "필수", "product": "광고"},
+        {"name": "주행 종료 팝업 CPM 광고 연동", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-26195", "type": "신규", "priority": "필수", "product": "주행 종료 팝업"},
+        {"name": "주행중 검색 UIUX 개선", "ticketUrl": "https://tmobi.atlassian.net/browse/SCH-380", "type": "신규", "priority": "상", "product": "Biz&Search"},
+        {"name": "지도 내 실시간 주행수 노출 추가 (N대 가는중)", "ticketUrl": "https://tmobi.atlassian.net/browse/MAPSERVICE-173", "type": "신규", "priority": "필수", "product": "지도"},
+        {"name": "스마트배너 UI 변경 (iOS)", "ticketUrl": "https://tmobi.atlassian.net/browse/AIM-259", "type": "신규", "priority": "필수", "product": "홈"},
+        {"name": "알림 설정 세분화 + 모인게이지 적재", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27440", "type": "운영", "priority": "필수", "product": "Core"},
+        {"name": "알림 설정 세분화", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28166", "type": "운영", "priority": "필수", "product": "Core"},
+        {"name": "주행 중 앱스킴/알림 진입 정책", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27404", "type": "운영", "priority": "필수", "product": "공통"},
+        {"name": "에이닷 툴팁 즉시 등록 개선", "ticketUrl": "https://tmobi.atlassian.net/wiki/spaces/TAIA/pages/2363719957", "type": "운영", "priority": "필수", "product": "에이닷"},
+        {"name": "지도 내 광고 주기 클릭 로그 추가", "ticketUrl": "https://tmobi.atlassian.net/browse/MAPSERVICE-170", "type": "운영", "priority": "필수", "product": "지도"},
+        {"name": "지도 개선", "ticketUrl": "https://tmobi.atlassian.net/browse/MAPSERVICE-186", "type": "운영", "priority": "필수", "product": "지도"},
+        {"name": "홈 스마트배너 믹스패널 로그 추가", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27499", "type": "운영", "priority": "필수", "product": "홈"},
+        {"name": "주행 완료 팝업 모인게이지 커스텀 이벤트", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28879", "type": "운영", "priority": "필수", "product": "Moengage"},
+        {"name": "사용자 발화 문자 읽기 오류 수정", "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9028", "type": "버그", "priority": "필수", "product": "에이닷"},
+        {"name": "광고 노출/클릭 트래킹 수정", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28265", "type": "버그", "priority": "필수", "product": "광고"},
+        {"name": "광고 믹스패널 로그 수정", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28309", "type": "버그", "priority": "필수", "product": "광고"}
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2410043667"
     },
     {
       "rtNumber": "v11.3.2",
-      "schedule": {
-        "reviewRequest": "2026-06-12",
-        "deployStart": "2026-06-13",
-        "deployComplete": null
-      },
+      "schedule": {"reviewRequest": "2026-06-12", "deployStart": "2026-06-13", "deployComplete": "2026-06-17"},
       "stages": [],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.3.1",
-      "schedule": {
-        "reviewRequest": "2026-06-10",
-        "deployStart": "2026-06-11",
-        "deployComplete": null
-      },
+      "schedule": {"reviewRequest": "2026-06-10", "deployStart": "2026-06-11", "deployComplete": "2026-06-13"},
       "stages": [],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.2.3",
-      "schedule": {
-        "reviewRequest": "2026-05-18",
-        "deployStart": "2026-05-26",
-        "deployComplete": "2026-06-02"
-      },
+      "schedule": {"reviewRequest": "2026-05-18", "deployStart": "2026-05-26", "deployComplete": "2026-06-02"},
       "stages": [],
       "tasks": [
-        {
-          "name": "MDC+ 후속 개선",
-          "ticketUrl": "",
-          "type": "운영",
-          "priority": "",
-          "product": "Core"
-        }
+        {"name": "MDC+ 후속 개선", "ticketUrl": "", "type": "운영", "priority": "", "product": "Core"}
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.2.2",
-      "schedule": {
-        "reviewRequest": "2026-05-13",
-        "deployStart": "2026-05-18",
-        "deployComplete": "2026-05-25"
-      },
+      "schedule": {"reviewRequest": "2026-05-13", "deployStart": "2026-05-18", "deployComplete": "2026-05-25"},
       "stages": [],
       "tasks": [
-        {
-          "name": "CLIENTQA-9887",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9887",
-          "type": "버그",
-          "priority": "",
-          "product": "에이닷"
-        },
-        {
-          "name": "TMAPCLIENT-29141",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29141",
-          "type": "버그",
-          "priority": "",
-          "product": "내비게이션"
-        }
+        {"name": "CLIENTQA-9887", "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9887", "type": "버그", "priority": "", "product": "에이닷"},
+        {"name": "TMAPCLIENT-29141", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29141", "type": "버그", "priority": "", "product": "내비게이션"}
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.2.1",
-      "schedule": {
-        "reviewRequest": "2026-05-08",
-        "deployStart": null,
-        "deployComplete": "2026-05-13"
-      },
+      "schedule": {"reviewRequest": "2026-05-08", "deployStart": null, "deployComplete": "2026-05-13"},
       "stages": [],
       "tasks": [
-        {
-          "name": "TMAPCLIENT-23923",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-23923",
-          "type": "버그",
-          "priority": "",
-          "product": "내비게이션"
-        }
+        {"name": "TMAPCLIENT-23923", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-23923", "type": "버그", "priority": "", "product": "내비게이션"}
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.2.0",
-      "schedule": {
-        "reviewRequest": "2026-04-17",
-        "deployStart": null,
-        "deployComplete": "2026-05-07"
-      },
+      "schedule": {"reviewRequest": "2026-04-17", "deployStart": null, "deployComplete": "2026-05-07"},
       "stages": [],
       "tasks": [
-        {
-          "name": "사용자 참여형 제보 기능/서비스 개발",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/SOCREP-1",
-          "type": "신규",
-          "priority": "필수",
-          "product": "소셜제보"
-        },
-        {
-          "name": "Google AdManager 360 SDK 추가",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27507",
-          "type": "신규",
-          "priority": "필수",
-          "product": "광고"
-        },
-        {
-          "name": "[이동로그] 유입 지점 개발",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/MOVING-32",
-          "type": "신규",
-          "priority": "",
-          "product": "이동로그"
-        },
-        {
-          "name": "분기 후 합류되는 도로정보 안내",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPBIZ-506",
-          "type": "신규",
-          "priority": "",
-          "product": "내비게이션"
-        },
-        {
-          "name": "주행중 > 에이닷 UI 개선",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9267",
-          "type": "신규",
-          "priority": "",
-          "product": "에이닷"
-        }
+        {"name": "사용자 참여형 제보 기능/서비스 개발", "ticketUrl": "https://tmobi.atlassian.net/browse/SOCREP-1", "type": "신규", "priority": "필수", "product": "소셜제보"},
+        {"name": "Google AdManager 360 SDK 추가", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27507", "type": "신규", "priority": "필수", "product": "광고"},
+        {"name": "[이동로그] 유입 지점 개발", "ticketUrl": "https://tmobi.atlassian.net/browse/MOVING-32", "type": "신규", "priority": "필수", "product": "이동로그"},
+        {"name": "티맵에 로플랫 SDK 탑재", "ticketUrl": "https://tmobi.atlassian.net/browse/MOVING-2", "type": "신규", "priority": "필수", "product": "이동로그"},
+        {"name": "분기 후 합류되는 도로정보 안내", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPBIZ-506", "type": "신규", "priority": "", "product": "내비게이션"},
+        {"name": "설정메뉴에 누락된 로그 추가 및 로그 통일", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27983", "type": "운영", "priority": "", "product": "공통"},
+        {"name": "에이닷 로그 추가 및 VOC 검토", "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9047", "type": "운영", "priority": "필수", "product": "에이닷"},
+        {"name": "주행중 에이닷 UI 개선", "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9267", "type": "신규", "priority": "필수", "product": "에이닷"},
+        {"name": "비정상 케이스 공통화면 노출 (AOS)", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28142", "type": "운영", "priority": "", "product": "Core"},
+        {"name": "인증 이슈 발생시 표출 메세지 변경", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28237", "type": "운영", "priority": "", "product": "기타"}
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2180255678"
     },
     {
       "rtNumber": "v11.1.3",
-      "schedule": {
-        "reviewRequest": "2026-04-28",
-        "deployStart": null,
-        "deployComplete": "2026-05-01"
-      },
+      "schedule": {"reviewRequest": "2026-04-28", "deployStart": null, "deployComplete": "2026-05-01"},
       "stages": [],
       "tasks": [
-        {
-          "name": "TMAPCLIENT-29016",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29016",
-          "type": "버그",
-          "priority": "",
-          "product": "내비게이션"
-        }
+        {"name": "TMAPCLIENT-29016", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-29016", "type": "버그", "priority": "", "product": "내비게이션"}
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.1.2",
-      "schedule": {
-        "reviewRequest": "2026-04-15",
-        "deployStart": null,
-        "deployComplete": "2026-04-20"
-      },
+      "schedule": {"reviewRequest": "2026-04-15", "deployStart": null, "deployComplete": "2026-04-20"},
       "stages": [],
       "tasks": [
-        {
-          "name": "TMAPCLIENT-28654",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28654",
-          "type": "버그",
-          "priority": "",
-          "product": "내비게이션"
-        }
+        {"name": "TMAPCLIENT-28654", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-28654", "type": "버그", "priority": "", "product": "내비게이션"}
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.1.1",
-      "schedule": {
-        "reviewRequest": "2026-04-10",
-        "deployStart": null,
-        "deployComplete": "2026-04-13"
-      },
+      "schedule": {"reviewRequest": "2026-04-10", "deployStart": null, "deployComplete": "2026-04-13"},
       "stages": [],
       "tasks": [],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/2701918389"
     },
     {
       "rtNumber": "v11.1.0",
-      "schedule": {
-        "reviewRequest": "2026-03-31",
-        "deployStart": "2026-04-13",
-        "deployComplete": "2026-04-23"
-      },
+      "schedule": {"reviewRequest": "2026-03-31", "deployStart": "2026-04-13", "deployComplete": "2026-04-23"},
       "stages": [],
       "tasks": [
-        {
-          "name": "홈 화면 내 지도 추가",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27496",
-          "type": "신규",
-          "priority": "필수",
-          "product": "홈"
-        },
-        {
-          "name": "오픈 프로필 런칭",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPWEB-4425",
-          "type": "신규",
-          "priority": "",
-          "product": "프로필"
-        },
-        {
-          "name": "경로요약 화면 개선 및 유고정보 제공",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-25332",
-          "type": "신규",
-          "priority": "",
-          "product": "내비게이션"
-        },
-        {
-          "name": "안심운전모드 구간단속 잔여거리/시간 표기",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-26517",
-          "type": "신규",
-          "priority": "",
-          "product": "내비게이션"
-        },
-        {
-          "name": "차로정보 V2 적용",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-26606",
-          "type": "신규",
-          "priority": "",
-          "product": "내비게이션"
-        },
-        {
-          "name": "현위치/나침반 동작 사용성 개선",
-          "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPONE-810",
-          "type": "신규",
-          "priority": "",
-          "product": "대중교통/도보"
-        }
+        {"name": "홈 화면 내 지도 추가", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27496", "type": "신규", "priority": "필수", "product": "홈"},
+        {"name": "오픈 프로필 런칭", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPWEB-4425", "type": "신규", "priority": "필수", "product": "프로필"},
+        {"name": "[리뷰 플랫폼] 비디오 리뷰 제공", "ticketUrl": "https://tmobi.atlassian.net/browse/LOCALSVC-295", "type": "신규", "priority": "필수", "product": "Place"},
+        {"name": "웹 지도 콜아웃 공통화 기반 앱 지면 상용 적용", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27562", "type": "신규", "priority": "필수", "product": "지도"},
+        {"name": "콜아웃 노출 시의 하단 GNB hidden 처리 대응", "ticketUrl": "https://tmobi.atlassian.net/browse/MAPSERVICE-131", "type": "운영", "priority": "필수", "product": "지도"},
+        {"name": "AA/CP 연결시 Mobile 타 기능 메뉴 활용 가능 구조 변경", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-26109", "type": "운영", "priority": "필수", "product": "내비게이션"},
+        {"name": "경로요약 화면 개선 및 유고정보 제공", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-25332", "type": "신규", "priority": "필수", "product": "내비게이션"},
+        {"name": "안심운전모드 구간단속 잔여거리/시간 표기", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-26517", "type": "신규", "priority": "필수", "product": "내비게이션"},
+        {"name": "고의사고 다발 구간 SDI 추가", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-26985", "type": "신규", "priority": "필수", "product": "내비게이션"},
+        {"name": "AA/CP GPS 수신불가 안내", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27722", "type": "신규", "priority": "필수", "product": "내비게이션"},
+        {"name": "차로정보 V2 적용", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-26606", "type": "신규", "priority": "중", "product": "내비게이션"},
+        {"name": "롱프레스로 저장한 즐겨찾기 장소명 1순위 검색 미적용 수정", "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-8714", "type": "버그", "priority": "필수", "product": "에이닷"},
+        {"name": "음성인식 모델 개선", "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-8487", "type": "운영", "priority": "필수", "product": "에이닷"},
+        {"name": "iOS Firebase 로그 수집", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-27728", "type": "운영", "priority": "필수", "product": "에이닷"},
+        {"name": "통화중 위젯 음성 버튼 선택시 에이닷 풀페이지 노출 현상 개선", "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-8847", "type": "버그", "priority": "필수", "product": "에이닷"},
+        {"name": "티맵으로 전화받기 ON 10초→3초 개선", "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-9026", "type": "버그", "priority": "필수", "product": "에이닷"},
+        {"name": "[주행중 어디갈까] 노출 POI 제한선 상향", "ticketUrl": "https://tmobi.atlassian.net/browse/CLIENTQA-8816", "type": "운영", "priority": "필수", "product": "Place"},
+        {"name": "저장 그룹 및 공유하기 기능 개선", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPSAVE-115", "type": "신규", "priority": "필수", "product": "저장"},
+        {"name": "저장 롱프레스 개선", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPSAVE-65", "type": "신규", "priority": "필수", "product": "저장"},
+        {"name": "현위치/나침반 동작 사용성 개선", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPONE-810", "type": "신규", "priority": "필수", "product": "대중교통/도보"},
+        {"name": "getAddress 앱스킴 내 법정동 코드 추가", "ticketUrl": "https://tmobi.atlassian.net/browse/TMAPCLIENT-26637", "type": "운영", "priority": "중", "product": "Biz&Search"},
+        {"name": "플레이스 홀더 내, 텍스트 말줄임", "ticketUrl": "https://tmobi.atlassian.net/browse/SCH-23", "type": "버그", "priority": "필수", "product": "Biz&Search"}
       ],
       "wikiUrl": "https://tmobi.atlassian.net/wiki/spaces/Product/pages/1552712015"
     }
